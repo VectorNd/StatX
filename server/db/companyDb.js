@@ -1,4 +1,4 @@
-const Company = require('../models'); 
+const { Company } = require('../models'); 
 
 // Function to create a new company entry
 async function createCompany(companyData) {
@@ -14,6 +14,26 @@ async function createCompany(companyData) {
 async function createCompanies(companies) {
     try {
         const value = await Company.insertMany(companies);
+        return value;
+    } catch (err) {
+        throw new Error(`Error creating company: ${err.message}`);
+    }
+}
+
+
+// Function to delete company entry
+async function deleteCompany(id) {
+    try {
+        const company =  await Company.deleteOne({ _id: id });
+        return company;
+    } catch (err) {
+        throw new Error(`Error deleting company: ${err.message}`);
+    }
+}
+
+async function deleteCompanies() {
+    try {
+        const value = await Company.deleteMany({});
         return value;
     } catch (err) {
         throw new Error(`Error creating company: ${err.message}`);
@@ -55,7 +75,7 @@ async function findCompaniesByCountry(country) {
 
 async function findCompanyByCode(companyCode) {
     try {
-        const company = await Company.findOne({ companyCode });
+        const company = await Company.findOne({ code: companyCode });
         if (!company) {
             throw new Error(`Company with code ${companyCode} not found`);
         }
@@ -113,7 +133,7 @@ async function countCompaniesWithGreaterStockPrice(latestStockPrice) {
 async function updateCompanyByCode(companyCode, updateData) {
     try {
         const updatedCompany = await Company.findOneAndUpdate(
-            { companyCode },
+            { code: companyCode },
             { $set: updateData },
             { new: true, runValidators: true }
         );
@@ -130,7 +150,7 @@ async function updateCompanyByCode(companyCode, updateData) {
 
 async function deleteCompanyByCode(companyCode) {
     try {
-        const deletedCompany = await Company.findOneAndDelete({ companyCode });
+        const deletedCompany = await Company.findOneAndDelete({ code: companyCode });
         if (!deletedCompany) {
             throw new Error(`Company with code ${companyCode} not found`);
         }
@@ -154,4 +174,6 @@ module.exports = {
     updateCompanyByCode,
     deleteCompanyByCode,
     findCompaniesWithGreaterStockPrice,
+    deleteCompanies,
+    deleteCompany,
 };

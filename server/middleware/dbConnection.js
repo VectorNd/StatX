@@ -1,5 +1,5 @@
 // src/middleware/dbConnection.js
-const ConnectDB = require("../config");
+const { ConnectDB } = require("../config");
 
 const dbConnectionMiddleware = async (req, res, next) => {
   try {

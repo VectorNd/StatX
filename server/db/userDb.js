@@ -1,4 +1,4 @@
-const User = require('../models'); 
+const { User } = require('../models'); 
 
 // Function to create a new user entry
 async function createUserByGoogle( username, email, googleId ) {

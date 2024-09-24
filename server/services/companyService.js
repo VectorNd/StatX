@@ -28,6 +28,21 @@ const predictNextYear = (company) => {
   };
 };
 
+function parseValue(value) {
+  // Remove any non-numeric characters (except for decimal points)
+  if (typeof value === 'string') {
+      // Check for 'n/a' or similar cases and return 0
+      if (value.trim().toLowerCase() === 'n/a' || value.trim() === '') {
+          return 0;
+      }
+      // Remove currency symbols and commas
+      const cleanedValue = value.replace(/[\$B,]/g, '').trim();
+      const parsedValue = parseFloat(cleanedValue);
+      return isNaN(parsedValue) ? 0 : parsedValue; // Default to 0 if NaN
+  }
+  return 0; // Default for non-string values
+}
+
 async function searchCompanies(input) {
   try {
     const companies = await CompanyDb.findCompaniesByNameOrCode(input);
@@ -100,7 +115,7 @@ async function addCompaniesFromCsv(filePath) {
           for (let year = 2015; year <= 2024; year++) {
             stockPrices.push({
               year: year,
-              price: parseFloat(row[`Stock Price (${year})`]) || 0,
+              price: parseValue(row[`Stock Price (${year})`]) || 0,
             });
             marketShares.push({
               year: year,
@@ -108,11 +123,11 @@ async function addCompaniesFromCsv(filePath) {
             });
             revenues.push({
               year: year,
-              revenue: parseFloat(row[`Revenue (${year})`]) || 0,
+              revenue: parseValue(row[`Revenue (${year})`]) || 0,
             });
             expenses.push({
               year: year,
-              expense: parseFloat(row[`Expense (${year})`]) || 0,
+              expense: parseValue(row[`Expense (${year})`]) || 0,
             });
           }
 
@@ -149,6 +164,16 @@ async function addCompaniesFromCsv(filePath) {
   }
 }
 
+async function deleteCompanies() {
+  try {
+    const count = await CompanyDb.deleteCompanies();
+    return count;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
 module.exports = {
   computeGrowthStability,
   predictNextYear,
@@ -158,4 +183,5 @@ module.exports = {
   findByCountry,
   countCompaniesWithGreaterMarketShare,
   countCompaniesWithGreaterStockPrice,
+  deleteCompanies,
 };
