@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import { SERVER_ENDPOINT } from "../../utils/constants";
 import { AuthContext } from "../../context/AuthContext";
+import { useLocation } from "react-router-dom";
 
 const CompanyMetrics = () => {
   const [metrics, setMetrics] = useState(null);
   const [loading, setLoading] = useState(false);
   const { jwt } = useContext(AuthContext);
+  const location = useLocation();
+  const { companyCode } = location.state || {};
 
 
   const handleCompute = async (companyCode) => {
@@ -37,7 +40,7 @@ const CompanyMetrics = () => {
 
   return (
     <div>
-      <button onClick={() => handleCompute("UAH")}>
+      <button onClick={() => handleCompute(companyCode)}>
         Compute Metrics
       </button>
 

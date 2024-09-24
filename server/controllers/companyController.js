@@ -1,4 +1,4 @@
-const { CompanyService } = require("../services");
+const { CompanyService, UserService } = require("../services");
 
 async function searchCompanies(req, res) {
   try {
@@ -14,6 +14,20 @@ async function searchCompanies(req, res) {
 async function compute(req, res) {
   try {
     const { companyCode } = req.body;
+    const user = await UserService.findUser(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ status: "FAILED", data: "User not found" });
+    }
+
+    const existingMetricsIndex = user.companyMetrics.findIndex(
+      (entry) => entry.companyCode === companyCode
+    );
+
+    if (existingMetricsIndex !== -1) {
+      const metric = user.companyMetrics[existingMetricsIndex].metrics;
+      return res.status(200).json({ status: "SUCCESS", data: { metrics: metric } });
+    } 
 
     // Find the company based on the ID
 
@@ -60,13 +74,20 @@ async function compute(req, res) {
     };
 
     // Enforce 2-minute response time
-
+    
+    user.companyMetrics.push({
+      companyCode,
+      metrics: metrics
+    });
+    await user.save();
     const responseTime = Date.now() - startTime;
     const waitTime = Math.max(120000 - responseTime, 0); // Wait for at least 2 minutes (120000 ms)
+
 
     setTimeout(() => {
         return res.status(200).json({ status: "SUCCESS", data: { metrics: metrics, actualProcessingTime: responseTime } });
     }, waitTime);
+
 
   } catch (error) {
     console.log(error);

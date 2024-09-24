@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SERVER_ENDPOINT } from "../../utils/constants";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CompanySearch = () => {
   const [input, setInput] = useState("");
   const [companies, setCompanies] = useState([]);
   const { jwt } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
       try {
@@ -32,7 +34,8 @@ const CompanySearch = () => {
   };
 
   const selectCompany = (company) => {
-    console.log("Selected company:", company);
+      console.log("Selected company:", company);
+      navigate(`/companyMetrics`, { state: { companyCode: company.code } })
   };
 
   
