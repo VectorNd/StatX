@@ -24,7 +24,8 @@ const userSchema = new mongoose.Schema({
             },
             growthStability: { type: String },
             predictions: { type: Object },
-        }
+        },
+        searchedAt: { type: String }
     }]
 
 }, { timestamps: true });

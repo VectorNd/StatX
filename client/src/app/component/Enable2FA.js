@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { SERVER_ENDPOINT } from "../../utils/constants";
 import Cookies from "js-cookie";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Enable2FA = () => {
   const [secret, setSecret] = useState("");
@@ -12,7 +12,6 @@ const Enable2FA = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const { setJwt, jwt } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleEnable2FA = async () => {
     try {

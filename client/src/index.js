@@ -12,6 +12,8 @@ import CompanyMetrics from "./app/component/CompanyMetrics";
 import Enable2FA from "./app/component/Enable2FA";
 import ResetPassword from "./app/component/ResetPassword";
 import ForgotPassword from "./app/component/ForgotPassword";
+import Login from "./app/component/Login";
+import History from "./app/component/History";
 
 
 const router = createBrowserRouter([
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
   {
     path: "/reset-password/:token",
     element: <ResetPassword key="page6" />,
+  },
+  {
+    path: "/login",
+    element: <Login key="page7" />,
+  },
+  {
+    path: "/history",
+    element: <History key="page8" />,
   },
 ]);
 

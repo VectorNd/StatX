@@ -77,7 +77,8 @@ async function compute(req, res) {
     
     user.companyMetrics.push({
       companyCode,
-      metrics: metrics
+      metrics: metrics,
+      searchedAt: Date.now(),
     });
     await user.save();
     const responseTime = Date.now() - startTime;
@@ -95,6 +96,23 @@ async function compute(req, res) {
   }
 }
 
+
+async function historyCompute(req, res) {
+  try {
+    const user = await UserService.findUser(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ status: "FAILED", data: "User not found" });
+    }
+
+    return res.status(200).json({ status: "SUCCESS", data: { metrics: user.companyMetrics }});
+    
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: "FAILED" });
+  }
+}
 
 async function addCompaniesFromCsv(req, res) {
   try {
@@ -120,4 +138,4 @@ async function deleteCompanies(req, res) {
   }
 }
 
-module.exports = { searchCompanies, compute, addCompaniesFromCsv, deleteCompanies };
+module.exports = { searchCompanies, compute, historyCompute, addCompaniesFromCsv, deleteCompanies };

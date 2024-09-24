@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { SERVER_ENDPOINT } from "../../utils/constants";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +38,10 @@ const CompanySearch = () => {
       navigate(`/companyMetrics`, { state: { companyCode: company.code } })
   };
 
+  const handleHistory = () => {
+    navigate('/history');
+  } 
+
   
   return (
     <div>
@@ -55,6 +59,9 @@ const CompanySearch = () => {
           </li>
         ))}
       </ul>
+      <br/>
+
+      <button onClick={handleHistory}>History</button>
     </div>
   );
 };
