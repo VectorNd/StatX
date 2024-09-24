@@ -1,5 +1,5 @@
 const { UserService } = require("../services");
-const { ServerConfig } = require('../config');
+const { ServerConfig } = require("../config");
 const { signJwt, verifyJwt } = require("../utils/jwt");
 const speakeasy = require("speakeasy");
 const qrcode = require("qrcode");
@@ -8,13 +8,28 @@ const bcrypt = require("bcryptjs");
 
 const googleOAuth = (req, res) => {
   const redirectUri = "http://localhost:4000/api/v1/user/googleOAuth/callback"; // Redirect URI for your app
-  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
-      `client_id=${ServerConfig.GOOGLE_CLIENT_ID}&` +
-      `redirect_uri=${encodeURIComponent(redirectUri)}&` +
-      `response_type=code&` +
-      `scope=profile email`;
+  const authUrl =
+    `https://accounts.google.com/o/oauth2/v2/auth?` +
+    `client_id=${ServerConfig.GOOGLE_CLIENT_ID}&` +
+    `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+    `response_type=code&` +
+    `scope=profile email`;
 
   // Redirect the user to Google’s OAuth consent page
+  res.redirect(authUrl);
+};
+
+const githubOAuth = (req, res) => {
+  const redirectUri = "http://localhost:4000/api/v1/user/githubOAuth/callback"; // Redirect URI for your app
+  const authUrl =
+    `https://github.com/login/oauth/authorize?` +
+    `client_id=${ServerConfig.GITHUB_CLIENT_ID}&` +
+    `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+    `scope=user:email` +
+    `&response_type=code` +
+    `&prompt=consent`;
+
+  // Redirect the user to GitHub’s OAuth consent page
   res.redirect(authUrl);
 };
 
@@ -55,11 +70,10 @@ async function googleOAuthCallback(req, res) {
     // Step 3: Check if the user exists or create a new one
 
     if (profileResponse.ok) {
-
       let user = await UserService.findUserByGoogle(profile.id);
-      
+
       if (!user) {
-        user = await UserService.findUserByEmail(profile.email); 
+        user = await UserService.findUserByEmail(profile.email);
         if (!user) {
           user = await UserService.createUserByGoogleId(
             profile.name,
@@ -70,24 +84,24 @@ async function googleOAuthCallback(req, res) {
           await UserService.updateGoogle(profile.email, profile.id);
         }
       }
-  
-  
+
       // Step 4: Generate JWT for session management
-      
+
       const token = await signJwt({ userId: user._id });
 
       // Set cookie with user data
-      await res.cookie('jwt', token, { httpOnly: false, secure: true, sameSite: 'None' });
-  
+      await res.cookie("jwt", token, {
+        httpOnly: false,
+        secure: true,
+        sameSite: "None",
+      });
+
       // Step 5: Send JWT token to the frontend
-      res.redirect('http://localhost:3000/enable2FA');
-    }
-    else {
+      res.redirect("http://localhost:3000/enable2FA");
+    } else {
       console.error("Token request failed:", tokenData);
-        res.status(400).send("Token request failed.");
+      res.status(400).send("Token request failed.");
     }
-
-
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "FAILED" });
@@ -97,7 +111,6 @@ async function googleOAuthCallback(req, res) {
 async function githubOAuthCallback(req, res) {
   try {
     const { code } = req.query;
-
     // Step 1: Exchange authorization code for access token
 
     const tokenResponse = await fetch(
@@ -128,32 +141,55 @@ async function githubOAuthCallback(req, res) {
 
     const profile = await profileResponse.json();
 
-    // Step 3: Check if the user exists or create a new one
+    const emailResponse = await fetch("https://api.github.com/user/emails", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
-    let user = await UserService.findUserByGitHub(profile.id);
+    const emails = await emailResponse.json();
 
-    if (!user) {
-      user = await UserService.findUserByEmail(profile.email); // Find by email to link accounts
-    }
+    // Find the primary email from the list of emails
+    const primaryEmail = emails?.find((email) => email.primary).email;
 
-    if (!user) {
-      user = await UserService.createUserByGitHubId(
-        profile.name,
-        profile.email,
-        profile.id
-      );
+    if (profileResponse.ok) {
+      // Step 3: Check if the user exists or create a new one
+
+      let user = await UserService.findUserByGitHub(profile.id);
+
+      if (!user) {
+        user = await UserService.findUserByEmail(primaryEmail); // Find by email to link accounts
+        if (!user) {
+          user = await UserService.createUserByGitHubId(
+            profile.name,
+            primaryEmail,
+            profile.id
+          );
+        } else {
+          await UserService.updateGitHub(primaryEmail, profile.id);
+        }
+      }
+
+      // Step 4: Generate JWT for session management
+
+      const token = await signJwt({ userId: user._id });
+
+
+      // Set cookie with user data
+      await res.cookie("jwt", token, {
+        httpOnly: false,
+        secure: true,
+        sameSite: "None",
+      });
+
+      // Step 5: Send JWT token to the frontend
+      res.redirect("http://localhost:3000/enable2FA");
     } else {
-      await UserService.updateGitHub(profile.email, profile.id);
+      console.error("Token request failed:", tokenData);
+      res.status(400).send("Token request failed.");
     }
-
-    // Step 4: Generate JWT for session management
-
-    const token = signJwt({ userId: user._id });
-
-    // Step 5: Send JWT token to the frontend
-
-    return res.status(200).json({ status: "SUCCESS", data: token });
-
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "FAILED" });
@@ -168,8 +204,8 @@ async function enable2FA(req, res) {
       return res.status(404).json({ status: "FAILED", data: "User not found" });
     }
 
-    // Generate a new secret for 
-    
+    // Generate a new secret for
+
     const secret = speakeasy.generateSecret({ name: "MyApp" });
 
     // Generate a QR code for the secret
@@ -180,10 +216,10 @@ async function enable2FA(req, res) {
 
     await UserService.update2FA(req.userId, secret.base32);
 
-    return res
-      .status(200)
-      .json({ status: "SUCCESS", data: { secret: secret, qrCode: qrCodeDataUrl } });
-
+    return res.status(200).json({
+      status: "SUCCESS",
+      data: { secret: secret, qrCode: qrCodeDataUrl },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "FAILED" });
@@ -197,9 +233,10 @@ async function verify2FA(req, res) {
     const user = await UserService.findUser(req.userId); // Make sure req.user is populated with authenticated user data
 
     if (!user || !user.secret2FA) {
-      return res
-        .status(404)
-        .json({ status: "FAILED", DataTransfer: "User not found or 2FA not enabled" });
+      return res.status(404).json({
+        status: "FAILED",
+        DataTransfer: "User not found or 2FA not enabled",
+      });
     }
 
     // Verify the provided token
@@ -227,7 +264,7 @@ async function forgotPassword(req, res) {
   try {
     const { email } = req.body;
 
-    const user = await UserService.findUserByEmail(email); 
+    const user = await UserService.findUserByEmail(email);
 
     if (!user) {
       return res.status(404).json({ status: "FAILED", data: "User not found" });
@@ -256,7 +293,9 @@ async function forgotPassword(req, res) {
 
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
-        return res.status(500).json({ status: "FAILED", data: "Email sending failed" });
+        return res
+          .status(500)
+          .json({ status: "FAILED", data: "Email sending failed" });
       }
       return res
         .status(200)
@@ -299,6 +338,7 @@ async function resetPassword(req, res) {
 module.exports = {
   googleOAuth,
   googleOAuthCallback,
+  githubOAuth,
   githubOAuthCallback,
   enable2FA,
   verify2FA,

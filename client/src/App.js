@@ -59,7 +59,7 @@ function App() {
   };
 
   const handleGitHubLogin = () => {
-    window.open("http://localhost:3000/auth/github", "_self");
+    window.open("http://localhost:4000/api/v1/user/githubOAuth", "_self");
   };
 
   return (

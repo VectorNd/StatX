@@ -5,7 +5,8 @@ const { AuthMiddleware } = require('../../middleware')
 
 router.get('/googleOAuth', UserController.googleOAuth);
 router.get('/googleOAuth/callback', UserController.googleOAuthCallback);
-router.get('/githubOAuth', UserController.githubOAuthCallback);
+router.get('/githubOAuth', UserController.githubOAuth);
+router.get('/githubOAuth/callback', UserController.githubOAuthCallback);
 router.post('/enable2FA', AuthMiddleware.checkUserAuth, UserController.enable2FA);
 router.post('/verify2FA', AuthMiddleware.checkUserAuth, UserController.verify2FA);
 router.post('/forgetPassword', AuthMiddleware.checkUserAuth, UserController.forgotPassword);
