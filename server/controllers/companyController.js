@@ -74,4 +74,17 @@ async function compute(req, res) {
   }
 }
 
-module.exports = { searchCompanies, compute };
+
+async function addCompaniesFromCsv(req, res) {
+  try {
+    const filePath = "../Mock Data Prepathon.csv";
+    const val = await CompanyService.addCompaniesFromCsv(filePath);
+
+    return res.status(200).json({ status: "SUCCESS", data: val });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: "FAILED" });
+  }
+}
+
+module.exports = { searchCompanies, compute, addCompaniesFromCsv };

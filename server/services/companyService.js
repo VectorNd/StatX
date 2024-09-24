@@ -1,4 +1,6 @@
 const { CompanyDb } = require("../db");
+const fs = require("fs");
+const csv = require("csv-parser");
 
 const computeGrowthStability = (company) => {
   // Calculate growth and stability based on revenue, stock price trends
@@ -13,9 +15,8 @@ const computeGrowthStability = (company) => {
 };
 
 const predictNextYear = (company) => {
-
   // Example simplistic prediction logic (ML model could be used here)
-  
+
   const lastRevenue = company.revenues.slice(-1)[0].revenue;
   const predictedRevenue = lastRevenue * 1.05; // Assuming 5% growth
 
@@ -83,9 +84,75 @@ async function countCompaniesWithGreaterStockPrice(company) {
   }
 }
 
+async function addCompaniesFromCsv(filePath) {
+  try {
+    const companies = [];
+    return new Promise((resolve, reject) => {
+      fs.createReadStream(filePath)
+        .pipe(csv())
+        .on("data", (row) => {
+          // Parse stock prices, expenses, revenues, and market shares
+          const stockPrices = [];
+          const marketShares = [];
+          const revenues = [];
+          const expenses = [];
+
+          for (let year = 2015; year <= 2024; year++) {
+            stockPrices.push({
+              year: year,
+              price: parseFloat(row[`Stock Price (${year})`]) || 0,
+            });
+            marketShares.push({
+              year: year,
+              share: parseFloat(row[`Market share (${year})`]) || 0,
+            });
+            revenues.push({
+              year: year,
+              revenue: parseFloat(row[`Revenue (${year})`]) || 0,
+            });
+            expenses.push({
+              year: year,
+              expense: parseFloat(row[`Expense (${year})`]) || 0,
+            });
+          }
+
+          // Create a company object
+          companies.push({
+            name: row["Company"],
+            code: row["Country Code"], 
+            country: row["Country"],
+            diversityScore: parseFloat(row["Diversity"]) || 0,
+            stockPrices: stockPrices,
+            marketShares: marketShares,
+            revenues: revenues,
+            expenses: expenses,
+          });
+        })
+        .on("end", async () => {
+          try {
+            await CompanyDb.createCompanies(companies); 
+            console.log("Companies imported successfully");
+            resolve(companies.length); // Return the count of inserted companies
+          } catch (err) {
+            console.error("Error importing companies:", err);
+            reject(err); // Reject the promise with the error
+          }
+        })
+        .on("error", (err) => {
+          console.error("Error reading CSV file:", err);
+          reject(err); // Reject the promise if there's an error reading the file
+        });
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
 module.exports = {
   computeGrowthStability,
   predictNextYear,
+  addCompaniesFromCsv,
   searchCompanies,
   findByCompanyCode,
   findByCountry,

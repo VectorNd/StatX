@@ -11,6 +11,15 @@ async function createCompany(companyData) {
     }
 }
 
+async function createCompanies(companies) {
+    try {
+        const value = await Company.insertMany(companies);
+        return value;
+    } catch (err) {
+        throw new Error(`Error creating company: ${err.message}`);
+    }
+}
+
 // Function to find companies 
 
 async function findCompaniesByNameOrCode(input) {
@@ -135,6 +144,7 @@ async function deleteCompanyByCode(companyCode) {
 // Export the functions to be used in the service layer
 module.exports = {
     createCompany,
+    createCompanies,
     findCompaniesByNameOrCode,
     findCompaniesByCountry,
     findCompanyByCode,
