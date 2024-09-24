@@ -272,10 +272,9 @@ async function forgotPassword(req, res) {
 
     // Generate a reset token
 
-    const resetToken = signJwt({ userId: user._id });
-
+    const resetToken = await signJwt({ userId: user._id });
     // Configure the transporter for sending emails
-
+    
     const transporter = nodemailer.createTransport({
       service: "Gmail", // or your SMTP service
       auth: {
@@ -283,16 +282,18 @@ async function forgotPassword(req, res) {
         pass: ServerConfig.EMAIL_PASS, // your email password
       },
     });
-
+    
     const mailOptions = {
       from: ServerConfig.EMAIL_USER,
       to: user.email,
       subject: "Password Reset",
       text: `Click here to reset your password: ${ServerConfig.FRONTEND_URL}/reset-password/${resetToken}`,
     };
-
+    
+    console.log(mailOptions)
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
+        console.log(err)
         return res
           .status(500)
           .json({ status: "FAILED", data: "Email sending failed" });
@@ -311,10 +312,10 @@ async function resetPassword(req, res) {
   try {
     const { token } = req.params;
     const { newPassword } = req.body;
-
+    
     // Verify the reset token
-
-    const decoded = verifyJwt(token);
+    
+    const decoded = await verifyJwt(token);
     const user = await UserService.findUser(decoded.userId); // Make sure req.user is populated with authenticated user data
 
     if (!user) {
@@ -325,10 +326,9 @@ async function resetPassword(req, res) {
       decoded.userId,
       bcrypt.hashSync(newPassword, 10)
     );
-
     return res
       .status(200)
-      .json({ status: "SUCCESS", data: "Password updated successfully" });
+      .json({ status: "SUCCESS", data:{ message: "Password updated successfully" }});
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "FAILED" });

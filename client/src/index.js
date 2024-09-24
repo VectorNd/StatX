@@ -10,6 +10,8 @@ import { AuthContextProvider } from "./context/AuthContext";
 import CompanySearch from "./app/component/CompanySearch";
 import CompanyMetrics from "./app/component/CompanyMetrics";
 import Enable2FA from "./app/component/Enable2FA";
+import ResetPassword from "./app/component/ResetPassword";
+import ForgotPassword from "./app/component/ForgotPassword";
 
 
 const router = createBrowserRouter([
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
   {
     path: "/enable2FA",
     element: <Enable2FA key="page4" />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword key="page5" />,
+  },
+  {
+    path: "/reset-password/:token",
+    element: <ResetPassword key="page6" />,
   },
 ]);
 

@@ -6,6 +6,8 @@ import { UserContext } from "./context/UserContext";
 import { AuthContext } from "./context/AuthContext";
 
 function App() {
+  const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,7 +69,8 @@ function App() {
       <h1>Welcome to the App</h1>
       <button onClick={handleGoogleLogin}>Login with Google</button>
       <button onClick={handleGitHubLogin}>Login with GitHub</button>
-      <a href="/reset-password">Forgot Password?</a>
+      
+      <a href="/forgot-password">Forgot Password?</a>
     </div>
   );
 }
