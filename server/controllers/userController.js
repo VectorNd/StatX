@@ -6,6 +6,17 @@ const qrcode = require("qrcode");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 
+const googleOAuth = (req, res) => {
+  const redirectUri = "http://localhost:4000/api/v1/user/googleOAuth/callback"; // Redirect URI for your app
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+      `client_id=${ServerConfig.GOOGLE_CLIENT_ID}&` +
+      `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+      `response_type=code&` +
+      `scope=profile email`;
+
+  // Redirect the user to Google’s OAuth consent page
+  res.redirect(authUrl);
+};
 
 async function googleOAuthCallback(req, res) {
   try {
@@ -43,29 +54,39 @@ async function googleOAuthCallback(req, res) {
 
     // Step 3: Check if the user exists or create a new one
 
-    let user = await UserService.findUserByGoogle(profile.id);
+    if (profileResponse.ok) {
 
-    if (!user) {
-      user = await UserService.findUserByEmail(profile.email); 
+      let user = await UserService.findUserByGoogle(profile.id);
+      
+      if (!user) {
+        user = await UserService.findUserByEmail(profile.email); 
+        if (!user) {
+          user = await UserService.createUserByGoogleId(
+            profile.name,
+            profile.email,
+            profile.id
+          );
+        } else {
+          await UserService.updateGoogle(profile.email, profile.id);
+        }
+      }
+  
+  
+      // Step 4: Generate JWT for session management
+      
+      const token = await signJwt({ userId: user._id });
+
+      // Set cookie with user data
+      await res.cookie('jwt', token, { httpOnly: false, secure: true, sameSite: 'None' });
+  
+      // Step 5: Send JWT token to the frontend
+      res.redirect('http://localhost:3000/enable2FA');
+    }
+    else {
+      console.error("Token request failed:", tokenData);
+        res.status(400).send("Token request failed.");
     }
 
-    if (!user) {
-      user = await UserService.createUserByGoogleId(
-        profile.name,
-        profile.email,
-        profile.id
-      );
-    } else {
-      await UserService.updateGoogle(profile.email, profile.id);
-    }
-
-    // Step 4: Generate JWT for session management
-
-    const token = signJwt({ userId: user._id });
-
-    // Step 5: Send JWT token to the frontend
-
-    return res.status(200).json({ status: "SUCCESS", data: token });
 
   } catch (error) {
     console.log(error);
@@ -141,8 +162,7 @@ async function githubOAuthCallback(req, res) {
 
 async function enable2FA(req, res) {
   try {
-
-    const user = await UserService.findUser(req.user.id); // Make sure req.user is populated with authenticated user data
+    const user = await UserService.findUser(req.userId); // Make sure req.user is populated with authenticated user data
 
     if (!user) {
       return res.status(404).json({ status: "FAILED", data: "User not found" });
@@ -158,11 +178,11 @@ async function enable2FA(req, res) {
 
     // Save the 2FA secret to the user
 
-    await UserService.update2FA(req.user.id, secret.base32);
+    await UserService.update2FA(req.userId, secret.base32);
 
     return res
       .status(200)
-      .json({ status: "SUCCESS", data: { qrCode: qrCodeDataUrl } });
+      .json({ status: "SUCCESS", data: { secret: secret, qrCode: qrCodeDataUrl } });
 
   } catch (error) {
     console.log(error);
@@ -174,7 +194,7 @@ async function verify2FA(req, res) {
   try {
     const { token } = req.body;
 
-    const user = await UserService.findUser(req.user.id); // Make sure req.user is populated with authenticated user data
+    const user = await UserService.findUser(req.userId); // Make sure req.user is populated with authenticated user data
 
     if (!user || !user.secret2FA) {
       return res
@@ -277,6 +297,7 @@ async function resetPassword(req, res) {
 }
 
 module.exports = {
+  googleOAuth,
   googleOAuthCallback,
   githubOAuthCallback,
   enable2FA,

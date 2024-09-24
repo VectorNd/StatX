@@ -19,4 +19,5 @@ module.exports = {
     EMAIL_USER: process.env.EMAIL_USER,
     EMAIL_PASS: process.env.EMAIL_PASS,
     FRONTEND_URL: process.env.FRONTEND_URL,
+    JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
 };

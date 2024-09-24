@@ -3,9 +3,9 @@ const { UserController } = require("../../controllers");
 const router = express.Router();
 const { AuthMiddleware } = require('../../middleware')
 
-
-router.post('/googleOAuth', UserController.googleOAuthCallback);
-router.post('/githubOAuth', UserController.githubOAuthCallback);
+router.get('/googleOAuth', UserController.googleOAuth);
+router.get('/googleOAuth/callback', UserController.googleOAuthCallback);
+router.get('/githubOAuth', UserController.githubOAuthCallback);
 router.post('/enable2FA', AuthMiddleware.checkUserAuth, UserController.enable2FA);
 router.post('/verify2FA', AuthMiddleware.checkUserAuth, UserController.verify2FA);
 router.post('/forgetPassword', AuthMiddleware.checkUserAuth, UserController.forgotPassword);
