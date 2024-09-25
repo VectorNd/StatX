@@ -87,30 +87,18 @@ body {
   right: 0;
   bottom: 0;
   background-image: url("../../media/PieChart.png"),
-    url("../../media/CandleStick.png"),
-    url("../../media/Id.png"),
-    url("../../media/Id.png"),
-    url("../../media/CandleStick.png"),
-    url("../../media/Folder.png"),
-    url("../../media/Calculate.png"),
-    url("../../media/CandleStick.png"),
-    url("../../media/PieChart.png"),
-    url("../../media/Calculate.png"),
-    url("../../media/Id.png"),
-    url("../../media/Folder.png"),
-    url("../../media/Calculate.png"),
-    url("../../media/CandleStick.png"),
-    url("../../media/PieChart.png"),
-    url("../../media/PieChart.png"),
-    url("../../media/CandleStick.png"),
-    url("../../media/Folder.png"),
-    url("../../media/Id.png"),
-    url("../../media/Folder.png"),
-    url("../../media/Calculate.png"),
-    url("../../media/CandleStick.png"),
-    url("../../media/PieChart.png"),
-    url("../../media/Calculate.png"),
-    url("../../media/CandleStick.png"),
+    url("../../media/CandleStick.png"), url("../../media/Id.png"),
+    url("../../media/Id.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/Id.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/PieChart.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Id.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/CandleStick.png"),
     url("../../media/Folder.png");
   background-repeat: no-repeat;
   background-position: 5% 5%, 95% 5%, 5% 95%, 95% 95%, 7% 40%, 90% 1%, 30% 6%,
@@ -188,6 +176,16 @@ body {
 .flipped .card-content {
   background-color: #f0f0f0;
   transform: rotateY(180deg);
+}
+
+.main-container {
+  position: absolute;
+  height: 500px;
+  top: 25%;
+  left: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @keyframes collapseIcons {
