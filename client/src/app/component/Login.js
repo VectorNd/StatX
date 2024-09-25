@@ -4,6 +4,7 @@ import GoogleImg from "../../media/Google.png";
 import GithubImg from "../../media/Github.png";
 import { useState } from "react";
 import { SERVER_ENDPOINT } from "../../utils/constants";
+import MainPage from "./MainPage";
 
 function Login() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -37,7 +38,6 @@ function Login() {
       const parsedResponse = await response.json();
       setMessage(parsedResponse.data);
     } catch (error) {
-      console.log(error.message);
       setMessage(error.message);
     }
   };
@@ -56,6 +56,7 @@ function Login() {
 
   return (
     <div className="App">
+      <MainPage/>
       {!isFlipped ? (
         <>
           <div className="login-container">
