@@ -188,6 +188,30 @@ body {
   justify-content: center;
 }
 
+.search-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: content;
+  align-items: flex-start;
+}
+
+.search-content-container .search-content {
+  color: #484848;
+  width: 200px;
+  height: 30px;
+  border-radius: 3px;
+  margin-left: 10px;
+  padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-content:hover {
+  border: 1px solid #dc3d3a;
+  background-color: #F6CDCC;
+}
+
 @keyframes collapseIcons {
   0% {
     transform: scale(1);

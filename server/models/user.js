@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     recoveryCodes: [{ type: String }],
     companyMetrics: [{
         companyCode: { type: String, required: true },
+        name: {type: String, required: true },
         metrics: {
             totalCompaniesInCountry: { type: Number },
             greaterDiversity: { type: Number },
