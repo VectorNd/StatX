@@ -1,0 +1,253 @@
+@import "rsuite/dist/rsuite.css";
+
+#root {
+  padding: 10px;
+}
+
+.rs-panel-body {
+  height: 100%;
+}
+.App {
+  height: 100vh;
+}
+
+body {
+  background-color: #d6d6d6;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 450px;
+  height: 480px;
+  position: absolute;
+  right: 17%;
+  top: 28%;
+  z-index: 2;
+}
+
+.login-apps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 280px;
+  height: 40px;
+  background-color: #d6d6d6;
+  border-radius: 20px;
+  margin: 0 0 10px 0;
+}
+
+.flex-column-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.flex-center-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.login-apps .login-app-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.login-apps .login-app-div .login-app-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: -25px;
+  flex: 1;
+}
+
+.flip-button {
+  color: #dc3d3a;
+  text-align: end;
+  margin: 10px 0 0 0;
+}
+
+.flip-button:hover {
+  text-decoration: underline;
+  color: #dc3d3a;
+}
+
+.background-icons {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../media/PieChart.png"),
+    url("../../media/CandleStick.png"), url("../../media/Id.png"),
+    url("../../media/Id.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/Id.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/PieChart.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Id.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png");
+  background-repeat: no-repeat;
+  background-position: 5% 5%, 95% 5%, 5% 95%, 95% 95%, 7% 40%, 90% 1%, 30% 6%,
+    60% 2%, 40% 90%, 60% 90%, 20% 80%, 80% 6%, 15% 1%, 77% 97%, 50% 5%, 50% 98%,
+    69% 91%, 27% 92%, 5% 25%, 5% 65%, 97% 45%, 95% 65%, 9% 80%, 90% 57%, 97% 28%,
+    95% 77%;
+  background-size: 35px 35px;
+  z-index: 1;
+  opacity: 0.1;
+  transition: all 1s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.collapsed {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.zoomed {
+  transform: scale(1.1);
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.login-card {
+  display: inline-block;
+  width: 320px;
+  height: 350px;
+  background-color: #f4f4f4;
+  z-index: 2;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.5s ease;
+}
+
+.login-card .card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  backface-visibility: hidden;
+  transition: all 0.5s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* backface-visibility: hidden; */
+  transition: transform 0.5s;
+}
+
+.card-front {
+  background-color: #f0f0f0;
+  backface-visibility: hidden;
+  z-index: 2;
+}
+
+.card-back {
+  background-color: #f0f0f0;
+  transform: rotateY(360deg);
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.flipped .card-content {
+  background-color: #f0f0f0;
+  transform: rotateY(180deg);
+}
+
+.main-container {
+  position: absolute;
+  height: 500px;
+  top: 25%;
+  left: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.search-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: content;
+  align-items: flex-start;
+}
+
+.search-content-container .search-content {
+  color: #484848;
+  width: 200px;
+  height: 30px;
+  border-radius: 3px;
+  margin-left: 10px;
+  padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-content:hover {
+  border: 1px solid #dc3d3a;
+  background-color: #F6CDCC;
+}
+
+@keyframes collapseIcons {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes expandIcons {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes zoomOut {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
