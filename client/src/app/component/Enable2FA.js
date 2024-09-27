@@ -59,7 +59,7 @@ const Enable2FA = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${jwt}`,
         },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token: authCode }),
       });
 
       const parsedResponse = await response.json();

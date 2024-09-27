@@ -8,12 +8,12 @@ import "./styles.css";
 
 const SameCountry = () => {
   return (
-      <div style={{margin: "20px"}}>
+      <div>
         <div
           style={{
             width: "200px",
             height: "180px",
-            backgroundColor: "white",
+            backgroundColor: "#e7e7e7",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",

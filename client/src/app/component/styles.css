@@ -215,19 +215,136 @@ body {
 
 .rs-progress-line-outer {
   width: 100% !important;
+  position: relative;
 }
 
+.rs-progress-line-outer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%; /* Center the line horizontally */
+  height: 100%; /* Full height */
+  width: 1px; /* Line thickness */
+  border-left: 0.5px dashed #a0a0a0; /* Vertical dashed line */
+  transform: translateX(-50%); /* Center the line horizontally */
+  z-index: 2; /* Make sure it's between the outer and inner bars */
+}
 .rs-progress-line-inner {
+  background-color: transparent;
+  z-index: 3;
   width: 100% !important;
 }
 
 .rs-progress-info {
   display: none !important;
+
 }
 
-.rs-progress-info:hover {
-  display: flex !important;
+
+.rs-progress-line {
+  padding: 8px 5px;
 }
+
+.rs-progress-line .rs-progress-line-vertical {
+  flex-direction: column;
+}
+
+.rs-progress-line-bg {
+  background-color: #A0A0A0;
+}
+
+.rs-progress-line-bg:hover {
+  background-color: #EA8E8C;
+}
+
+.percentage-viewer {
+  display: none;
+}
+
+.rs-modal-lg {
+  width: 1100px;
+}
+
+
+.background-icons-full {
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../media/PieChart.png"),
+    url("../../media/CandleStick.png"), url("../../media/Id.png"),
+    url("../../media/Id.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/Id.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/PieChart.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Id.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Id.png");
+  background-repeat: no-repeat;
+  background-position: 5% 5%, /* 1 */
+  95% 5%, /* 2 */
+  5% 95%, /* 3 */
+  95% 95%, /* 4 */
+  7% 40%, /* 5 */
+  90% 1%, /* 6 */
+  30% 6%,/* 7 */
+  60% 2%, /* 8 */
+  40% 50%, /* 9 */
+  60% 60%, /* 10 */
+  20% 20%, /* 11 */
+  80% 6%, /* 12 */
+  15% 1%, /* 13 */
+  77% 57%, /* 14 */
+  50% 5%, /* 15 */
+  50% 38%,/* 16 */
+  69% 41%,/* 17 */
+  27% 42%, /* 18 */
+  5% 25%, /* 19 */
+  75% 65%, /* 20 */
+  97% 45%, /* 21 */
+  95% 65%, /* 22 */
+  9% 80%, /* 23 */
+  90% 57%, /* 24 */
+  97% 28%, /* 25 */
+  95% 77%, /* 26 */
+  45% 26%, /* 27 */
+  25% 30%, /* 28 */
+  20% 50%, /* 29 */
+  55% 60%, /* 30 */
+  64% 24%, /* 31 */
+  34% 57%, /* 32 */
+  35% 23%, /* 33 */
+  5% 60%, /* 34 */
+  15% 94%, /* 35 */
+  13% 67%, /* 36 */
+  77% 85%, /* 37 */
+  87% 74%, /* 38 */
+  80% 22%, /* 39 */
+  90% 26%; /* 40 */
+  background-size: 35px 35px;
+  z-index: -1;
+  opacity: 0.1;
+  transition: all 1s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
 
 @keyframes collapseIcons {
   0% {

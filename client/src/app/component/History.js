@@ -3,35 +3,35 @@ import { SERVER_ENDPOINT } from "../../utils/constants";
 import { AuthContext } from "../../context/AuthContext";
 
 const History = () => {
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([{company: "ZOOXO"}, {company: "wrt"}, {company: "hfutirti"}, {company: "78945"}, {company: "qasdrtfgv"}]);
   const { jwt } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const response = await fetch(
-          `${SERVER_ENDPOINT}/api/v1/company/historyCompute`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        );
+  // useEffect(() => {
+  //   const fetchHistory = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${SERVER_ENDPOINT}/api/v1/company/historyCompute`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${jwt}`,
+  //           },
+  //         }
+  //       );
 
-        const parsedResponse = await response.json();
-        if (parsedResponse.status != "SUCCESS") {
-          throw new Error("Network response was not ok");
-        }
-        setHistory(parsedResponse.data.metrics);
-      } catch (error) {
-        console.error("Error fetching history:", error);
-      }
-    };
+  //       const parsedResponse = await response.json();
+  //       if (parsedResponse.status != "SUCCESS") {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       setHistory(parsedResponse.data.metrics);
+  //     } catch (error) {
+  //       console.error("Error fetching history:", error);
+  //     }
+  //   };
 
-    fetchHistory();
-  }, []);
+  //   fetchHistory();
+  // }, []);
 
   console.log(history)
   return (

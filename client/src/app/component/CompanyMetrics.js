@@ -15,19 +15,19 @@ const CompanyMetrics = ({ data }) => {
   return (
     <>
     <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "600px", width: "1000px"}}>
-      <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", height: "100%", alignItems: "center"}}>
-        <div style={{display: "flex", alignItems: "center"}}>
+      <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", height: "100%", alignItems: "center", margin: "20px"}}>
+        <div style={{display: "flex", alignItems: "center", width: "100%", justifyContent: "space-between"}}>
           <SameCountry />
           <SameCountry />
         </div>
         <Graph />
       </div>
       <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%"}}>
-        <UnionTwo/>
+        <UnionOne/>
       </div>
     </div>
 
-    <div style={{display: "flex", flexDirection: "column",  width: "1000px"}}>
+    {/* <div style={{display: "flex", flexDirection: "column",  width: "1000px"}}>
       <div style={{display: "flex", justifyContent: "space-around",}}>
       <Graph />
       <Graph />
@@ -35,7 +35,7 @@ const CompanyMetrics = ({ data }) => {
       <div style={{display: "flex", justifyContent: "space-around"}}>
       <Graph />
       </div>
-    </div>
+    </div> */}
      
     </>
   );

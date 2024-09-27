@@ -1,10 +1,14 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef, useEffect, useCallback } from "react";
 import { SERVER_ENDPOINT } from "../../utils/constants";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Popover, Whisper, Loader, Modal, Button } from "rsuite";
 import SelectedImg from "../../media/Selected.png";
+import SearchImg from "../../media/Search.png";
+import Search2Img from "../../media/Search2.png";
 import "./styles.css";
+import CompanyMetrics from "./CompanyMetrics";
+import History2 from "./History2";
 
 const CompanySearch = () => {
   const [input, setInput] = useState("");
@@ -12,7 +16,7 @@ const CompanySearch = () => {
   const { jwt } = useContext(AuthContext);
   const [open, setOpen] = useState(true);
   const [openModal, setOpenModal] = useState(false);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([{name: "Zooxo", companyCode: "UAH"}, {name: "Youbridge", companyCode: "UAH"}, {name: "Babblestorm", companyCode: "UAH"}, {name: "Tagfeed", companyCode: "UAH"}, {name: "Shufflester", companyCode: "UAH"}]);
   const [metrics, setMetrics] = useState(null);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
@@ -48,10 +52,6 @@ const CompanySearch = () => {
     navigate(`/companyMetrics`, { state: { companyCode: company.code } });
   };
 
-  const handleHistory = () => {
-    navigate("/history");
-  };
-
   const handleSearchChange = (e) => {
     setInput(e.target.value);
     handleSearch();
@@ -73,6 +73,12 @@ const CompanySearch = () => {
     handleCompute(company.code);
     setOpenModal(true);
   };
+
+  const handleHistoryClick = (company) => {
+    handleCompute(company.companyCode);
+    setOpenModal(true);
+  };
+
   const handleClose = () => setOpenModal(false);
 
   const handleCompute = async (companyCode) => {
@@ -108,7 +114,7 @@ const CompanySearch = () => {
       style={{
         display: input ? "block" : "none",
         width: "250px",
-        maxHeight: "350px",
+        maxHeight: "200px",
         overflow: "auto",
       }}
     >
@@ -123,9 +129,9 @@ const CompanySearch = () => {
               >
                 {company.name} ({company.code})
                 {history.some(
-                  (company) =>
-                    company.companyCode === company.code &&
-                    company.name === company.name
+                  (item) =>
+                    item.companyCode === company.code &&
+                    item.name === company.name
                 ) ? (
                   <div style={{ margin: "0 20px 0 0", flex: "0" }}>
                     <img
@@ -154,74 +160,227 @@ const CompanySearch = () => {
     }
   }, [open]);
 
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const response = await fetch(
-          `${SERVER_ENDPOINT}/api/v1/company/historyCompute`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        );
+  // useEffect(() => {
+  //   const fetchHistory = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${SERVER_ENDPOINT}/api/v1/company/historyCompute`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${jwt}`,
+  //           },
+  //         }
+  //       );
 
-        const parsedResponse = await response.json();
-        if (parsedResponse.status != "SUCCESS") {
-          throw new Error("Network response was not ok");
-        }
-        setHistory(parsedResponse.data.metrics);
-      } catch (error) {
-        console.error("Error fetching history:", error);
-      }
-    };
+  //       const parsedResponse = await response.json();
+  //       if (parsedResponse.status != "SUCCESS") {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       setHistory(parsedResponse.data.metrics);
+  //     } catch (error) {
+  //       console.error("Error fetching history:", error);
+  //     }
+  //   };
 
-    fetchHistory();
-  }, []);
+  //   fetchHistory();
+  // }, []);
 
   return (
     <div>
       <div>
         <div className="App">
-          <Whisper
-            placement="bottom"
-            trigger="click"
-            controlId="control-id-bottom"
-            speaker={speaker}
-            className="flex-column-container"
-          >
-            <input
-              type="text"
-              placeholder="Enter Your Password Here"
-              value={input}
-              onChange={handleSearchChange}
-              className="login-apps"
-              style={{
-                width: "250px",
-                paddingLeft: "10px",
-                paddingRight: "5px",
-                margin: "0",
-                position: "absolute",
-                left: "30%",
-                top: "40%",
-              }}
-            />
-          </Whisper>
+          <div style={{position: "absolute"}}>
 
-          <Modal size="md" open={openModal} onClose={handleClose}>
-            {loading && (<Modal.Header>
-                  <Modal.Title><Loader/></Modal.Title>
-                </Modal.Header>)}
+        <div
+              className={`background-icons-full`}
+            ></div>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              zIndex: "2",
+              position: "relative"
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                minHeight: "500px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "200px",
+                    width: "250px",
+                    margin: "50px",
+                  }}
+                >
+                  <img
+                    src={SearchImg}
+                    alt="searched"
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+              </div>
+              <div
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: "#292929",
+                        fontSize: "30px",
+                        fontFamily: "cursive",
+                        width: "60%",
+                        textAlign: "center",
+                      }}
+                    >
+                      Welcome to Your Company Insights Hub!
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "30px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: "#292929",
+                        fontSize: "18px",
+                        fontFamily: "sans-serif",
+                        width: "50%",
+                        textAlign: "center",
+                      }}
+                    >
+                      Welcome to Your Company Insights Hub! Dive into the world
+                      of financial data!
+                    </div>
+                  </div>
+                </div>
+                <div style={{ margin: "50px", marginTop: "10px" }}>
+                  <Whisper
+                    placement="bottom"
+                    trigger="click"
+                    controlId="control-id-bottom"
+                    speaker={speaker}
+                    className="flex-column-container"
+                  >
+                    <input
+                      type="text"
+                      placeholder="Enter Your Company Here"
+                      value={input}
+                      onChange={handleSearchChange}
+                      className="login-apps"
+                      style={{
+                        width: "250px",
+                        paddingLeft: "10px",
+                        paddingRight: "5px",
+                        margin: "0",
+                      }}
+                    />
+                  </Whisper>
+                </div>
+              </div>
+              <div
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "200px",
+                    width: "250px",
+                    margin: "50px",
+                  }}
+                >
+                  <img
+                    src={Search2Img}
+                    alt="searched"
+                    height="100%"
+                    width="100%"
+                  />
+                </div>
+              </div>
+            </div>
+            <div style={{ height: "300px" }}>
+              {/* <button onClick={handleHistory}>History</button> */}
+              <History2 history={history} onCompute={handleHistoryClick}/>
+            </div>
+          </div>
+
+          <Modal size="lg" open={openModal} onClose={handleClose}>
+            {loading && (
+              <Modal.Header>
+                <Modal.Title>
+                  <Loader />
+                </Modal.Title>
+              </Modal.Header>
+            )}
 
             {metrics && (
               <>
                 <Modal.Header>
-                  <Modal.Title>Metrics:</Modal.Title>
+                  <Modal.Title>Dashboard</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                  <div>
+                <Modal.Body
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    minHeight: "600px",
+                    backgroundColor: "#f6f6f6",
+                  }}
+                >
+                  {/* <div>
                     <p>
                       Total Companies in Country:{" "}
                       {metrics.totalCompaniesInCountry}
@@ -235,7 +394,8 @@ const CompanySearch = () => {
                       Market Share Prediction:{" "}
                       {metrics.predictions.predictedMarketShare}
                     </p>
-                  </div>
+                  </div> */}
+                  <CompanyMetrics />
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={handleClose} appearance="subtle">
@@ -250,8 +410,6 @@ const CompanySearch = () => {
 
             {msg && handleClose()}
           </Modal>
-
-          <button onClick={handleHistory}>History</button>
         </div>
       </div>
     </div>

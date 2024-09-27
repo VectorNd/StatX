@@ -10,8 +10,8 @@ const userSchema = new mongoose.Schema({
     secret2FA: { type: String },
     recoveryCodes: [{ type: String }],
     companyMetrics: [{
-        companyCode: { type: String, required: true },
-        name: {type: String, required: true },
+        companyCode: { type: String },
+        name: {type: String },
         metrics: {
             totalCompaniesInCountry: { type: Number },
             greaterDiversity: { type: Number },
