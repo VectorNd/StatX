@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Popover, Whisper, Loader, Modal, Button } from "rsuite";
 import SelectedImg from "../../media/Selected.png";
+import "./styles.css";
 
 const CompanySearch = () => {
   const [input, setInput] = useState("");

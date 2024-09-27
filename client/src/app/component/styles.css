@@ -15,6 +15,7 @@ body {
   background-color: #d6d6d6;
 }
 
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -210,6 +211,22 @@ body {
 .search-content:hover {
   border: 1px solid #dc3d3a;
   background-color: #F6CDCC;
+}
+
+.rs-progress-line-outer {
+  width: 100% !important;
+}
+
+.rs-progress-line-inner {
+  width: 100% !important;
+}
+
+.rs-progress-info {
+  display: none !important;
+}
+
+.rs-progress-info:hover {
+  display: flex !important;
 }
 
 @keyframes collapseIcons {
