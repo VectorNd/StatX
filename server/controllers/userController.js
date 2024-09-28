@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 
 const googleOAuth = (req, res) => {
-  const redirectUri = "http://localhost:4000/api/v1/user/googleOAuth/callback"; // Redirect URI for your app
+  const redirectUri = `${ServerConfig.SERVER_ENDPOINT}/api/v1/user/googleOAuth/callback`; // Redirect URI for your app
   const authUrl =
     `https://accounts.google.com/o/oauth2/v2/auth?` +
     `client_id=${ServerConfig.GOOGLE_CLIENT_ID}&` +
@@ -20,7 +20,7 @@ const googleOAuth = (req, res) => {
 };
 
 const githubOAuth = (req, res) => {
-  const redirectUri = "http://localhost:4000/api/v1/user/githubOAuth/callback"; // Redirect URI for your app
+  const redirectUri = `${ServerConfig.SERVER_ENDPOINT}/api/v1/user/githubOAuth/callback`; // Redirect URI for your app
   const authUrl =
     `https://github.com/login/oauth/authorize?` +
     `client_id=${ServerConfig.GITHUB_CLIENT_ID}&` +
@@ -98,7 +98,7 @@ async function googleOAuthCallback(req, res) {
 
       // Step 5: Send JWT token to the frontend
       setTimeout(() => {
-        res.redirect("http://localhost:3000/enable2FA");
+        res.redirect(`${ServerConfig.FRONTEND_URL}/enable2FA`);
       }, 1000);
     } else {
       console.error("Token request failed:", tokenData);
@@ -188,7 +188,7 @@ async function githubOAuthCallback(req, res) {
 
       // Step 5: Send JWT token to the frontend
       setTimeout(() => {
-        res.redirect("http://localhost:3000/enable2FA");
+        res.redirect(`${ServerConfig.FRONTEND_URL}/enable2FA`);
       }, 1000);
     } else {
       console.error("Token request failed:", tokenData);
