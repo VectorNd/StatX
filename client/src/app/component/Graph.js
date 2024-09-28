@@ -154,7 +154,7 @@ const Graph = () => {
                   style={{ width: "40px", textAlign: "center" }}
                   className="rs-progress-info-status"
                 >
-                  {index + 2014}
+                  {index + 2015}
                 </div>
                 <div
                   className="percentage-viewer"

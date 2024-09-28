@@ -99,6 +99,32 @@ async function countCompaniesWithGreaterStockPrice(company) {
   }
 }
 
+async function countCompaniesWithGreaterRevenue(company) {
+  try {
+    const latestRevenue = company.revenues.slice(-1)[0].revenue;
+    const count = await CompanyDb.countCompaniesWithGreaterRevenue(
+      latestRevenue
+    );
+    return count;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
+async function countCompaniesWithGreaterExpense(company) {
+  try {
+    const latestExpense = company.expenses.slice(-1)[0].expense;
+    const count = await CompanyDb.countCompaniesWithGreaterExpense(
+      latestExpense
+    );
+    return count;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
 async function addCompaniesFromCsv(filePath) {
   try {
     const companies = [];
@@ -183,5 +209,7 @@ module.exports = {
   findByCountry,
   countCompaniesWithGreaterMarketShare,
   countCompaniesWithGreaterStockPrice,
+  countCompaniesWithGreaterRevenue,
+  countCompaniesWithGreaterExpense,
   deleteCompanies,
 };

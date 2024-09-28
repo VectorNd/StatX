@@ -127,6 +127,24 @@ async function countCompaniesWithGreaterStockPrice(latestStockPrice) {
     }
 }
 
+async function countCompaniesWithGreaterRevenue(latestRevenue) {
+    try {
+        const count = await Company.countDocuments({ 'revenues.revenue': { $gt: latestRevenue } });
+        return count;
+    } catch (err) {
+        throw new Error(`Error counting companies with greater revenue: ${err.message}`);
+    }
+}
+
+async function countCompaniesWithGreaterExpense(latestExpense) {
+    try {
+        const count = await Company.countDocuments({ 'expenses.expense': { $gt: latestExpense } });
+        return count;
+    } catch (err) {
+        throw new Error(`Error counting companies with greater expense: ${err.message}`);
+    }
+}
+
 
 // Function to update a company 
 
@@ -170,6 +188,8 @@ module.exports = {
     findCompanyByCode,
     countCompaniesWithGreaterMarketShare,
     countCompaniesWithGreaterStockPrice,
+    countCompaniesWithGreaterExpense,
+    countCompaniesWithGreaterRevenue,
     findAllCompanies,
     updateCompanyByCode,
     deleteCompanyByCode,

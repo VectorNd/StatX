@@ -6,6 +6,21 @@ import "./styles.css";
 
 const UnionOne = () => {
   const [domestic, setDomestic] = useState(false);
+  const [rotateClass, setRotateClass] = useState("");
+  const [scaleClass, setScaleClass] = useState("fade-in");
+
+  const toggleDomestic = () => {
+    setScaleClass("scale-out");
+    setRotateClass("rotate");
+    setTimeout(() => {
+      setDomestic(!domestic);
+      setScaleClass("scale-in");
+      setRotateClass("rotate2");
+    }, 500);
+    
+  };
+
+
   return (
     <>
       <div>
@@ -34,12 +49,15 @@ const UnionOne = () => {
           >
             <div>
               Companies With More{" "}
-              <div style={{display: "inline-block", cursor: "pointer", borderRadius: "25px", padding: "5px", boxShadow: "inset 1px -1px 20px 0px #a0a0a0"}} onClick={() => setDomestic(!domestic)}>
+              <div style={{display: "inline-block", cursor: "pointer", borderRadius: "25px", padding: "5px", boxShadow: "inset 1px -1px 20px 0px #a0a0a0"}} onClick={() => {toggleDomestic();
+                setDomestic(!domestic)} }>
                 {" "}
                 {domestic ? "Domestically" : "Globally"}{" "}
               </div>
             </div>
           </div>
+          <div className={scaleClass}>
+
           {domestic ? (
             <div style={{ marginRight: "5px", height: "220px" }}>
               <div
@@ -55,7 +73,8 @@ const UnionOne = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-              >
+                className={rotateClass}
+                >
                 <div
                   style={{
                     display: "flex",
@@ -64,7 +83,7 @@ const UnionOne = () => {
                     alignItems: "center",
                     zIndex: "999",
                   }}
-                >
+                  >
                   <div
                     style={{
                       height: "15px",
@@ -74,7 +93,7 @@ const UnionOne = () => {
                       fontSize: "17px",
                       fontFamily: "cursive",
                     }}
-                  >
+                    >
                     13
                   </div>
                   <div
@@ -86,7 +105,7 @@ const UnionOne = () => {
                       fontSize: "14px",
                       fontFamily: "sans-serif",
                     }}
-                  >
+                    >
                     Stock Price
                   </div>
                 </div>
@@ -105,7 +124,8 @@ const UnionOne = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-              >
+                className={rotateClass}
+                >
                 <div
                   style={{
                     display: "flex",
@@ -114,7 +134,7 @@ const UnionOne = () => {
                     alignItems: "center",
                     zIndex: "999",
                   }}
-                >
+                  >
                   <div
                     style={{
                       height: "15px",
@@ -136,7 +156,7 @@ const UnionOne = () => {
                       fontSize: "10px",
                       fontFamily: "sans-serif",
                     }}
-                  >
+                    >
                     Market Share
                   </div>
                 </div>
@@ -155,7 +175,8 @@ const UnionOne = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-              >
+                className={rotateClass}
+                >
                 <div
                   style={{
                     display: "flex",
@@ -164,7 +185,7 @@ const UnionOne = () => {
                     alignItems: "center",
                     zIndex: "999",
                   }}
-                >
+                  >
                   <div
                     style={{
                       height: "10px",
@@ -205,7 +226,8 @@ const UnionOne = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-              >
+                className={rotateClass}
+                >
                 <div
                   style={{
                     display: "flex",
@@ -214,7 +236,7 @@ const UnionOne = () => {
                     alignItems: "center",
                     zIndex: "999",
                   }}
-                >
+                  >
                   <div
                     style={{
                       height: "15px",
@@ -224,7 +246,7 @@ const UnionOne = () => {
                       fontSize: "15px",
                       fontFamily: "cursive",
                     }}
-                  >
+                    >
                     18
                   </div>
                   <div
@@ -236,7 +258,7 @@ const UnionOne = () => {
                       fontSize: "10px",
                       fontFamily: "sans-serif",
                     }}
-                  >
+                    >
                     Revenue
                   </div>
                 </div>
@@ -257,6 +279,7 @@ const UnionOne = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                className={rotateClass}
               >
                 <div
                   style={{
@@ -266,7 +289,7 @@ const UnionOne = () => {
                     alignItems: "center",
                     zIndex: "999",
                   }}
-                >
+                  >
                   <div
                     style={{
                       height: "15px",
@@ -288,7 +311,7 @@ const UnionOne = () => {
                       fontSize: "14px",
                       fontFamily: "sans-serif",
                     }}
-                  >
+                    >
                     Stock Price
                   </div>
                 </div>
@@ -307,7 +330,8 @@ const UnionOne = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-              >
+                className={rotateClass}
+                >
                 <div
                   style={{
                     display: "flex",
@@ -316,7 +340,7 @@ const UnionOne = () => {
                     alignItems: "center",
                     zIndex: "999",
                   }}
-                >
+                  >
                   <div
                     style={{
                       height: "15px",
@@ -326,7 +350,7 @@ const UnionOne = () => {
                       fontSize: "15px",
                       fontFamily: "cursive",
                     }}
-                  >
+                    >
                     6
                   </div>
                   <div
@@ -357,7 +381,8 @@ const UnionOne = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-              >
+                className={rotateClass}
+                >
                 <div
                   style={{
                     display: "flex",
@@ -366,7 +391,7 @@ const UnionOne = () => {
                     alignItems: "center",
                     zIndex: "999",
                   }}
-                >
+                  >
                   <div
                     style={{
                       height: "10px",
@@ -407,6 +432,7 @@ const UnionOne = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                className={rotateClass}
               >
                 <div
                   style={{
@@ -426,7 +452,7 @@ const UnionOne = () => {
                       fontSize: "15px",
                       fontFamily: "cursive",
                     }}
-                  >
+                    >
                     18
                   </div>
                   <div
@@ -438,13 +464,14 @@ const UnionOne = () => {
                       fontSize: "10px",
                       fontFamily: "sans-serif",
                     }}
-                  >
+                    >
                     Revenue
                   </div>
                 </div>
               </div>
             </div>
           )}
+          </div>
         </div>
       </div>
     </>

@@ -23,6 +23,20 @@ const userSchema = new mongoose.Schema({
                 domestic: { type: Number },
                 global: { type: Number }
             },
+            revenueComparison: {
+                domestic: { type: Number },
+                global: { type: Number }
+            },
+            expenseComparison: {
+                domestic: { type: Number },
+                global: { type: Number }
+            },
+            yearlyChanges: {
+                stockPriceChange: { type: Object },
+                marketShareChange: { type: Object },
+                revenueChange: { type: Object },
+                expenseChange: { type: Object },
+            },
             growthStability: { type: String },
             predictions: { type: Object },
         },

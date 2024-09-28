@@ -22,6 +22,7 @@ const CompanySearch = () => {
   const [msg, setMsg] = useState("");
   const searchRef = useRef(null);
   const navigate = useNavigate();
+  
 
   const handleSearch = async () => {
     try {
@@ -101,6 +102,7 @@ const CompanySearch = () => {
         throw new Error("Network response was not ok");
       }
       setMetrics(parsedResponse.data.metrics);
+      console.log(parsedResponse.data.metrics);
     } catch (error) {
       setMsg(error.message);
       console.error("Error fetching metrics:", error);
@@ -108,6 +110,9 @@ const CompanySearch = () => {
       setLoading(false);
     }
   };
+
+
+
 
   const speaker = (
     <Popover
@@ -296,8 +301,7 @@ const CompanySearch = () => {
                         textAlign: "center",
                       }}
                     >
-                      Welcome to Your Company Insights Hub! Dive into the world
-                      of financial data!
+                      Get ready to explore a treasure trove of financial data and unveil the trends that shape your business landscape!
                     </div>
                   </div>
                 </div>
