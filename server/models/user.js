@@ -10,9 +10,10 @@ const userSchema = new mongoose.Schema({
     secret2FA: { type: String },
     recoveryCodes: [{ type: String }],
     companyMetrics: [{
-        companyCode: { type: String, required: true },
-        name: {type: String, required: true },
+        companyCode: { type: String },
+        name: {type: String },
         metrics: {
+            id: { type: String },
             totalCompaniesInCountry: { type: Number },
             greaterDiversity: { type: Number },
             stockPriceComparison: {
@@ -22,6 +23,20 @@ const userSchema = new mongoose.Schema({
             marketShareComparison: {
                 domestic: { type: Number },
                 global: { type: Number }
+            },
+            revenueComparison: {
+                domestic: { type: Number },
+                global: { type: Number }
+            },
+            expenseComparison: {
+                domestic: { type: Number },
+                global: { type: Number }
+            },
+            yearlyChanges: {
+                stockPriceChange: { type: Object },
+                marketShareChange: { type: Object },
+                revenueChange: { type: Object },
+                expenseChange: { type: Object },
             },
             growthStability: { type: String },
             predictions: { type: Object },

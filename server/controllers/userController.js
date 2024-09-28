@@ -97,7 +97,9 @@ async function googleOAuthCallback(req, res) {
       });
 
       // Step 5: Send JWT token to the frontend
-      res.redirect("http://localhost:3000/enable2FA");
+      setTimeout(() => {
+        res.redirect("http://localhost:3000/enable2FA");
+      }, 1000);
     } else {
       console.error("Token request failed:", tokenData);
       res.status(400).send("Token request failed.");
@@ -185,7 +187,9 @@ async function githubOAuthCallback(req, res) {
       });
 
       // Step 5: Send JWT token to the frontend
-      res.redirect("http://localhost:3000/enable2FA");
+      setTimeout(() => {
+        res.redirect("http://localhost:3000/enable2FA");
+      }, 1000);
     } else {
       console.error("Token request failed:", tokenData);
       res.status(400).send("Token request failed.");
@@ -202,6 +206,13 @@ async function enable2FA(req, res) {
 
     if (!user) {
       return res.status(404).json({ status: "FAILED", data: "User not found" });
+    }
+
+    if (user.secret2FA) {
+      return res.status(200).json({
+        status: "SUCCESS",
+        data: { secret: user.secret2FA, message: "Already Accessed" },
+      });
     }
 
     // Generate a new secret for

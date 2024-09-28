@@ -63,6 +63,17 @@ async function findByCompanyCode(companyCode) {
   }
 }
 
+
+async function findCompany(id) {
+  try {
+    const company = await CompanyDb.findCompany(id);
+    return company;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
 async function findByCountry(country) {
   try {
     const companies = await CompanyDb.findCompaniesByCountry(country);
@@ -75,9 +86,9 @@ async function findByCountry(country) {
 
 async function countCompaniesWithGreaterMarketShare(company) {
   try {
-    const latestMarketShare = company.marketShares.slice(-1)[0].share;
+    const avgMarketShare = company.averages.marketShare;
     const count = await CompanyDb.countCompaniesWithGreaterMarketShare(
-      latestMarketShare
+      avgMarketShare
     );
     return count;
   } catch (error) {
@@ -88,9 +99,35 @@ async function countCompaniesWithGreaterMarketShare(company) {
 
 async function countCompaniesWithGreaterStockPrice(company) {
   try {
-    const latestStockPrice = company.stockPrices.slice(-1)[0].price;
+    const avgStockPrice = company.averages.stockPrice;
     const count = await CompanyDb.countCompaniesWithGreaterStockPrice(
-      latestStockPrice
+      avgStockPrice
+    );
+    return count;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
+async function countCompaniesWithGreaterRevenue(company) {
+  try {
+    const avgRevenue = company.averages.revenue;
+    const count = await CompanyDb.countCompaniesWithGreaterRevenue(
+      avgRevenue
+    );
+    return count;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
+async function countCompaniesWithGreaterExpense(company) {
+  try {
+    const avgExpense = company.averages.expense;
+    const count = await CompanyDb.countCompaniesWithGreaterExpense(
+      avgExpense
     );
     return count;
   } catch (error) {
@@ -131,6 +168,52 @@ async function addCompaniesFromCsv(filePath) {
             });
           }
 
+          const totalMetrics = {
+            stockPrice: 0,
+            marketShare: 0,
+            revenue: 0,
+            expense: 0,
+          };
+
+          let countStock = 0;
+          let countMarket = 0;
+          let countRevenue = 0;
+          let countExpense = 0;
+
+          stockPrices.map((data) => {
+            if (data.price > 0) {
+              totalMetrics.stockPrice += data.price;
+              countStock++;
+            } 
+          });
+          marketShares.map((data) => {
+            if (data.share > 0) {
+              totalMetrics.marketShare += data.share;
+              countMarket++;
+            }
+          });
+          revenues.map((data) => {
+            if (data.revenue > 0) {
+              totalMetrics.revenue += data.revenue;
+              countRevenue++;
+            }
+          });
+          expenses.map((data) => {
+            if (data.expense > 0) {
+              totalMetrics.expense += data.expense;
+              countExpense++;
+            }
+          });
+
+
+          const averages = {
+            stockPrice: (totalMetrics.stockPrice / countStock),
+            marketShare: (totalMetrics.marketShare / countMarket),
+            revenue: (totalMetrics.revenue / countRevenue),
+            expense: (totalMetrics.expense / countExpense),
+          };
+
+
           // Create a company object
           companies.push({
             name: row["Company"],
@@ -141,6 +224,7 @@ async function addCompaniesFromCsv(filePath) {
             marketShares: marketShares,
             revenues: revenues,
             expenses: expenses,
+            averages: averages,
           });
         })
         .on("end", async () => {
@@ -181,7 +265,10 @@ module.exports = {
   searchCompanies,
   findByCompanyCode,
   findByCountry,
+  findCompany,
   countCompaniesWithGreaterMarketShare,
   countCompaniesWithGreaterStockPrice,
+  countCompaniesWithGreaterRevenue,
+  countCompaniesWithGreaterExpense,
   deleteCompanies,
 };

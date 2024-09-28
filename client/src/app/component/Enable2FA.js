@@ -40,11 +40,17 @@ const Enable2FA = () => {
 
       const parsedResponse = await response.json();
       if (parsedResponse.status != "SUCCESS") {
-        throw new Error("Failed to enable 2FA. Please try again.");
+        throw new Error(`Failed to enable 2FA. Please try again. ${parsedResponse.data}`);
       }
 
-      const data = parsedResponse.data;
-      setQrCodeUrl(data.qrCode);
+      if (parsedResponse.data.message) {
+        setQrCodeUrl("");
+      }
+      else {
+        const data = parsedResponse.data;
+        setQrCodeUrl(data.qrCode);
+      }
+
       setMessage("");
     } catch (error) {
       setMessage(error.message);
@@ -59,7 +65,7 @@ const Enable2FA = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${jwt}`,
         },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token: authCode }),
       });
 
       const parsedResponse = await response.json();
@@ -123,23 +129,26 @@ const Enable2FA = () => {
                   <div style={{ fontSize: "15px" }}>
                     <strong>Enable Two-Factor Authentication</strong>
                   </div>
-                  <div style={{ fontSize: "15px" }}>
-                    Scan the QR Code with your authenticator app
-                  </div>
+                  <div style={{display: qrCodeUrl == "" ? "none" : "block"}}>
+                    <div style={{ fontSize: "15px" }}>
+                      Scan the QR Code with your authenticator app
+                    </div>
+
                   <div
                     className="flex-column-container"
                     style={{ alignItems: "center" }}
-                  >
+                    >
                     <div style={{ width: "120px", height: "120px" }}>
                       {qrCodeUrl && (
                         <img
-                          style={{ height: "100%", width: "100%" }}
-                          src={qrCodeUrl}
-                          alt="QR Code"
+                        style={{ height: "100%", width: "100%" }}
+                        src={qrCodeUrl}
+                        alt="QR Code"
                         />
                       )}
                     </div>
                   </div>
+                      </div>
                   <div>
                     <input
                       type="text"
