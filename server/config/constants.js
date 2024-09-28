@@ -21,4 +21,5 @@ module.exports = {
     FRONTEND_URL: process.env.FRONTEND_URL,
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
     SERVER_ENDPOINT: process.env.SERVER_ENDPOINT,
+    COOKIE_SECURE: false,
 };

@@ -93,7 +93,7 @@ async function googleOAuthCallback(req, res) {
       // Set cookie with user data
       await res.cookie("jwt", token, {
         httpOnly: false,
-        secure: true,
+        secure: `${ServerConfig.COOKIE_SECURE}`,
         sameSite: "None",
       });
 
@@ -183,7 +183,7 @@ async function githubOAuthCallback(req, res) {
       // Set cookie with user data
       await res.cookie("jwt", token, {
         httpOnly: false,
-        secure: true,
+        secure: `${ServerConfig.COOKIE_SECURE}`,
         sameSite: "None",
       });
 
