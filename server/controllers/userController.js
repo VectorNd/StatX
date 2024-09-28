@@ -21,6 +21,7 @@ const googleOAuth = (req, res) => {
 
 const githubOAuth = (req, res) => {
   const redirectUri = `${ServerConfig.SERVER_ENDPOINT}/api/v1/user/githubOAuth/callback`; // Redirect URI for your app
+  console.log(redirectUri);
   const authUrl =
     `https://github.com/login/oauth/authorize?` +
     `client_id=${ServerConfig.GITHUB_CLIENT_ID}&` +
