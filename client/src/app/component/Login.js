@@ -43,11 +43,11 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.open("http://localhost:4000/api/v1/user/googleOAuth", "_self");
+    window.open(`${SERVER_ENDPOINT}/api/v1/user/googleOAuth`, "_self");
   };
 
   const handleGitHubLogin = () => {
-    window.open("http://localhost:4000/api/v1/user/githubOAuth", "_self");
+    window.open(`${SERVER_ENDPOINT}/api/v1/user/githubOAuth`, "_self");
   };
 
   const handleEmailChange = (e) => {

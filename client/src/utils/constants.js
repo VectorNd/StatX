@@ -1,5 +1,5 @@
 
-const SERVER_ENDPOINT = "http://localhost:4000";
+const SERVER_ENDPOINT = "https://sdetrack.onrender.com";
 
 export {
   SERVER_ENDPOINT,

@@ -87,7 +87,7 @@ const Enable2FA = () => {
 
   useEffect(() => {
     const jwtVal = Cookies.get("jwt");
-    console.log(jwtVal);
+    console.log(Cookies.get(), Cookies, jwtVal, document.cookie);
     if (jwtVal) {
       setJwt(jwtVal);
     } else {

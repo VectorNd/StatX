@@ -95,6 +95,7 @@ async function googleOAuthCallback(req, res) {
         httpOnly: false,
         secure: `${ServerConfig.COOKIE_SECURE}`,
         sameSite: "None",
+        domain: `${ServerConfig.COOKIE_DOMAIN}`,
       });
 
       // Step 5: Send JWT token to the frontend
@@ -185,6 +186,7 @@ async function githubOAuthCallback(req, res) {
         httpOnly: false,
         secure: `${ServerConfig.COOKIE_SECURE}`,
         sameSite: "None",
+        domain: `${ServerConfig.COOKIE_DOMAIN}`,
       });
 
       // Step 5: Send JWT token to the frontend

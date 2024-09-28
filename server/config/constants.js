@@ -22,4 +22,5 @@ module.exports = {
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
     SERVER_ENDPOINT: process.env.SERVER_ENDPOINT,
     COOKIE_SECURE: false,
+    COOKIE_DOMAIN: "localhost"
 };
