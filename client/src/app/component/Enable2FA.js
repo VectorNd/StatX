@@ -17,15 +17,15 @@ const Enable2FA = () => {
   const { setJwt, jwt } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const triggerAnimation = () => {
-    setIsCollapsed(!isCollapsed);
-    setTimeout(() => {
-      setIsFlipped(!isFlipped);
-      if (isFlipped) {
-        setMessage("");
-      }
-    }, 500);
-  };
+  // const triggerAnimation = () => {
+  //   setIsCollapsed(!isCollapsed);
+  //   setTimeout(() => {
+  //     setIsFlipped(!isFlipped);
+  //     if (isFlipped) {
+  //       setMessage("");
+  //     }
+  //   }, 500);
+  // };
 
   const handleEnable2FA = async () => {
     try {
@@ -39,7 +39,7 @@ const Enable2FA = () => {
       });
 
       const parsedResponse = await response.json();
-      if (parsedResponse.status != "SUCCESS") {
+      if (parsedResponse.status !== "SUCCESS") {
         throw new Error(`Failed to enable 2FA. Please try again. ${parsedResponse.data}`);
       }
 
@@ -70,7 +70,7 @@ const Enable2FA = () => {
 
       const parsedResponse = await response.json();
 
-      if (parsedResponse.status != "SUCCESS") {
+      if (parsedResponse.status !== "SUCCESS") {
         throw new Error("Verification failed. Please check your code.");
       }
 

@@ -17,15 +17,15 @@ const ResetPassword = () => {
   const { setJwt, jwt } = useContext(AuthContext);
   const navigate = useNavigate();
   
-  const triggerAnimation = () => {
-    setIsCollapsed(!isCollapsed);
-    setTimeout(() => {
-      setIsFlipped(!isFlipped);
-      if (isFlipped) {
-        setMessage("");
-      }
-    }, 500);
-  };
+  // const triggerAnimation = () => {
+  //   setIsCollapsed(!isCollapsed);
+  //   setTimeout(() => {
+  //     setIsFlipped(!isFlipped);
+  //     if (isFlipped) {
+  //       setMessage("");
+  //     }
+  //   }, 500);
+  // };
 
   const handleResetPassword = async () => {
     try {
