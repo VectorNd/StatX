@@ -22,5 +22,5 @@ module.exports = {
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
     SERVER_ENDPOINT: process.env.SERVER_ENDPOINT,
     COOKIE_SECURE: true,
-    COOKIE_DOMAIN: "https://sde-track.vercel.app/login"
+    COOKIE_DOMAIN: "https://sde-track.vercel.app"
 };
