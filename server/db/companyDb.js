@@ -1,4 +1,5 @@
 const { Company } = require('../models'); 
+const levenshtein = require('fast-levenshtein');
 
 // Function to create a new company entry
 async function createCompany(companyData) {
@@ -48,11 +49,27 @@ async function findCompaniesByNameOrCode(input) {
         // Search for companies with names or codes that match the input (case-insensitive)
         const companies = await Company.find({
             $or: [
-                { name: { $regex: input, $options: 'i' } }, // Case-insensitive match on name
-                { companyCode: { $regex: input, $options: 'i' } } // Case-insensitive match on company code
+                { name: { $regex: input, $options: 'i' } },
+                { code: { $regex: input, $options: 'i' } }
             ]
         });
-        return companies;
+    
+        // Step 2: Calculate Levenshtein distance and sort companies
+        const companiesWithScores = companies.map(company => {
+            const nameDistance = levenshtein.get(company.name.toLowerCase(), input.toLowerCase());
+            const codeDistance = levenshtein.get(company.code.toLowerCase(), input.toLowerCase());
+            
+            // Combine the distances into a score
+            const score = Math.min(nameDistance, codeDistance);
+            
+            return { ...company.toObject(), score }; // Include score in the result
+        });
+    
+        // Step 3: Sort by score (lower is better)
+        companiesWithScores.sort((a, b) => a.score - b.score);
+        
+        
+        return companiesWithScores;
     } catch (err) {
         throw new Error(`Error finding companies by name or code: ${err.message}`);
     }
@@ -85,6 +102,18 @@ async function findCompanyByCode(companyCode) {
     }
 }
 
+async function findCompany(id) {
+    try {
+        const company = await Company.findOne({ _id: id });
+        if (!company) {
+            throw new Error(`Company with ${id} not found`);
+        }
+        return company;
+    } catch (err) {
+        throw new Error(`Error finding company: ${err.message}`);
+    }
+}
+
 
 async function findAllCompanies(filter = {}, sort = { createdAt: -1 }) {
     try {
@@ -98,7 +127,7 @@ async function findAllCompanies(filter = {}, sort = { createdAt: -1 }) {
 
 async function findCompaniesWithGreaterStockPrice(stockPrice) {
     try {
-        const companies = await Company.find({ stockPrice: { $gt: stockPrice } });
+        const companies = await Company.find({ 'averages.stockPrice': { $gt: stockPrice } });
         return companies;
     } catch (err) {
         throw new Error(`Error finding companies with greater stock price: ${err.message}`);
@@ -108,9 +137,9 @@ async function findCompaniesWithGreaterStockPrice(stockPrice) {
 
 // Function to count companies 
 
-async function countCompaniesWithGreaterMarketShare(latestMarketShare) {
+async function countCompaniesWithGreaterMarketShare(avgMarketShare) {
     try {
-        const count = await Company.countDocuments({ 'marketShares.share': { $gt: latestMarketShare } });
+        const count = await Company.countDocuments({ 'averages.marketShare': { $gt: avgMarketShare } });
         return count;
     } catch (err) {
         throw new Error(`Error counting companies with greater market share: ${err.message}`);
@@ -118,27 +147,27 @@ async function countCompaniesWithGreaterMarketShare(latestMarketShare) {
 }
 
 
-async function countCompaniesWithGreaterStockPrice(latestStockPrice) {
+async function countCompaniesWithGreaterStockPrice(avgStockPrice) {
     try {
-        const count = await Company.countDocuments({ 'stockPrices.price': { $gt: latestStockPrice } });
+        const count = await Company.countDocuments({ 'averages.stockPrice': { $gt: avgStockPrice } });
         return count;
     } catch (err) {
         throw new Error(`Error counting companies with greater stock price: ${err.message}`);
     }
 }
 
-async function countCompaniesWithGreaterRevenue(latestRevenue) {
+async function countCompaniesWithGreaterRevenue(avgRevenue) {
     try {
-        const count = await Company.countDocuments({ 'revenues.revenue': { $gt: latestRevenue } });
+        const count = await Company.countDocuments({ 'averages.revenue': { $gt: avgRevenue } });
         return count;
     } catch (err) {
         throw new Error(`Error counting companies with greater revenue: ${err.message}`);
     }
 }
 
-async function countCompaniesWithGreaterExpense(latestExpense) {
+async function countCompaniesWithGreaterExpense(avgExpense) {
     try {
-        const count = await Company.countDocuments({ 'expenses.expense': { $gt: latestExpense } });
+        const count = await Company.countDocuments({ 'averages.expense': { $gt: avgExpense } });
         return count;
     } catch (err) {
         throw new Error(`Error counting companies with greater expense: ${err.message}`);
@@ -186,6 +215,7 @@ module.exports = {
     findCompaniesByNameOrCode,
     findCompaniesByCountry,
     findCompanyByCode,
+    findCompany,
     countCompaniesWithGreaterMarketShare,
     countCompaniesWithGreaterStockPrice,
     countCompaniesWithGreaterExpense,

@@ -6,7 +6,7 @@ import JordanImg from "../../media/Jordan.png";
 import "./styles.css";
 
 
-const SameCountry = () => {
+const SameCountry = ({data, type}) => {
   return (
       <div>
         <div
@@ -57,7 +57,7 @@ const SameCountry = () => {
                 fontFamily: "sans-serif",
               }}
             >
-              Companies In The Same Country
+              Companies {type === "diversity" ? "With Greater Diversity" : "In The Same Country"}
             </div>
             <div
               style={{
@@ -71,7 +71,7 @@ const SameCountry = () => {
                 fontFamily: "cursive",
               }}
             >
-              7
+              {data}
             </div>
           </div>
         </div>

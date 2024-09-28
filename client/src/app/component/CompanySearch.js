@@ -16,7 +16,7 @@ const CompanySearch = () => {
   const { jwt } = useContext(AuthContext);
   const [open, setOpen] = useState(true);
   const [openModal, setOpenModal] = useState(false);
-  const [history, setHistory] = useState([{name: "Zooxo", companyCode: "UAH"}, {name: "Youbridge", companyCode: "UAH"}, {name: "Babblestorm", companyCode: "UAH"}, {name: "Tagfeed", companyCode: "UAH"}, {name: "Shufflester", companyCode: "UAH"}]);
+  const [history, setHistory] = useState([]);
   const [metrics, setMetrics] = useState(null);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
@@ -71,18 +71,21 @@ const CompanySearch = () => {
     setOpen(false);
     setCompanies([]);
     setInput("");
-    handleCompute(company.code);
+    handleCompute(company._id);
     setOpenModal(true);
   };
 
   const handleHistoryClick = (company) => {
-    handleCompute(company.companyCode);
+    handleCompute(company.metrics.id);
     setOpenModal(true);
   };
 
-  const handleClose = () => setOpenModal(false);
+  const handleClose = () => {
+    setMetrics(null);
+    setOpenModal(false);
+  }
 
-  const handleCompute = async (companyCode) => {
+  const handleCompute = async (id) => {
     setLoading(true);
     try {
       const response = await fetch(
@@ -93,7 +96,7 @@ const CompanySearch = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwt}`,
           },
-          body: JSON.stringify({ companyCode }),
+          body: JSON.stringify({ id }),
         }
       );
 
@@ -165,32 +168,32 @@ const CompanySearch = () => {
     }
   }, [open]);
 
-  // useEffect(() => {
-  //   const fetchHistory = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `${SERVER_ENDPOINT}/api/v1/company/historyCompute`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${jwt}`,
-  //           },
-  //         }
-  //       );
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const response = await fetch(
+          `${SERVER_ENDPOINT}/api/v1/company/historyCompute`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
 
-  //       const parsedResponse = await response.json();
-  //       if (parsedResponse.status != "SUCCESS") {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       setHistory(parsedResponse.data.metrics);
-  //     } catch (error) {
-  //       console.error("Error fetching history:", error);
-  //     }
-  //   };
+        const parsedResponse = await response.json();
+        if (parsedResponse.status != "SUCCESS") {
+          throw new Error("Network response was not ok");
+        }
+        setHistory(parsedResponse.data.metrics);
+      } catch (error) {
+        console.error("Error fetching history:", error);
+      }
+    };
 
-  //   fetchHistory();
-  // }, []);
+    fetchHistory();
+  }, [openModal]);
 
   return (
     <div>
@@ -399,20 +402,20 @@ const CompanySearch = () => {
                       {metrics.predictions.predictedMarketShare}
                     </p>
                   </div> */}
-                  <CompanyMetrics />
+                  <CompanyMetrics data={metrics}/>
                 </Modal.Body>
-                <Modal.Footer>
+                {/* <Modal.Footer>
                   <Button onClick={handleClose} appearance="subtle">
                     Cancel
                   </Button>
                   <Button onClick={handleClose} appearance="primary">
                     Ok
                   </Button>
-                </Modal.Footer>
+                </Modal.Footer> */}
               </>
             )}
 
-            {msg && handleClose()}
+            {msg && handleClose(metrics)}
           </Modal>
         </div>
       </div>

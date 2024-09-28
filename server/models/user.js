@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
         companyCode: { type: String },
         name: {type: String },
         metrics: {
+            id: { type: String },
             totalCompaniesInCountry: { type: Number },
             greaterDiversity: { type: Number },
             stockPriceComparison: {

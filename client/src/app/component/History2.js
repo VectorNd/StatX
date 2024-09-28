@@ -1,66 +1,106 @@
 import React from "react";
 import styled, { keyframes, css } from "styled-components";
 
-function History2({history, onCompute} ) {
-    // console.log(history)
-  const row1 = [
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/7ae42bac3b34999c0db3.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/b2bd91d7b87b2181ca45.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/6591cdc0702b32310306.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/3b7d9f4b073deb6a9b74.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/3cd767dea94a85078ca4.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/a2b3c3709ffedce2a22a.png",
-  ];
-
-  const row2 = [
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/6c585c33ca6c71c79bb7.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/9dd55e54b5a28658bf4e.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/0384060dcbf73b6a707c.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/35e044b3354aaa0caed5.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/f50ae7cbf6cc805bdadc.png",
-    "https://assets.algoexpert.io/spas/main/prod/g523bdeb478-prod/dist/images/6c585c33ca6c71c79bb7.png",
-  ];
-
+function History2({ history, onCompute }) {
   return (
     <AppContainer>
       <Wrapper>
         <Text>Wanna Visit Again ?</Text>
         <Note>
-        Your search history is displayed below for your convenience!</Note>
+          Your search history is displayed below for your convenience!
+        </Note>
         <Marquee>
           <MarqueeGroup>
             {history?.map((el, index) => (
-                <ImageGroup onClick={() => onCompute(el)}>
-                    {/* {console.log(el.name)} */}
-                <Image>{el.name}</Image>
+              <ImageGroup onClick={() => onCompute(el)}>
+                <Image>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>{el.name}</div>
+                    <div>
+                      ({el.companyCode})
+                    </div>
+                  </div>
+                </Image>
               </ImageGroup>
             ))}
           </MarqueeGroup>
           <MarqueeGroup>
             {history?.map((el) => (
               <ImageGroup onClick={() => onCompute(el)}>
-                {/* <Image src={el} /> */}
-                <Image>{el.name}</Image>
+                <Image>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>{el.name}</div>
+                    <div>
+                      ({el.companyCode})
+                    </div>
+                  </div>
+                </Image>
               </ImageGroup>
             ))}
           </MarqueeGroup>
         </Marquee>
         <Marquee>
           <MarqueeGroup2>
-            {history?.slice().reverse().map((el) => (
-              <ImageGroup onClick={() => onCompute(el)}>
-                {/* <Image src={el} /> */}
-                <Image>{el.name}</Image>
-              </ImageGroup>
-            ))}
+            {history
+              ?.slice()
+              .reverse()
+              .map((el) => (
+                <ImageGroup onClick={() => onCompute(el)}>
+                  <Image>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div>{el.name}</div>
+                      <div>
+                        ({el.companyCode})
+                      </div>
+                    </div>
+                  </Image>
+                </ImageGroup>
+              ))}
           </MarqueeGroup2>
           <MarqueeGroup2>
-            {history?.slice().reverse().map((el) => (
-              <ImageGroup onClick={() => onCompute(el)}>
-                <Image>{el.name}</Image>
-                {/* <Image src={el} /> */}
-              </ImageGroup>
-            ))}
+            {history
+              ?.slice()
+              .reverse()
+              .map((el) => (
+                <ImageGroup onClick={() => onCompute(el)}>
+                  <Image>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div>{el.name}</div>
+                      <div>
+                        ({el.companyCode})
+                      </div>
+                    </div>
+                  </Image>
+                </ImageGroup>
+              ))}
           </MarqueeGroup2>
         </Marquee>
       </Wrapper>
@@ -72,7 +112,7 @@ export default History2;
 
 const AppContainer = styled.div`
   width: 100vw;
-//   height: 100vh;
+  //   height: 100vh;
   color: #000000;
 
   position: relative;
@@ -154,23 +194,23 @@ const MarqueeGroup2 = styled.div`
 const ImageGroup = styled.div`
   display: flex;
   place-items: center;
-//   width: clamp(2rem, 1rem + 20vmin, 10rem);
-//   padding: calc(clamp(2rem, 1rem + 20vmin, 20rem) / 10);
-margin: 20px;
+  //   width: clamp(2rem, 1rem + 20vmin, 10rem);
+  //   padding: calc(clamp(2rem, 1rem + 20vmin, 20rem) / 10);
+  margin: 20px;
 `;
 
 const Image = styled.div`
-//   object-fit: contain;
-//   width: 100%;
-//   height: 100%;
-//   /* border: 1px solid black; */
-//   border-radius: 0.5rem;
-//   aspect-ratio: 16/9;
-//   padding: 5px 20px;
-//   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-display: inline-block;
-                cursor: pointer;
-                border-radius: 25px;
-                padding: 25px;
-                box-shadow: inset 1px -1px 20px 0px #a0a0a0;
+  //   object-fit: contain;
+  //   width: 100%;
+  //   height: 100%;
+  //   /* border: 1px solid black; */
+  //   border-radius: 0.5rem;
+  //   aspect-ratio: 16/9;
+  //   padding: 5px 20px;
+  //   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: inset 1px -1px 20px 0px #a0a0a0;
 `;

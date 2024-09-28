@@ -9,6 +9,12 @@ const companySchema = new mongoose.Schema({
     marketShares: [{ year: Number, share: Number }],
     revenues: [{ year: Number, revenue: Number }],
     expenses: [{ year: Number, expense: Number }],
+    averages: {
+        stockPrice: { type: Number },
+        marketShare: { type: Number },
+        revenue: { type: Number },
+        expense: { type: Number },
+    },
 }, { timestamps: true });
 
 const Company = mongoose.model('Company', companySchema);

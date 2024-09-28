@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Button, Progress } from "rsuite";
 import "./styles.css";
 
-const UnionOne = () => {
+const UnionOne = ({data}) => {
   const [domestic, setDomestic] = useState(false);
   const [rotateClass, setRotateClass] = useState("");
   const [scaleClass, setScaleClass] = useState("fade-in");
@@ -94,7 +94,7 @@ const UnionOne = () => {
                       fontFamily: "cursive",
                     }}
                     >
-                    13
+                    {data.stockPriceComparison.domestic}
                   </div>
                   <div
                     style={{
@@ -145,7 +145,7 @@ const UnionOne = () => {
                       fontFamily: "cursive",
                     }}
                   >
-                    6
+                    {data.marketShareComparison.domestic}
                   </div>
                   <div
                     style={{
@@ -196,7 +196,7 @@ const UnionOne = () => {
                       fontFamily: "cursive",
                     }}
                   >
-                    9
+                    {data.expenseComparison.domestic}
                   </div>
                   <div
                     style={{
@@ -247,7 +247,7 @@ const UnionOne = () => {
                       fontFamily: "cursive",
                     }}
                     >
-                    18
+                    {data.revenueComparison.domestic}
                   </div>
                   <div
                     style={{
@@ -300,7 +300,7 @@ const UnionOne = () => {
                       fontFamily: "cursive",
                     }}
                   >
-                    13
+                    {data.stockPriceComparison.global}
                   </div>
                   <div
                     style={{
@@ -351,7 +351,7 @@ const UnionOne = () => {
                       fontFamily: "cursive",
                     }}
                     >
-                    6
+                    {data.marketShareComparison.global}
                   </div>
                   <div
                     style={{
@@ -402,7 +402,7 @@ const UnionOne = () => {
                       fontFamily: "cursive",
                     }}
                   >
-                    9
+                    {data.expenseComparison.global}
                   </div>
                   <div
                     style={{
@@ -453,7 +453,7 @@ const UnionOne = () => {
                       fontFamily: "cursive",
                     }}
                     >
-                    18
+                    {data.revenueComparison.global}
                   </div>
                   <div
                     style={{

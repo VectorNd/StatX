@@ -5,21 +5,32 @@ import { Progress } from "rsuite";
 import CornerImg from "../../media/Corner.png";
 import "./styles.css";
 
-const Graph = () => {
+const Graph = ({data}) => {
   const boxRefs = useRef([]);
   const [hoveredElement, setHoveredElement] = useState(null);
-  const [progressValues, setProgressValues] = useState([
-    { percent: 20, status: "2014" },
-    { percent: 40, status: "2015" },
-    { percent: 60, status: "2016" },
-    { percent: 80, status: "2017" },
-    { percent: 100, status: "2018" },
-    { percent: 90, status: "2019" },
-    { percent: 70, status: "2020" },
-    { percent: 50, status: "2021" },
-    { percent: 20, status: "2022" },
-    { percent: 10, status: "2023" },
-  ]);
+  const [selectedGraph, setSelectedGraph] = useState("");
+  const [progressValues, setProgressValues] = useState([]);
+
+
+  useEffect(() => {
+    if (selectedGraph === "stock") {
+      setProgressValues(data.stockPriceChange);
+    }
+    else if (selectedGraph === "market") {
+      setProgressValues(data.marketShareChange);
+    }
+    else if (selectedGraph === "revenue") {
+      setProgressValues(data.revenueChange);
+    }
+    else if (selectedGraph === "expense") {
+      setProgressValues(data.expenseChange);
+    }
+  }, [selectedGraph])
+
+  useEffect(() => {
+    setSelectedGraph("stock");
+    setProgressValues(data.stockPriceChange);
+  }, [])
 
   useEffect(() => {
     // Define a cleanup function to add and remove event listeners
@@ -83,8 +94,9 @@ const Graph = () => {
                 cursor: "pointer",
                 borderRadius: "25px",
                 padding: "5px",
-                boxShadow: "inset 1px -1px 20px 0px #a0a0a0",
+                boxShadow: `inset 1px -1px 20px 0px ${selectedGraph == "stock" ? "#EA8E8C" : "#a0a0a0"}`,
               }}
+              onClick={() => setSelectedGraph("stock")}
             >
               {" "}
               Stock Price
@@ -95,8 +107,9 @@ const Graph = () => {
                 cursor: "pointer",
                 borderRadius: "25px",
                 padding: "5px",
-                boxShadow: "inset 1px -1px 20px 0px #a0a0a0",
+                boxShadow: `inset 1px -1px 20px 0px ${selectedGraph == "market" ? "#EA8E8C" : "#a0a0a0"}`,
               }}
+              onClick={() => setSelectedGraph("market")}
             >
               {" "}
               Market Share
@@ -107,8 +120,9 @@ const Graph = () => {
                 cursor: "pointer",
                 borderRadius: "25px",
                 padding: "5px",
-                boxShadow: "inset 1px -1px 20px 0px #a0a0a0",
+                boxShadow: `inset 1px -1px 20px 0px ${selectedGraph == "revenue" ? "#EA8E8C" : "#a0a0a0"}`,
               }}
+              onClick={() => setSelectedGraph("revenue")}
             >
               {" "}
               Revenue
@@ -119,8 +133,9 @@ const Graph = () => {
                 cursor: "pointer",
                 borderRadius: "25px",
                 padding: "5px",
-                boxShadow: "inset 1px -1px 20px 0px #a0a0a0",
+                boxShadow: `inset 1px -1px 20px 0px ${selectedGraph == "expense" ? "#EA8E8C" : "#a0a0a0"}`,
               }}
+              onClick={() => setSelectedGraph("expense")}
             >
               {" "}
               Expense
@@ -146,8 +161,9 @@ const Graph = () => {
                     width: "40px",
                     height: "200px",
                     borderRadius: "10px",
+                    display: item.change == -1 ? "table-footer-group" : "flex"
                   }}
-                  percent={item.percent}
+                  percent={(item.change).toFixed(3)}
                   status="active"
                 />
                 <div
@@ -161,8 +177,8 @@ const Graph = () => {
                   style={{
                     left: "-20px",
                     bottom: `${
-                      2 * item.percent +
-                      (item.percent < 60 ? 25 : item.percent < 90 ? 18 : 15)
+                      2 * item.change +
+                      (item.change < 60 ? 25 : item.change < 90 ? 18 : 15)
                     }px`,
                     zIndex: "5",
                     position: "absolute",
@@ -192,7 +208,7 @@ const Graph = () => {
                         fontFamily: "cursive",
                       }}
                     >
-                      {item.percent}%
+                      {(item.change).toFixed(2)}%
                     </div>
                   </div>
                   <div style={{ width: "5px", height: "5px", display: "flex" }}>

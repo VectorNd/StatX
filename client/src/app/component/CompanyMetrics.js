@@ -17,13 +17,13 @@ const CompanyMetrics = ({ data }) => {
     <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "600px", width: "1000px"}}>
       <div style={{display: "flex", flexDirection: "column", justifyContent: "space-evenly", height: "100%", alignItems: "center", margin: "20px"}}>
         <div style={{display: "flex", alignItems: "center", width: "100%", justifyContent: "space-between"}}>
-          <SameCountry />
-          <SameCountry />
+          <SameCountry data={data.totalCompaniesInCountry} type="same-country"/>
+          <SameCountry data={data.greaterDiversity} type="diversity"/>
         </div>
-        <Graph />
+        <Graph data={data.yearlyChanges}/>
       </div>
       <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%"}}>
-        <UnionOne/>
+        <UnionOne data={data}/>
       </div>
     </div>
 
