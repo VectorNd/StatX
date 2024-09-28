@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { SERVER_ENDPOINT } from "../../utils/constants";
-import { AuthContext } from "../../context/AuthContext";
-import { Button, Progress } from "rsuite";
+import React, { useState } from "react";
 import "./styles.css";
 
 const UnionOne = ({data}) => {

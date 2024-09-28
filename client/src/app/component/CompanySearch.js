@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect, useCallback } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { SERVER_ENDPOINT } from "../../utils/constants";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -48,10 +48,10 @@ const CompanySearch = () => {
     }
   };
 
-  const selectCompany = (company) => {
-    console.log("Selected company:", company);
-    navigate(`/companyMetrics`, { state: { companyCode: company.code } });
-  };
+  // const selectCompany = (company) => {
+  //   console.log("Selected company:", company);
+  //   navigate(`/companyMetrics`, { state: { companyCode: company.code } });
+  // };
 
   const handleSearchChange = (e) => {
     setInput(e.target.value);

@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { SERVER_ENDPOINT } from "../../utils/constants";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState, useEffect, useRef } from "react";
 import { Progress } from "rsuite";
 import CornerImg from "../../media/Corner.png";
 import "./styles.css";
