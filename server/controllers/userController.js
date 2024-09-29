@@ -91,17 +91,15 @@ async function googleOAuthCallback(req, res) {
       const token = await signJwt({ userId: user._id });
 
       // Set cookie with user data
-      await res.cookie("jwt", token, {
-        httpOnly: false,
-        secure: `${ServerConfig.COOKIE_SECURE}`,
-        sameSite: "None",
-        domain: `${ServerConfig.COOKIE_DOMAIN}`,
-      });
+      // await res.cookie("jwt", token, {
+      //   httpOnly: false,
+      //   secure: `${ServerConfig.COOKIE_SECURE}`,
+      //   sameSite: "None",
+      //   domain: `${ServerConfig.COOKIE_DOMAIN}`,
+      // });
 
       // Step 5: Send JWT token to the frontend
-      setTimeout(() => {
-        res.redirect(`${ServerConfig.FRONTEND_URL}/enable2FA`);
-      }, 1000);
+      res.redirect(`${ServerConfig.FRONTEND_URL}/enable2FA?token=${token}`)
     } else {
       console.error("Token request failed:", tokenData);
       res.status(400).send("Token request failed.");
@@ -182,17 +180,16 @@ async function githubOAuthCallback(req, res) {
 
 
       // Set cookie with user data
-      await res.cookie("jwt", token, {
-        httpOnly: false,
-        secure: `${ServerConfig.COOKIE_SECURE}`,
-        sameSite: "None",
-        domain: `${ServerConfig.COOKIE_DOMAIN}`,
-      });
+      // await res.cookie("jwt", token, {
+      //   httpOnly: false,
+      //   secure: `${ServerConfig.COOKIE_SECURE}`,
+      //   sameSite: "None",
+      //   domain: `${ServerConfig.COOKIE_DOMAIN}`,
+      // });
 
       // Step 5: Send JWT token to the frontend
-      setTimeout(() => {
-        res.redirect(`${ServerConfig.FRONTEND_URL}/enable2FA`);
-      }, 1000);
+
+      res.redirect(`${ServerConfig.FRONTEND_URL}/enable2FA?token=${token}`)
     } else {
       console.error("Token request failed:", tokenData);
       res.status(400).send("Token request failed.");

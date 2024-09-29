@@ -2,8 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { SERVER_ENDPOINT } from "../../utils/constants";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Panel } from "rsuite";
 import "./styles.css";
 import MainPage from "./MainPage";
@@ -16,6 +15,7 @@ const Enable2FA = () => {
   const [message, setMessage] = useState("");
   const { setJwt, jwt } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   // const triggerAnimation = () => {
   //   setIsCollapsed(!isCollapsed);
@@ -26,6 +26,11 @@ const Enable2FA = () => {
   //     }
   //   }, 500);
   // };
+
+  const getQueryParams = () => {
+    const params = new URLSearchParams(location.search);
+    return params.get('token');
+  };
 
   const handleEnable2FA = async () => {
     try {
@@ -86,10 +91,9 @@ const Enable2FA = () => {
   };
 
   useEffect(() => {
-    const jwtVal = Cookies.get("jwt");
-    console.log(Cookies.get(), Cookies, jwtVal, document.cookie);
-    if (jwtVal) {
-      setJwt(jwtVal);
+    const retrievedToken = getQueryParams();
+    if (retrievedToken) {
+      setJwt(retrievedToken);
     } else {
       console.log("invalid credentials");
     }
