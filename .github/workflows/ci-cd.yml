@@ -21,10 +21,6 @@ jobs:
         working-directory: server
         run: npm install
 
-      - name: Install Render CLI
-        run: |
-          curl -sSL https://cli.render.com/install.sh | bash
-
       - name: Deploy Backend
         working-directory: server
         # Only run this step if the branch is main
@@ -47,7 +43,8 @@ jobs:
 
       - name: Install Frontend Dependencies
         working-directory: client
-        run: npm install
+        run: |
+          CI=false npm run build # Set CI to false to ignore warnings
 
       - name: Build Frontend
         working-directory: client
