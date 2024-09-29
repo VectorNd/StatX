@@ -85,7 +85,7 @@ async function googleOAuthCallback(req, res) {
           await UserService.updateGoogle(profile.email, profile.id);
         }
       }
-
+      console.log(user);
       // Step 4: Generate JWT for session management
 
       const token = await signJwt({ userId: user._id });
@@ -177,6 +177,7 @@ async function githubOAuthCallback(req, res) {
       // Step 4: Generate JWT for session management
 
       const token = await signJwt({ userId: user._id });
+      console.log(token, user._id, user);
 
 
       // Set cookie with user data
@@ -203,7 +204,6 @@ async function githubOAuthCallback(req, res) {
 async function enable2FA(req, res) {
   try {
     const user = await UserService.findUser(req.userId); // Make sure req.user is populated with authenticated user data
-    console.log(user, req.userId, req);
     if (!user) {
       return res.status(404).json({ status: "FAILED", data: "User not found" });
     }
