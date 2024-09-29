@@ -45,6 +45,10 @@ jobs:
         working-directory: client
         run: npm install
 
+      - name: Install Vercel CLI
+        working-directory: client
+        run: npm install -g vercel
+
       - name: Build Frontend
         working-directory: client
         run: |
