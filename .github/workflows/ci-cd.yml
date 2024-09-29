@@ -1,0 +1,63 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main # Deploy only on pushes to the main branch
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js for Backend
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20' # Specify the Node.js version
+
+      - name: Install Backend Dependencies
+        working-directory: server
+        run: npm install
+
+      - name: Deploy Backend
+        working-directory: server
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }} # Your Render API key
+          SERVICE_ID: your_backend_service_id # Replace with your Render service ID
+        run: |
+          echo "Deploying Backend..."
+          curl -X POST https://api.render.com/v1/deploy/svc_${SERVICE_ID} \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -d '{"branch":"main"}'
+          echo "Backend deployed!"
+
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js for Frontend
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20' # Specify the Node.js version
+
+      - name: Install Frontend Dependencies
+        working-directory: client
+        run: npm install
+
+      - name: Build Frontend
+        working-directory: client
+        run: npm run build
+
+      - name: Deploy Frontend
+        working-directory: client
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} # Your Vercel token
+        run: |
+          echo "Deploying Frontend..."
+          npx vercel --prod --token $VERCEL_TOKEN --cwd ./client
+          echo "Frontend deployed!"
