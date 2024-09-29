@@ -54,20 +54,11 @@ jobs:
         run: |
           CI=false npm run build # Set CI to false to ignore warnings
 
-      - name: Link Frontend Project
+      - name: Deploy Frontend
         working-directory: client
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} # Your Vercel token
         run: |
-          echo "Linking Frontend Project..."
-          npx vercel link --token $VERCEL_TOKEN --project sde-track --yes
-          echo "Frontend Project Linked!"
-
-      - name: Deploy Frontend
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} # Your Vercel token
-          VERCEL_PROJECT: sde-track
-        run: |
           echo "Deploying Frontend..."
-          npx vercel --prod --token $VERCEL_TOKEN --no-link --yes 
+          npx vercel --prod --skip-domain --token $VERCEL_TOKEN --yes 
           echo "Frontend deployed!"
