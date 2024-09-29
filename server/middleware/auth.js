@@ -10,8 +10,8 @@ async function checkUserAuth(req, res, next) {
 
         const userJwt = token.split(" ")[1];
         const user = await verifyJwt(userJwt);
-        console.log(user)
         if (!user) throw new Error(`Invalid Jwt ${token}`);
+        console.log(user, user.userId)
         req.userId = user.userId;
         return next();
     } catch (error) {
