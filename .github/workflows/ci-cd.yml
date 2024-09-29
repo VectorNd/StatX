@@ -21,11 +21,15 @@ jobs:
         working-directory: server
         run: npm install
 
+      - name: Install Render CLI
+        run: |
+          curl -sSL https://cli.render.com/install.sh | bash
+
       - name: Deploy Backend
         working-directory: server
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }} # Your Render API key
-          SERVICE_ID: your_backend_service_id # Replace with your Render service ID
+          SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }} # Replace with your Render service ID
         run: |
           echo "Deploying Backend..."
           curl -X POST https://api.render.com/v1/deploy/svc_${SERVICE_ID} \
