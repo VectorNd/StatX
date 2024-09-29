@@ -60,5 +60,5 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} # Your Vercel token
         run: |
           echo "Deploying Frontend..."
-          npx vercel --prod --token $VERCEL_TOKEN --cwd ./client
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm
           echo "Frontend deployed!"
