@@ -27,16 +27,12 @@ jobs:
 
       - name: Deploy Backend
         working-directory: server
+        # Only run this step if the branch is main
+        if: github.ref == 'refs/heads/main'
         env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }} # Your Render API key
-          SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }} # Replace with your Render service ID
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
-          echo "Deploying Backend..."
-          curl -X POST https://api.render.com/v1/deploy/svc_${SERVICE_ID} \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $RENDER_API_KEY" \
-            -d '{"branch":"main"}'
-          echo "Backend deployed!"
+          curl "$deploy_url"
 
   deploy-frontend:
     runs-on: ubuntu-latest
