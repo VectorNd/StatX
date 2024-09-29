@@ -60,7 +60,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} # Your Vercel token
         run: |
           echo "Linking Frontend Project..."
-          npx vercel link --token $VERCEL_TOKEN --project sde-track
+          npx vercel link --token $VERCEL_TOKEN --project sde-track --yes
           echo "Frontend Project Linked!"
 
       - name: Deploy Frontend
