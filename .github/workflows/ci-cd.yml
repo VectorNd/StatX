@@ -61,5 +61,5 @@ jobs:
           VERCEL_PROJECT: sde-track
         run: |
           echo "Deploying Frontend..."
-          npx vercel --prod --token $VERCEL_TOKEN --confirm 
+          npx vercel --prod --token $VERCEL_TOKEN --project sde-track --confirm 
           echo "Frontend deployed!"
