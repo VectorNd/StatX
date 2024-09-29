@@ -10,7 +10,7 @@ async function createUserByGoogle( username, email, googleId ) {
             isVerified: true
         });
         await user.save();
-        return User;
+        return user;
     } catch (err) {
         throw new Error(`Error finding User: ${err.message}`);
     }
@@ -25,7 +25,7 @@ async function createUserByGitHub( username, email, githubId ) {
             isVerified: true
         });
         await user.save();
-        return User;
+        return user;
     } catch (err) {
         throw new Error(`Error finding User: ${err.message}`);
     }
