@@ -64,11 +64,10 @@ jobs:
           echo "Frontend Project Linked!"
 
       - name: Deploy Frontend
-        working-directory: client
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} # Your Vercel token
           VERCEL_PROJECT: sde-track
         run: |
           echo "Deploying Frontend..."
-          npx vercel --prod --token $VERCEL_TOKEN --confirm 
+          npx vercel --prod --token $VERCEL_TOKEN --yes 
           echo "Frontend deployed!"
