@@ -203,7 +203,7 @@ async function githubOAuthCallback(req, res) {
 async function enable2FA(req, res) {
   try {
     const user = await UserService.findUser(req.userId); // Make sure req.user is populated with authenticated user data
-
+    console.log(user, req.userId, req);
     if (!user) {
       return res.status(404).json({ status: "FAILED", data: "User not found" });
     }
