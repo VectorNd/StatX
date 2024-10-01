@@ -10,56 +10,10 @@ function History({ history, onCompute }) {
         <Note>
           Your search history is displayed below for your convenience!
         </Note>
-        <Marquee>
-          <MarqueeGroup>
-            {history?.map((el, index) => (
-              <ImageGroup onClick={() => onCompute(el)}>
-                <Image>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div>{el.name}</div>
-                    <div>
-                      ({el.companyCode})
-                    </div>
-                  </div>
-                </Image>
-              </ImageGroup>
-            ))}
-          </MarqueeGroup>
-          <MarqueeGroup>
-            {history?.map((el) => (
-              <ImageGroup onClick={() => onCompute(el)}>
-                <Image>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div>{el.name}</div>
-                    <div>
-                      ({el.companyCode})
-                    </div>
-                  </div>
-                </Image>
-              </ImageGroup>
-            ))}
-          </MarqueeGroup>
-        </Marquee>
-        <Marquee>
-          <MarqueeGroup2>
-            {history
-              ?.slice()
-              .reverse()
-              .map((el) => (
+        {history.length > 3 ? (
+          <Marquee>
+            <MarqueeGroup>
+              {history?.map((el, index) => (
                 <ImageGroup onClick={() => onCompute(el)}>
                   <Image>
                     <div
@@ -71,19 +25,14 @@ function History({ history, onCompute }) {
                       }}
                     >
                       <div>{el.name}</div>
-                      <div>
-                        ({el.companyCode})
-                      </div>
+                      <div>({el.companyCode})</div>
                     </div>
                   </Image>
                 </ImageGroup>
               ))}
-          </MarqueeGroup2>
-          <MarqueeGroup2>
-            {history
-              ?.slice()
-              .reverse()
-              .map((el) => (
+            </MarqueeGroup>
+            <MarqueeGroup>
+              {history?.map((el) => (
                 <ImageGroup onClick={() => onCompute(el)}>
                   <Image>
                     <div
@@ -95,15 +44,103 @@ function History({ history, onCompute }) {
                       }}
                     >
                       <div>{el.name}</div>
-                      <div>
-                        ({el.companyCode})
-                      </div>
+                      <div>({el.companyCode})</div>
                     </div>
                   </Image>
                 </ImageGroup>
               ))}
-          </MarqueeGroup2>
-        </Marquee>
+            </MarqueeGroup>
+          </Marquee>
+        ) : (
+          <Marquee>
+            <MarqueeGroup1>
+              {history?.map((el, index) => (
+                <ImageGroup onClick={() => onCompute(el)}>
+                  <Image>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div>{el.name}</div>
+                      <div>({el.companyCode})</div>
+                    </div>
+                  </Image>
+                </ImageGroup>
+              ))}
+            </MarqueeGroup1>
+            <MarqueeGroup1>
+              {history?.map((el) => (
+                <ImageGroup onClick={() => onCompute(el)}>
+                  <Image>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div>{el.name}</div>
+                      <div>({el.companyCode})</div>
+                    </div>
+                  </Image>
+                </ImageGroup>
+              ))}
+            </MarqueeGroup1>
+          </Marquee>
+        )}
+        {history.length > 5 && (
+          <Marquee>
+            <MarqueeGroup2>
+              {history
+                ?.slice()
+                .reverse()
+                .map((el) => (
+                  <ImageGroup onClick={() => onCompute(el)}>
+                    <Image>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div>{el.name}</div>
+                        <div>({el.companyCode})</div>
+                      </div>
+                    </Image>
+                  </ImageGroup>
+                ))}
+            </MarqueeGroup2>
+            <MarqueeGroup2>
+              {history
+                ?.slice()
+                .reverse()
+                .map((el) => (
+                  <ImageGroup onClick={() => onCompute(el)}>
+                    <Image>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div>{el.name}</div>
+                        <div>({el.companyCode})</div>
+                      </div>
+                    </Image>
+                  </ImageGroup>
+                ))}
+            </MarqueeGroup2>
+          </Marquee>
+        )}
       </Wrapper>
     </AppContainer>
   );
@@ -113,15 +150,25 @@ export default History;
 
 const AppContainer = styled.div`
   width: 100vw;
-  //   height: 100vh;
   color: #000000;
-
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 40px;
+  margin: 20px 0px;
   z-index: 2;
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    margin: 10px 0px;
+  }
+
+  @media screen and (max-width: 767px) {
+    margin: 5px 0px;
+  }
+
+  @media screen and (max-width: 540px) {
+    margin: 0px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -132,6 +179,18 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    padding: 0 20px;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 0 15px;
+  }
+
+  @media screen and (max-width: 540px) {
+    padding: 0 10px;
+  }
 `;
 
 const Text = styled.div`
@@ -139,13 +198,41 @@ const Text = styled.div`
   font-weight: 500;
   margin-bottom: 10px;
   color: #02203c;
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    font-size: 30px;
+  }
+
+  @media screen and (max-width: 767px) {
+    font-size: 28px;
+  }
+
+  @media screen and (max-width: 540px) {
+    font-size: 24px;
+  }
 `;
 
 const Note = styled.div`
   font-size: 18px;
+  text-align: center;
   font-weight: 200;
   margin-bottom: 40px;
   color: #7c8e9a;
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  @media screen and (max-width: 767px) {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  @media screen and (max-width: 540px) {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
 `;
 
 const Marquee = styled.div`
@@ -161,6 +248,18 @@ const Marquee = styled.div`
     hsl(0 0% 0% / 1) 90%,
     hsl(0 0% 0% / 0)
   );
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    width: 500px;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 400px;
+  }
+
+  @media screen and (max-width: 540px) {
+    width: 300px;
+  }
 `;
 
 const scrollX = keyframes`
@@ -179,13 +278,33 @@ const common = css`
   justify-content: space-around;
   overflow: hidden;
   white-space: nowrap;
-  width: 100%;
+  width: 600px;
   animation: ${scrollX} 30s linear infinite;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    animation-duration: 25s;
+  }
+
+  @media screen and (max-width: 767px) {
+    animation-duration: 20s;
+  }
+
+  @media screen and (max-width: 540px) {
+    animation-duration: 15s;
+  }
 `;
 
 const MarqueeGroup = styled.div`
   ${common}
 `;
+
+const MarqueeGroup1 = styled.div`
+  ${common}
+  width: 300px;
+`;
+
 const MarqueeGroup2 = styled.div`
   ${common}
   animation-direction: reverse;
@@ -195,23 +314,42 @@ const MarqueeGroup2 = styled.div`
 const ImageGroup = styled.div`
   display: flex;
   place-items: center;
-  //   width: clamp(2rem, 1rem + 20vmin, 10rem);
-  //   padding: calc(clamp(2rem, 1rem + 20vmin, 20rem) / 10);
   margin: 20px;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    margin: 15px;
+  }
+
+  @media screen and (max-width: 767px) {
+    margin: 10px;
+  }
+
+  @media screen and (max-width: 540px) {
+    margin: 5px;
+  }
 `;
 
 const Image = styled.div`
-  //   object-fit: contain;
-  //   width: 100%;
-  //   height: 100%;
-  //   /* border: 1px solid black; */
-  //   border-radius: 0.5rem;
-  //   aspect-ratio: 16/9;
-  //   padding: 5px 20px;
-  //   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: inline-block;
   cursor: pointer;
   border-radius: 25px;
   padding: 25px;
   box-shadow: inset 1px -1px 20px 0px #a0a0a0;
+  width: 80%;
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    padding: 20px;
+    box-shadow: inset 1px -1px 15px 0px #a0a0a0;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 15px;
+    box-shadow: inset 1px -1px 10px 0px #a0a0a0;
+  }
+
+  @media screen and (max-width: 540px) {
+    padding: 10px;
+    box-shadow: inset 1px -1px 8px 0px #a0a0a0;
+  }
 `;

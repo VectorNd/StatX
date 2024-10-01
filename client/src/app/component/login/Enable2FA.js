@@ -8,8 +8,6 @@ import "../../styles/styles.css";
 import MainPage from "./MainPage";
 
 const Enable2FA = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isFlipped, setIsFlipped] = useState(false);
   const [authCode, setAuthCode] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [message, setMessage] = useState("");
@@ -101,16 +99,14 @@ const Enable2FA = () => {
         <MainPage />
         <div className="login-container">
           <div
-            className={`background-icons ${isCollapsed ? "collapsed" : ""}`}
+            className={`background-icons`}
           ></div>
 
           <Panel
             shaded
             bordered
             bodyFill
-            className={`login-card ${isCollapsed ? "zoomed" : ""} ${
-              isFlipped ? "flipped" : ""
-            }`}
+            className={`login-card`}
           >
             <div className="card-content">
               <Panel className="card-back">
@@ -123,7 +119,7 @@ const Enable2FA = () => {
                   <div className="faAuth-content">
                     <strong>Enable Two-Factor Authentication</strong>
                   </div>
-                  <div style={{display: qrCodeUrl == "" ? "none" : "block"}}>
+                  <div style={{display: qrCodeUrl === "" ? "none" : "block"}}>
                     <div className="faAuth-content">
                       Scan the QR Code with your authenticator app
                     </div>

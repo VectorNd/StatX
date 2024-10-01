@@ -307,6 +307,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  align-content: center;
+  flex-wrap: wrap;
 }
 
 .search-image {
@@ -530,77 +532,252 @@ body {
 
 
 /* Responsive for Tablet Screens */
-@media (max-width: 768px) {
-  .login-container {
-    width: 350px;
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+  
+  .mainPage-image-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .mainPage-content-container {
+    height: 160px;
+  }
+
+  .mainPage-heading {
+    font-size: 26px;
+    width: 180px;
+  }
+
+  .mainPage-para {
+    font-size: 14px;
+    width: 180px;
+  }
+
+  .main-container {
     height: 400px;
-    right: 5%;
-    top: 30%;
+    top: 25%;
+    left: 20%;
+  }
+
+  .login-container {
+    width: 380px;
+    height: 420px;
+    right: 10%;
+    top: 25%;
   }
 
   .login-apps {
-    width: 220px;
+    width: 250px;
     height: 35px;
-  }
-
-  .flip-button {
-    font-size: 14px;
   }
 
   .login-card {
     width: 280px;
     height: 300px;
   }
+
+  .search-content-container .search-content {
+    width: 180px;
+  }
+
+  .search-image {
+    height: 180px;
+    width: 220px;
+    margin: 40px 0px;
+  }
+
+  .search-company-content-div-heading-content {
+    font-size: 28px;
+    width: 70%;
+  }
+
+  .search-company-content-div-para-heading {
+    font-size: 16px;
+    width: 60%;
+  }
+
+  .search-page-input {
+    width: 220px;
+  }
+
+  .search-history-container {
+    height: 250px;
+  }
 }
 
 /* Responsive for Mobile Screens */
-@media (max-width: 480px) {
+
+@media screen and (max-width: 767px) {
+  .mainPage-image-container {
+    width: 80px;
+    height: 80px;
+  }
+
+  .mainPage-content-container {
+    height: 140px;
+  }
+
+  .mainPage-heading {
+    font-size: 22px;
+    width: 150px;
+  }
+
+  .mainPage-para {
+    font-size: 12px;
+    width: 150px;
+  }
+
+  .main-container {
+    height: 300px;
+    top: 22%;
+    left: 18%;
+  }
+
   .login-container {
-    width: 280px;
-    height: 360px;
-    right: 2%;
-    top: 35%;
+    width: 300px;
+    height: 350px;
+    right: 5%;
+    top: 20%;
   }
 
   .login-apps {
-    width: 180px;
+    width: 200px;
     height: 30px;
   }
 
   .login-card {
-    width: 250px;
+    width: 240px;
     height: 280px;
   }
 
-  .flip-button {
-    font-size: 12px;
-  }
-
-  .search-content-container {
-    flex-direction: column;
-  }
-
   .search-content-container .search-content {
-    width: 180px;
-    height: 25px;
+    width: 160px;
+  }
+
+  .search-image {
+    height: 150px;
+    width: 160px;
+    margin: 30px 0px;
+  }
+
+  .search-company-content-div-heading-content {
+    font-size: 26px;
+    width: 75%;
+  }
+
+  .search-company-content-div-para-heading {
+    font-size: 15px;
+    width: 65%;
   }
 
   .search-page-input {
     width: 200px;
   }
+
+  .search-page-search-box {
+    margin: 10px 10px 50px 10px;
 }
 
-/* For fine adjustments */
-.search-company-content-div-heading-content {
-  font-size: 26px;
+  .search-history-container {
+    height: 220px;
+  }
+
+  .flip-button {
+    font-size: 12px;
+  }
+}
+@media (max-width: 540px) {
+
+  .main-container {
+    display: none;
+  }
+
+  .login-first {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .login-container {
+    position: relative;
+    width: 300px;
+    height: 350px;
+    left: 0%;
+    top: 0%
+  }
+
+  .login-apps {
+    width: 220px;
+    height: 30px;
+  }
+
+  .card-back .login-apps {
+    width: 200px;
+    height: 30px;
+  }
+
+  .login-card {
+    width: 240px;
+    height: 300px;
+  }
+
+  .rs-panel-header, .rs-panel-body {
+    padding: 10px;
+  }
+
+  .search-content-container .search-content {
+    width: 140px;
+  }
+
+
+  .search-upper-div {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .search-upper-div .search-images-div1 {
+    display: none;
+  }
+
+  .search-images-div {
+    height: auto;
+  }
+
+  .search-upper-mid-div {
+    height: auto;
+  }
+
+  .search-company-content-div-para {
+    display: none;
 }
 
-.search-company-content-div-para-heading {
-  font-size: 14px;
+.search-page-search-box {
+  margin: 10px 10px 20px 10px;
 }
 
-.search-page-input {
-  padding: 8px;
+  .search-image {
+    height: 140px;
+    width: 180px;
+    margin: 20px 0px;
+  }
+
+  .search-company-content-div-heading-content {
+    font-size: 24px;
+    width: 80%;
+  }
+
+  .search-company-content-div-para-heading {
+    font-size: 14px;
+    width: 70%;
+  }
+
+  .search-page-input {
+    width: 180px;
+  }
+
+  .search-history-container {
+    height: 200px;
+  }
 }
 
 

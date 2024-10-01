@@ -75,28 +75,28 @@ const Graph = ({data}) => {
           className="graph-buttons-container"
           >
             <div
-            className={selectedGraph == "stock" ? "graph-button1" : "graph-button2"}
+            className={selectedGraph === "stock" ? "graph-button1" : "graph-button2"}
               onClick={() => setSelectedGraph("stock")}
             >
               {" "}
               Stock Price
             </div>
             <div
-            className={selectedGraph == "market" ? "graph-button1" : "graph-button2"}
+            className={selectedGraph === "market" ? "graph-button1" : "graph-button2"}
               onClick={() => setSelectedGraph("market")}
             >
               {" "}
               Market Share
             </div>
             <div
-            className={selectedGraph == "revenue" ? "graph-button1" : "graph-button2"}
+            className={selectedGraph === "revenue" ? "graph-button1" : "graph-button2"}
               onClick={() => setSelectedGraph("revenue")}
             >
               {" "}
               Revenue
             </div>
             <div
-            className={selectedGraph == "expense" ? "graph-button1" : "graph-button2"}
+            className={selectedGraph === "expense" ? "graph-button1" : "graph-button2"}
               onClick={() => setSelectedGraph("expense")}
             >
               {" "}
@@ -115,7 +115,7 @@ const Graph = ({data}) => {
                   vertical
                   className="graphBar-single"
                   style={{
-                    display: item.change == -1 ? "table-footer-group" : "flex"
+                    display: item.change === -1 ? "table-footer-group" : "flex"
                   }}
                   percent={(item.change).toFixed(3)}
                   status="active"

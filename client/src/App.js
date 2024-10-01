@@ -5,19 +5,19 @@ import { AuthContext } from "./context/AuthContext";
 
 function App() {
   const navigate = useNavigate();
-  const { setJwt, jwt } = useContext(AuthContext);
+  const { jwt } = useContext(AuthContext);
 
   useEffect(() => {
     if (!jwt) {
       navigate('/login');
     }
-  }, []);
+  }, [jwt, navigate]);
 
   useEffect(() => {
     if (jwt) {
       navigate('/companySearch');
     } 
-  }, [jwt]);
+  }, [jwt, navigate]);
 
   return (
     <div>
