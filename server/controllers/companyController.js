@@ -207,7 +207,7 @@ async function historyCompute(req, res) {
     }
 
 
-    let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
+    let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}_${JSON.stringify(req.userId)}`;
     await redisClient.setEx(cacheKey, 3600, JSON.stringify({ metrics: user.companyMetrics }));
     return res.status(200).json({ status: "SUCCESS", data: { metrics: user.companyMetrics }});
     
