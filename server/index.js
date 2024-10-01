@@ -4,21 +4,9 @@ const ApiRouter = require("./routes");
 const { DbConnectionMiddleware } = require("./middleware");
 const { ServerConfig, ConnectDB } = require("./config");
 const redis = require('redis');
+const redisClient = require('./redisClient');
 
 const app = express();
-
-const redisClient = redis.createClient({
-  password: ServerConfig.REDIS_PASSWORD,
-  socket: {
-    host: ServerConfig.REDIS_HOST,
-    port: 17602
-  }
-});
-
-redisClient.connect()
-  .then(() => console.log('Connected to Redis...'))
-  .catch((err) => console.error('Could not connect to Redis', err));
-
 
 app.use(express.json());
 app.use(cors({
@@ -35,4 +23,4 @@ app.listen(ServerConfig.PORT, async () => {
   console.log(`Server is up at ${ServerConfig.PORT}`);
 });
 
-module.exports = {app, redisClient };
+// module.exports = {app, redisClient };
