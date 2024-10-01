@@ -17,6 +17,9 @@ app.use(DbConnectionMiddleware.dbConnectionMiddleware);
 
 app.use("/api", ApiRouter);
 
+
+app.use(express.static(__dirname + "/public/"));
+
 app.listen(ServerConfig.PORT, async () => {
   await ConnectDB();
   console.log(`Server is up at ${ServerConfig.PORT}`);
