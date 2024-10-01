@@ -1,5 +1,5 @@
 const { CompanyService, UserService } = require("../services");
-const { redisClient } = require('../index');
+const redisClient = require('../redisClient');
 
 async function searchCompanies(req, res) {
   try {

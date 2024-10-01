@@ -1,5 +1,5 @@
 // middlewares/cacheMiddleware.js
-const { redisClient } = require("../index");
+const redisClient = require("../redisClient");
 
 const cacheMiddleware = async (req, res, next) => {
   try {
