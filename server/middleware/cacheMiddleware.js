@@ -9,6 +9,8 @@ const cacheMiddlewareSearch = async (req, res, next) => {
       cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
     }
 
+    console.log(cacheKey, "redis :", redisClient)
+
     const cachedData = await redisClient.get(cacheKey);
     console.log("dataCachedSearch", cachedData);
     if (cachedData) {
