@@ -5,8 +5,9 @@ async function searchCompanies(req, res) {
   try {
     const { input } = req.body;
     const companies = await CompanyService.searchCompanies(input);
-    
-    await redisClient.setEx(req.originalUrl, 3600, JSON.stringify(companies)); // Cache for 1 hour
+
+    let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(companies)); // Cache for 1 hour
     return res.status(200).json({ status: "SUCCESS", data: companies });
   } catch (error) {
     console.log(error);
@@ -183,7 +184,9 @@ async function compute(req, res) {
     // setTimeout(() => {
     // }, waitTime);
 
-    await redisClient.setEx(req.originalUrl, 3600, JSON.stringify({ metrics: metrics, actualProcessingTime: responseTime }));
+
+    let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify({ metrics: metrics, actualProcessingTime: responseTime }));
 
     return res.status(200).json({ status: "SUCCESS", data: { metrics: metrics, actualProcessingTime: responseTime } });
 
@@ -203,7 +206,9 @@ async function historyCompute(req, res) {
       return res.status(404).json({ status: "FAILED", data: "User not found" });
     }
 
-    await redisClient.setEx(req.originalUrl, 3600, JSON.stringify({ metrics: user.companyMetrics }));
+
+    let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify({ metrics: user.companyMetrics }));
     return res.status(200).json({ status: "SUCCESS", data: { metrics: user.companyMetrics }});
     
 
