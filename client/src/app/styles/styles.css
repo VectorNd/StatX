@@ -688,14 +688,43 @@ body {
 }
 @media (max-width: 540px) {
 
+  .mainPage-image-container {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mainPage-content-container {
+    height: 120px;
+    text-align: center;
+  }
+
+  .mainPage-heading {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .mainPage-para {
+    font-size: 13px;
+    width: 120px;
+  }
+
   .main-container {
-    display: none;
+    position: relative;
+    height: 250px;
+    top: 0%;
+    left: 0%;
   }
 
   .login-first {
     display: flex;
     width: 100%;
     justify-content: center;
+    flex-direction: column;
+    align-content: center;
+  }
+
+  .login-first .App {
+    height: auto;
   }
 
   .login-container {

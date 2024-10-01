@@ -12,7 +12,6 @@ import ResetPassword from "./app/component/login/ResetPassword";
 import Enable2FA from "./app/component/login/Enable2FA";
 import CompanySearch from "./app/component/search/CompanySearch";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
