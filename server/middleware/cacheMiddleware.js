@@ -10,6 +10,7 @@ const cacheMiddlewareSearch = async (req, res, next) => {
     }
 
     const cachedData = await redisClient.get(cacheKey);
+    console.log("dataCachedSearch", cachedData);
     if (cachedData) {
       return res
         .status(200)
@@ -36,7 +37,7 @@ const cacheMiddlewareHistory = async (req, res, next) => {
       }
 
     const cachedData = await redisClient.get(cacheKey);
-    console.log(cachedData);
+    console.log("dataCached", cachedData);
     if (cachedData) {
       return res
         .status(200)
