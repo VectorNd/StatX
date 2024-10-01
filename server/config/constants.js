@@ -21,6 +21,8 @@ module.exports = {
     FRONTEND_URL: process.env.FRONTEND_URL,
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
     SERVER_ENDPOINT: process.env.SERVER_ENDPOINT,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+    REDIS_HOST: process.env.REDIS_HOST,
     COOKIE_SECURE: true,
-    COOKIE_DOMAIN: "sde-track.vercel.app"
+    COOKIE_DOMAIN: "sde-track.vercel.app",
 };

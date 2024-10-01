@@ -212,8 +212,6 @@ body {
   background-color: #f6cdcc;
 }
 
-
-
 .background-icons-full {
   width: 100%;
   min-height: 100%;
@@ -223,18 +221,18 @@ body {
   right: 0;
   bottom: 0;
   background-image: url("../../media/PieChart.png"),
-  url("../../media/CandleStick.png"), url("../../media/Id.png"),
-  url("../../media/Id.png"), url("../../media/CandleStick.png"),
-  url("../../media/Folder.png"), url("../../media/Calculate.png"),
-  url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
-  url("../../media/Calculate.png"), url("../../media/Id.png"),
-  url("../../media/Folder.png"), url("../../media/Calculate.png"),
-  url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
-  url("../../media/PieChart.png"), url("../../media/CandleStick.png"),
-  url("../../media/Folder.png"), url("../../media/Id.png"),
-  url("../../media/Folder.png"), url("../../media/Calculate.png"),
-  url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
-  url("../../media/Calculate.png"), url("../../media/CandleStick.png"),
+    url("../../media/CandleStick.png"), url("../../media/Id.png"),
+    url("../../media/Id.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/Id.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/PieChart.png"), url("../../media/CandleStick.png"),
+    url("../../media/Folder.png"), url("../../media/Id.png"),
+    url("../../media/Folder.png"), url("../../media/Calculate.png"),
+    url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
+    url("../../media/Calculate.png"), url("../../media/CandleStick.png"),
     url("../../media/Folder.png"), url("../../media/CandleStick.png"),
     url("../../media/PieChart.png"), url("../../media/Calculate.png"),
     url("../../media/CandleStick.png"), url("../../media/Folder.png"),
@@ -243,8 +241,8 @@ body {
     url("../../media/Folder.png"), url("../../media/Calculate.png"),
     url("../../media/CandleStick.png"), url("../../media/PieChart.png"),
     url("../../media/Id.png");
-    background-repeat: no-repeat;
-    background-position: 5% 5%, /* 1 */ 95% 5%, /* 2 */ 5% 95%, /* 3 */ 95% 95%,
+  background-repeat: no-repeat;
+  background-position: 5% 5%, /* 1 */ 95% 5%, /* 2 */ 5% 95%, /* 3 */ 95% 95%,
     /* 4 */ 7% 40%, /* 5 */ 90% 1%, /* 6 */ 30% 6%, /* 7 */ 60% 2%,
     /* 8 */ 40% 50%, /* 9 */ 60% 60%, /* 10 */ 20% 20%, /* 11 */ 80% 6%,
     /* 12 */ 15% 1%, /* 13 */ 77% 57%, /* 14 */ 50% 5%, /* 15 */ 50% 38%,
@@ -254,7 +252,7 @@ body {
     /* 28 */ 20% 50%, /* 29 */ 55% 60%, /* 30 */ 64% 24%, /* 31 */ 34% 57%,
     /* 32 */ 35% 23%, /* 33 */ 5% 60%, /* 34 */ 15% 94%, /* 35 */ 13% 67%,
     /* 36 */ 77% 85%, /* 37 */ 87% 74%, /* 38 */ 80% 22%, /* 39 */ 90% 26%; /* 40 */
-    background-size: 35px 35px;
+  background-size: 35px 35px;
   z-index: -1;
   opacity: 0.1;
   transition: all 1s ease;
@@ -277,7 +275,6 @@ body {
 .rotate2 {
   animation: rotate2 0.5s ease-in-out;
 }
-
 
 .history-tick-image-container {
   margin: 0px 20px 0px 0px;
@@ -378,7 +375,6 @@ body {
 .search-history-container {
   height: 300px;
 }
-
 
 .faAuth-content {
   font-size: 15px;
@@ -529,11 +525,8 @@ body {
   }
 }
 
-
-
 /* Responsive for Tablet Screens */
 @media screen and (max-width: 1024px) and (min-width: 768px) {
-  
   .mainPage-image-container {
     width: 100px;
     height: 100px;
@@ -574,10 +567,6 @@ body {
   .login-card {
     width: 280px;
     height: 300px;
-  }
-
-  .search-content-container .search-content {
-    width: 180px;
   }
 
   .search-image {
@@ -650,10 +639,6 @@ body {
     height: 280px;
   }
 
-  .search-content-container .search-content {
-    width: 160px;
-  }
-
   .search-image {
     height: 150px;
     width: 160px;
@@ -676,7 +661,7 @@ body {
 
   .search-page-search-box {
     margin: 10px 10px 50px 10px;
-}
+  }
 
   .search-history-container {
     height: 220px;
@@ -687,7 +672,6 @@ body {
   }
 }
 @media (max-width: 540px) {
-
   .mainPage-image-container {
     width: 40px;
     height: 40px;
@@ -733,7 +717,7 @@ body {
     width: 300px;
     height: 350px;
     left: 0%;
-    top: 0%
+    top: 0%;
   }
 
   .login-apps {
@@ -751,14 +735,10 @@ body {
     height: 300px;
   }
 
-  .rs-panel-header, .rs-panel-body {
+  .rs-panel-header,
+  .rs-panel-body {
     padding: 10px;
   }
-
-  .search-content-container .search-content {
-    width: 140px;
-  }
-
 
   .search-upper-div {
     height: auto;
@@ -779,11 +759,11 @@ body {
 
   .search-company-content-div-para {
     display: none;
-}
+  }
 
-.search-page-search-box {
-  margin: 10px 10px 20px 10px;
-}
+  .search-page-search-box {
+    margin: 10px 10px 20px 10px;
+  }
 
   .search-image {
     height: 140px;
@@ -809,7 +789,6 @@ body {
     height: 200px;
   }
 }
-
 
 .search-modal-body {
   display: flex;
@@ -877,7 +856,6 @@ body {
   z-index: 2; /* Make sure it's between the outer and inner bars */
 }
 
-
 .rs-progress-line-inner {
   background-color: transparent;
   z-index: 3;
@@ -914,7 +892,6 @@ body {
 .rs-modal-content {
   overflow: auto;
 }
-
 
 .graph-container {
   width: 100%;

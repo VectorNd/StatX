@@ -8,6 +8,7 @@ import Search2Img from "../../../media/Search2.png";
 import "../../styles/styles.css";
 import CompanyMetrics from "./CompanyMetrics";
 import History from "../content/History";
+import { useNavigate } from "react-router";
 
 const CompanySearch = () => {
   const [input, setInput] = useState("");
@@ -20,6 +21,7 @@ const CompanySearch = () => {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
   const searchRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     try {
@@ -148,6 +150,12 @@ const CompanySearch = () => {
       </div>
     </Popover>
   );
+
+  useEffect(() => {
+    if (!jwt) {
+      navigate('/login');
+    }
+  }, [jwt, navigate]);
 
   useEffect(() => {
     if (open && searchRef.current) {

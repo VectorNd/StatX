@@ -1,9 +1,12 @@
 const { CompanyService, UserService } = require("../services");
+const { redisClient } = require('../index');
 
 async function searchCompanies(req, res) {
   try {
     const { input } = req.body;
     const companies = await CompanyService.searchCompanies(input);
+    
+    await redisClient.setEx(req.originalUrl, 3600, JSON.stringify(companies)); // Cache for 1 hour
     return res.status(200).json({ status: "SUCCESS", data: companies });
   } catch (error) {
     console.log(error);
@@ -177,9 +180,11 @@ async function compute(req, res) {
     const responseTime = Date.now() - startTime;
     const waitTime = Math.max(120000 - responseTime, 0); // Wait for at least 2 minutes (120000 ms)
 
-
     // setTimeout(() => {
     // }, waitTime);
+
+    await redisClient.setEx(req.originalUrl, 3600, JSON.stringify({ metrics: metrics, actualProcessingTime: responseTime }));
+
     return res.status(200).json({ status: "SUCCESS", data: { metrics: metrics, actualProcessingTime: responseTime } });
 
 
@@ -198,6 +203,7 @@ async function historyCompute(req, res) {
       return res.status(404).json({ status: "FAILED", data: "User not found" });
     }
 
+    await redisClient.setEx(req.originalUrl, 3600, JSON.stringify({ metrics: user.companyMetrics }));
     return res.status(200).json({ status: "SUCCESS", data: { metrics: user.companyMetrics }});
     
 
