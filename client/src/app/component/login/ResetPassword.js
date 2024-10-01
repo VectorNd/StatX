@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import { SERVER_ENDPOINT } from "../../utils/constants";
-import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Panel } from "rsuite";
-import "./styles.css";
+import "../../styles/styles.css";
 import MainPage from "./MainPage";
+import { SERVER_ENDPOINT } from "../../../utils/constants";
+import { AuthContext } from "../../../context/AuthContext";
 
 const ResetPassword = () => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
 
   const { token } = useParams();
@@ -16,21 +16,11 @@ const ResetPassword = () => {
   const [message, setMessage] = useState("");
   const { setJwt, jwt } = useContext(AuthContext);
   const navigate = useNavigate();
-  
-  // const triggerAnimation = () => {
-  //   setIsCollapsed(!isCollapsed);
-  //   setTimeout(() => {
-  //     setIsFlipped(!isFlipped);
-  //     if (isFlipped) {
-  //       setMessage("");
-  //     }
-  //   }, 500);
-  // };
 
   const handleResetPassword = async () => {
     try {
-        const response = await fetch(
-            `${SERVER_ENDPOINT}/api/v1/user/resetPassword/${token}`,
+      const response = await fetch(
+        `${SERVER_ENDPOINT}/api/v1/user/resetPassword/${token}`,
         {
           method: "POST",
           headers: {
@@ -39,15 +29,15 @@ const ResetPassword = () => {
           body: JSON.stringify({ newPassword }),
         }
       );
-  
+
       const parsedResponse = await response.json();
       const data = parsedResponse.data;
       setMessage(data.message);
       setJwt(token);
       navigate("/enable2FA");
     } catch (error) {
-        setMessage(error.message);
-      }
+      setMessage(error.message);
+    }
   };
 
   const handlePasswordChange = (e) => {
@@ -57,7 +47,7 @@ const ResetPassword = () => {
   return (
     <div>
       <div className="App">
-        <MainPage/>
+        <MainPage />
         <div className="login-container">
           <div
             className={`background-icons ${isCollapsed ? "collapsed" : ""}`}
@@ -79,8 +69,8 @@ const ResetPassword = () => {
                     height: "100%",
                   }}
                 >
-                  <div style={{ fontSize: "31px" }}>Reset Password</div>
-                  <div style={{ fontSize: "15px" }}>
+                  <div className="login-content-heading">Reset Password</div>
+                  <div className="login-content-para">
                     Please enter your new Password.
                   </div>
                   <div className="flex-column-container">
@@ -89,28 +79,15 @@ const ResetPassword = () => {
                       placeholder="Enter Your Password Here"
                       value={newPassword}
                       onChange={handlePasswordChange}
-                      className="login-apps"
-                      style={{
-                        width: "250px",
-                        paddingLeft: "10px",
-                        paddingRight: "5px",
-                        margin: "0",
-                      }}
+                      className="login-apps forgotPass-input"
                     />
                   </div>
                   <div className="flex-center-container">
                     {!message ? (
                       <>
                         <div
-                          className="flex-center-container"
+                          className="flex-center-container forgotPass-button"
                           onClick={handleResetPassword}
-                          style={{
-                            flexWrap: "wrap",
-                            width: "150px",
-                            height: "40px",
-                            backgroundColor: "#DC3D3A",
-                            color: "#F4F4F4",
-                          }}
                         >
                           <strong>Send Reset Link</strong>
                         </div>

@@ -1,10 +1,10 @@
 // src/components/Enable2FA.js
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { SERVER_ENDPOINT } from "../../utils/constants";
+import { AuthContext } from "../../../context/AuthContext";
+import { SERVER_ENDPOINT } from "../../../utils/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Panel } from "rsuite";
-import "./styles.css";
+import "../../styles/styles.css";
 import MainPage from "./MainPage";
 
 const Enable2FA = () => {
@@ -16,16 +16,6 @@ const Enable2FA = () => {
   const { setJwt, jwt } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-
-  // const triggerAnimation = () => {
-  //   setIsCollapsed(!isCollapsed);
-  //   setTimeout(() => {
-  //     setIsFlipped(!isFlipped);
-  //     if (isFlipped) {
-  //       setMessage("");
-  //     }
-  //   }, 500);
-  // };
 
   const getQueryParams = () => {
     const params = new URLSearchParams(location.search);
@@ -130,11 +120,11 @@ const Enable2FA = () => {
                     height: "100%",
                   }}
                 >
-                  <div style={{ fontSize: "15px" }}>
+                  <div className="faAuth-content">
                     <strong>Enable Two-Factor Authentication</strong>
                   </div>
                   <div style={{display: qrCodeUrl == "" ? "none" : "block"}}>
-                    <div style={{ fontSize: "15px" }}>
+                    <div className="faAuth-content">
                       Scan the QR Code with your authenticator app
                     </div>
 
@@ -142,7 +132,7 @@ const Enable2FA = () => {
                     className="flex-column-container"
                     style={{ alignItems: "center" }}
                     >
-                    <div style={{ width: "120px", height: "120px" }}>
+                    <div className="faAuth-image-container">
                       {qrCodeUrl && (
                         <img
                         style={{ height: "100%", width: "100%" }}
@@ -159,28 +149,15 @@ const Enable2FA = () => {
                       placeholder="Enter Your 2FA Code Here"
                       value={authCode}
                       onChange={handleAuthCodeChange}
-                      className="login-apps"
-                      style={{
-                        width: "250px",
-                        paddingLeft: "10px",
-                        paddingRight: "5px",
-                        margin: "0",
-                      }}
+                      className="login-apps faAuth-input"
                     />
                   </div>
                   <div className="flex-center-container">
                     {!message ? (
                       <>
                         <div
-                          className="flex-center-container"
+                          className="flex-center-container faAuth-button"
                           onClick={handleVerify2FA}
-                          style={{
-                            flexWrap: "wrap",
-                            width: "150px",
-                            height: "40px",
-                            backgroundColor: "#DC3D3A",
-                            color: "#F4F4F4",
-                          }}
                         >
                           <strong>Verify Code</strong>
                         </div>

@@ -1,14 +1,13 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
-import { SERVER_ENDPOINT } from "../../utils/constants";
-import { AuthContext } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { Popover, Whisper, Loader, Modal, Button } from "rsuite";
-import SelectedImg from "../../media/Selected.png";
-import SearchImg from "../../media/Search.png";
-import Search2Img from "../../media/Search2.png";
-import "./styles.css";
+import { SERVER_ENDPOINT } from "../../../utils/constants";
+import { AuthContext } from "../../../context/AuthContext";
+import { Popover, Whisper, Loader, Modal } from "rsuite";
+import SelectedImg from "../../../media/Selected.png";
+import SearchImg from "../../../media/Search.png";
+import Search2Img from "../../../media/Search2.png";
+import "../../styles/styles.css";
 import CompanyMetrics from "./CompanyMetrics";
-import History2 from "./History2";
+import History from "../content/History";
 
 const CompanySearch = () => {
   const [input, setInput] = useState("");
@@ -21,8 +20,6 @@ const CompanySearch = () => {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
   const searchRef = useRef(null);
-  const navigate = useNavigate();
-  
 
   const handleSearch = async () => {
     try {
@@ -47,11 +44,6 @@ const CompanySearch = () => {
       console.error("Error fetching companies:", error);
     }
   };
-
-  // const selectCompany = (company) => {
-  //   console.log("Selected company:", company);
-  //   navigate(`/companyMetrics`, { state: { companyCode: company.code } });
-  // };
 
   const handleSearchChange = (e) => {
     setInput(e.target.value);
@@ -83,7 +75,7 @@ const CompanySearch = () => {
   const handleClose = () => {
     setMetrics(null);
     setOpenModal(false);
-  }
+  };
 
   const handleCompute = async (id) => {
     setLoading(true);
@@ -114,16 +106,11 @@ const CompanySearch = () => {
     }
   };
 
-
-
-
   const speaker = (
     <Popover
+      className="search-popover"
       style={{
         display: input ? "block" : "none",
-        width: "250px",
-        maxHeight: "200px",
-        overflow: "auto",
       }}
     >
       <div>
@@ -141,7 +128,7 @@ const CompanySearch = () => {
                     item.companyCode === company.code &&
                     item.name === company.name
                 ) ? (
-                  <div style={{ margin: "0 20px 0 0", flex: "0" }}>
+                  <div className="history-tick-image-container">
                     <img
                       src={SelectedImg}
                       alt="searched"
@@ -199,50 +186,13 @@ const CompanySearch = () => {
     <div>
       <div>
         <div className="App">
-          <div style={{position: "absolute"}}>
-
-        <div
-              className={`background-icons-full`}
-            ></div>
+          <div style={{ position: "absolute" }}>
+            <div className={`background-icons-full`}></div>
           </div>
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-              zIndex: "2",
-              position: "relative"
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                minHeight: "500px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "200px",
-                    width: "250px",
-                    margin: "50px",
-                  }}
-                >
+          <div className="search-container">
+            <div className="search-upper-div">
+              <div className="search-images-div">
+                <div className="search-image">
                   <img
                     src={SearchImg}
                     alt="searched"
@@ -251,105 +201,40 @@ const CompanySearch = () => {
                   />
                 </div>
               </div>
-              <div
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <div className="search-upper-mid-div">
                 <div>
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        color: "#292929",
-                        fontSize: "30px",
-                        fontFamily: "cursive",
-                        width: "60%",
-                        textAlign: "center",
-                      }}
-                    >
+                  <div className="search-company-content-div-heading">
+                    <div className="search-company-content-div-heading-content">
                       Welcome to Your Company Insights Hub!
                     </div>
                   </div>
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "30px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        color: "#292929",
-                        fontSize: "18px",
-                        fontFamily: "sans-serif",
-                        width: "50%",
-                        textAlign: "center",
-                      }}
-                    >
-                      Get ready to explore a treasure trove of financial data and unveil the trends that shape your business landscape!
+                  <div className="search-company-content-div-para">
+                    <div className="search-company-content-div-para-heading">
+                      Get ready to explore a treasure trove of financial data
+                      and unveil the trends that shape your business landscape!
                     </div>
                   </div>
                 </div>
-                <div style={{ margin: "50px", marginTop: "10px" }}>
+                <div className="search-page-search-box">
                   <Whisper
                     placement="bottom"
                     trigger="click"
                     controlId="control-id-bottom"
                     speaker={speaker}
-                    className="flex-column-container"
+                    className="search-modal flex-column-container"
                   >
                     <input
                       type="text"
                       placeholder="Enter Your Company Here"
                       value={input}
                       onChange={handleSearchChange}
-                      className="login-apps"
-                      style={{
-                        width: "250px",
-                        paddingLeft: "10px",
-                        paddingRight: "5px",
-                        margin: "0",
-                      }}
+                      className="login-apps search-page-input"
                     />
                   </Whisper>
                 </div>
               </div>
-              <div
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "200px",
-                    width: "250px",
-                    margin: "50px",
-                  }}
-                >
+              <div className="search-images-div">
+                <div className="search-image">
                   <img
                     src={Search2Img}
                     alt="searched"
@@ -359,9 +244,8 @@ const CompanySearch = () => {
                 </div>
               </div>
             </div>
-            <div style={{ height: "300px" }}>
-              {/* <button onClick={handleHistory}>History</button> */}
-              <History2 history={history} onCompute={handleHistoryClick}/>
+            <div className="search-history-container">
+              <History history={history} onCompute={handleHistoryClick} />
             </div>
           </div>
 
@@ -379,42 +263,11 @@ const CompanySearch = () => {
                 <Modal.Header>
                   <Modal.Title>Dashboard</Modal.Title>
                 </Modal.Header>
-                <Modal.Body
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    minHeight: "600px",
-                    backgroundColor: "#f6f6f6",
-                  }}
-                >
-                  {/* <div>
-                    <p>
-                      Total Companies in Country:{" "}
-                      {metrics.totalCompaniesInCountry}
-                    </p>
-                    <p>Greater Diversity: {metrics.greaterDiversity}</p>
-                    <p>
-                      Stock Price Comparison (Domestic):{" "}
-                      {metrics.stockPriceComparison.domestic}
-                    </p>
-                    <p>
-                      Market Share Prediction:{" "}
-                      {metrics.predictions.predictedMarketShare}
-                    </p>
-                  </div> */}
-                  <CompanyMetrics data={metrics}/>
+                <Modal.Body className="search-modal-body">
+                  <CompanyMetrics data={metrics} />
                 </Modal.Body>
-                {/* <Modal.Footer>
-                  <Button onClick={handleClose} appearance="subtle">
-                    Cancel
-                  </Button>
-                  <Button onClick={handleClose} appearance="primary">
-                    Ok
-                  </Button>
-                </Modal.Footer> */}
               </>
             )}
-
             {msg && handleClose(metrics)}
           </Modal>
         </div>

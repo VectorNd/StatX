@@ -1,12 +1,12 @@
-import "./styles.css";
-import FrameImg from "../../media/Frame.png";
+import "../../styles/styles.css";
+import FrameImg from "../../../media/Frame.png";
 
 function MainPage() {
   return (
     <div className="App">
       <div className="main-container">
         <div className="flex-column-container" style={{ alignItems: "center" }}>
-          <div style={{ width: "120px", height: "120px" }}>
+          <div className="mainPage-image-container">
             <img
               style={{ height: "100%", width: "100%" }}
               src={FrameImg}
@@ -14,15 +14,14 @@ function MainPage() {
             />
           </div>
           <div
-            className="flex-column-container"
-            style={{ alignItems: "center", height: "180px" }}
+            className="flex-column-container mainPage-content-container"
           >
-            <div
-              style={{ fontSize: "30px", width: "200px", fontWeight: "bolder" }}
+            <div className="mainPage-heading"
+              
             >
               Welcome to Your Company Insights Hub!
             </div>
-            <div style={{ fontSize: "15px", width: "200px" }}>
+            <div className="mainPage-para">
               Dive into the world of financial data!
             </div>
           </div>

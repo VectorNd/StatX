@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { keyframes, css } from "styled-components";
+import "../../styles/styles.css";
 
-function History2({ history, onCompute }) {
+function History({ history, onCompute }) {
   return (
     <AppContainer>
       <Wrapper>
@@ -108,7 +109,7 @@ function History2({ history, onCompute }) {
   );
 }
 
-export default History2;
+export default History;
 
 const AppContainer = styled.div`
   width: 100vw;

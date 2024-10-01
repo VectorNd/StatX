@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile  # Make sure this points to your Dockerfile for the client
+    ports:
+      - "3000:80"  # Adjust according to your Nginx configuration
+    environment:
+      - FRONTEND_URL=http://localhost:3000
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile  # Make sure this points to your Dockerfile for the server
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGOURI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority
+      - JWT_SECRET_KEY=your_jwt_secret_key
+      - GOOGLE_CLIENT_ID=your_google_client_id
+      - GOOGLE_CLIENT_SECRET=your_google_client_secret
+      - GOOGLE_REDIRECT_URI=https://yourdomain.com/api/v1/user/googleOAuth/callback
+      - GITHUB_CLIENT_ID=your_github_client_id
+      - GITHUB_CLIENT_SECRET=your_github_client_secret
+      - GITHUB_REDIRECT_URI=https://yourdomain.com/api/v1/user/githubOAuth/callback
+      - EMAIL_USER=your_email
+      - EMAIL_PASS=your_email_password
+      - RENDER_API_KEY=your_render_api_key
+      - VERCEL_TOKEN=your_vercel_token
+      - RENDER_SERVICE_ID=your_render_service_id
+      - RENDER_DEPLOY_HOOK_URL=https://api.render.com/deploy/your_service_id?key=your_render_key
+    volumes:
+      - ./server:/app  # Map the server directory
+
+networks:
+  default:
+    external:
+      name: my-network  # Specify a custom network if needed
