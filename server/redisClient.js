@@ -10,8 +10,19 @@ const redisClient = redis.createClient({
   }
 });
 
-redisClient.connect()
-  .then(() => console.log('Connected to Redis...'))
-  .catch((err) => console.error('Could not connect to Redis', err));
+(async () => {
+  try {
+    await redisClient.connect();
+    console.log('Connected to Redis on Render!');
 
+    // Test setting and getting a value
+    await redisClient.set('testKey', 'testValue');
+    const value = await redisClient.get('testKey');
+    console.log('Value from Redis:', value);
+
+    await redisClient.quit();
+  } catch (error) {
+    console.error('Error connecting to Redis:', error);
+  }
+})();
 module.exports = redisClient;
