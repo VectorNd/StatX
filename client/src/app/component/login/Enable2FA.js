@@ -17,7 +17,7 @@ const Enable2FA = () => {
 
   const getQueryParams = () => {
     const params = new URLSearchParams(location.search);
-    return params.get('token');
+    return params.get("token");
   };
 
   const handleEnable2FA = async () => {
@@ -33,13 +33,14 @@ const Enable2FA = () => {
 
       const parsedResponse = await response.json();
       if (parsedResponse.status !== "SUCCESS") {
-        throw new Error(`Failed to enable 2FA. Please try again. ${parsedResponse.data}`);
+        throw new Error(
+          `Failed to enable 2FA. Please try again. ${parsedResponse.data}`
+        );
       }
 
       if (parsedResponse.data.message) {
         setQrCodeUrl("");
-      }
-      else {
+      } else {
         const data = parsedResponse.data;
         setQrCodeUrl(data.qrCode);
       }
@@ -96,85 +97,82 @@ const Enable2FA = () => {
   return (
     <div>
       <div className="App">
-        <MainPage />
-        <div className="login-container">
-          <div
-            className={`background-icons`}
-          ></div>
+        <div className="login-first">
+          <MainPage />
+          <div className="login-container">
+            <div className={`background-icons`}></div>
 
-          <Panel
-            shaded
-            bordered
-            bodyFill
-            className={`login-card`}
-          >
-            <div className="card-content">
-              <Panel className="card-back">
-                <div
-                  className="flex-column-container"
-                  style={{
-                    height: "100%",
-                  }}
-                >
-                  <div className="faAuth-content">
-                    <strong>Enable Two-Factor Authentication</strong>
-                  </div>
-                  <div style={{display: qrCodeUrl === "" ? "none" : "block"}}>
-                    <div className="faAuth-content">
-                      Scan the QR Code with your authenticator app
-                    </div>
-
+            <Panel shaded bordered bodyFill className={`login-card`}>
+              <div className="card-content">
+                <Panel className="card-back">
                   <div
                     className="flex-column-container"
-                    style={{ alignItems: "center" }}
+                    style={{
+                      height: "100%",
+                    }}
+                  >
+                    <div className="faAuth-content">
+                      <strong>Enable Two-Factor Authentication</strong>
+                    </div>
+                    <div
+                      style={{ display: qrCodeUrl === "" ? "none" : "block" }}
                     >
-                    <div className="faAuth-image-container">
-                      {qrCodeUrl && (
-                        <img
-                        style={{ height: "100%", width: "100%" }}
-                        src={qrCodeUrl}
-                        alt="QR Code"
-                        />
+                      <div className="faAuth-content">
+                        Scan the QR Code with your authenticator app
+                      </div>
+
+                      <div
+                        className="flex-column-container"
+                        style={{ alignItems: "center" }}
+                      >
+                        <div className="faAuth-image-container">
+                          {qrCodeUrl && (
+                            <img
+                              style={{ height: "100%", width: "100%" }}
+                              src={qrCodeUrl}
+                              alt="QR Code"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Enter Your 2FA Code Here"
+                        value={authCode}
+                        onChange={handleAuthCodeChange}
+                        className="login-apps faAuth-input"
+                      />
+                    </div>
+                    <div className="flex-center-container">
+                      {!message ? (
+                        <>
+                          <div
+                            className="flex-center-container faAuth-button"
+                            onClick={handleVerify2FA}
+                          >
+                            <strong>Verify Code</strong>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div
+                            className="flex-center-container"
+                            style={{
+                              color: "#EA8E8C",
+                            }}
+                          >
+                            {message}
+                          </div>
+                        </>
                       )}
                     </div>
                   </div>
-                      </div>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Enter Your 2FA Code Here"
-                      value={authCode}
-                      onChange={handleAuthCodeChange}
-                      className="login-apps faAuth-input"
-                    />
-                  </div>
-                  <div className="flex-center-container">
-                    {!message ? (
-                      <>
-                        <div
-                          className="flex-center-container faAuth-button"
-                          onClick={handleVerify2FA}
-                        >
-                          <strong>Verify Code</strong>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div
-                          className="flex-center-container"
-                          style={{
-                            color: "#EA8E8C",
-                          }}
-                        >
-                          {message}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </Panel>
-            </div>
-          </Panel>
+                </Panel>
+              </div>
+            </Panel>
+          </div>
         </div>
       </div>
     </div>
