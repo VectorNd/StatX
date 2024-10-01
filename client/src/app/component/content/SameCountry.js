@@ -1,5 +1,5 @@
 import React from "react";
-import JordanImg from "../..../media/Jordan.png";
+import JordanImg from "../../../media/Jordan.png";
 import "../../styles/styles.css";
 
 const SameCountry = ({ data, type }) => {
