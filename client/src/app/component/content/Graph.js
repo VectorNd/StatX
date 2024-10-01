@@ -3,6 +3,7 @@ import { Progress } from "rsuite";
 import CornerImg from "../../../media/Corner.png";
 import "../../styles/styles.css";
 
+
 const Graph = ({data}) => {
   const boxRefs = useRef([]);
   const [hoveredElement, setHoveredElement] = useState(null);
