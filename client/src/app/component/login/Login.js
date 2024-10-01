@@ -1,9 +1,9 @@
 import { Panel } from "rsuite";
-import "./styles.css";
-import GoogleImg from "../../media/Google.png";
-import GithubImg from "../../media/Github.png";
+import "../../styles/styles.css";
+import GoogleImg from "../../../media/Google.png";
+import GithubImg from "../../../media/Github.png";
 import { useState } from "react";
-import { SERVER_ENDPOINT } from "../../utils/constants";
+import { SERVER_ENDPOINT } from "../../../utils/constants";
 import MainPage from "./MainPage";
 
 function Login() {
@@ -56,7 +56,7 @@ function Login() {
 
   return (
     <div className="App">
-      <MainPage/>
+      <MainPage />
       {!isFlipped ? (
         <>
           <div className="login-container">
@@ -80,15 +80,15 @@ function Login() {
                       height: "100%",
                     }}
                   >
-                    <div style={{ fontSize: "31px" }}>Log In</div>
-                    <div style={{ fontSize: "15px" }}>
+                    <div className="login-content-heading">Log In</div>
+                    <div className="login-content-para">
                       This is a secure system and you will need to provide your
                       login details to access the site.
                     </div>
                     <div className="flex-column-container">
                       <div className="login-apps" onClick={handleGoogleLogin}>
                         <div className="login-app-div">
-                          <div style={{ margin: "0 10px 0 10px", flex: "0" }}>
+                          <div className="login-aap-image-container">
                             <img
                               src={GoogleImg}
                               alt="google"
@@ -103,7 +103,7 @@ function Login() {
                       </div>
                       <div className="login-apps" onClick={handleGitHubLogin}>
                         <div className="login-app-div">
-                          <div style={{ margin: "0 10px 0 10px", flex: "0" }}>
+                          <div className="login-aap-image-container">
                             <img
                               src={GithubImg}
                               alt="google"
@@ -149,8 +149,8 @@ function Login() {
                       height: "100%",
                     }}
                   >
-                    <div style={{ fontSize: "31px" }}>Forgot Password</div>
-                    <div style={{ fontSize: "15px" }}>
+                    <div className="login-content-heading">Forgot Password</div>
+                    <div className="login-content-para">
                       Please enter your credentials first. Won't be shared
                       publicly, won't be spammed.
                     </div>
@@ -160,28 +160,15 @@ function Login() {
                         placeholder="Enter Your Email Address"
                         value={email}
                         onChange={handleEmailChange}
-                        className="login-apps"
-                        style={{
-                          width: "250px",
-                          paddingLeft: "10px",
-                          paddingRight: "5px",
-                          margin: "0",
-                        }}
+                        className="login-apps forgotPass-input"
                       />
                     </div>
                     <div className="flex-center-container">
                       {!message ? (
                         <>
                           <div
-                          className="flex-center-container"
+                            className="flex-center-container forgotPass-button"
                             onClick={handleForgotPassword}
-                            style={{
-                              flexWrap: "wrap",
-                              width: "150px",
-                              height: "40px",
-                              backgroundColor: "#DC3D3A",
-                              color: "#F4F4F4",
-                            }}
                           >
                             <strong>Send Reset Link</strong>
                           </div>
@@ -189,7 +176,7 @@ function Login() {
                       ) : (
                         <>
                           <div
-                          className="flex-center-container"
+                            className="flex-center-container"
                             style={{
                               color: "#EA8E8C",
                             }}
@@ -199,10 +186,7 @@ function Login() {
                         </>
                       )}
                     </div>
-                    <div
-                      className="flip-button"
-                      onClick={triggerAnimation}
-                    >
+                    <div className="flip-button" onClick={triggerAnimation}>
                       Back to log-in page
                     </div>
                   </div>

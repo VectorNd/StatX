@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Progress } from "rsuite";
-import CornerImg from "../../media/Corner.png";
-import "./styles.css";
+import CornerImg from "../../../media/Corner.png";
+import "../../styles/styles.css";
 
 const Graph = ({data}) => {
   const boxRefs = useRef([]);
@@ -66,73 +66,36 @@ const Graph = ({data}) => {
 
   return (
     <div
-      style={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#e7e7e7",
-        margin: "20px",
-      }}
+    className="graph-container"
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div>
           <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-evenly",
-              alignItems: "center",
-              margin: "20px 0 20px 0",
-            }}
+          className="graph-buttons-container"
           >
             <div
-              style={{
-                display: "inline-block",
-                cursor: "pointer",
-                borderRadius: "25px",
-                padding: "5px",
-                boxShadow: `inset 1px -1px 20px 0px ${selectedGraph == "stock" ? "#EA8E8C" : "#a0a0a0"}`,
-              }}
+            className={selectedGraph == "stock" ? "graph-button1" : "graph-button2"}
               onClick={() => setSelectedGraph("stock")}
             >
               {" "}
               Stock Price
             </div>
             <div
-              style={{
-                display: "inline-block",
-                cursor: "pointer",
-                borderRadius: "25px",
-                padding: "5px",
-                boxShadow: `inset 1px -1px 20px 0px ${selectedGraph == "market" ? "#EA8E8C" : "#a0a0a0"}`,
-              }}
+            className={selectedGraph == "market" ? "graph-button1" : "graph-button2"}
               onClick={() => setSelectedGraph("market")}
             >
               {" "}
               Market Share
             </div>
             <div
-              style={{
-                display: "inline-block",
-                cursor: "pointer",
-                borderRadius: "25px",
-                padding: "5px",
-                boxShadow: `inset 1px -1px 20px 0px ${selectedGraph == "revenue" ? "#EA8E8C" : "#a0a0a0"}`,
-              }}
+            className={selectedGraph == "revenue" ? "graph-button1" : "graph-button2"}
               onClick={() => setSelectedGraph("revenue")}
             >
               {" "}
               Revenue
             </div>
             <div
-              style={{
-                display: "inline-block",
-                cursor: "pointer",
-                borderRadius: "25px",
-                padding: "5px",
-                boxShadow: `inset 1px -1px 20px 0px ${selectedGraph == "expense" ? "#EA8E8C" : "#a0a0a0"}`,
-              }}
+            className={selectedGraph == "expense" ? "graph-button1" : "graph-button2"}
               onClick={() => setSelectedGraph("expense")}
             >
               {" "}
@@ -141,13 +104,7 @@ const Graph = ({data}) => {
           </div>
         </div>
         <div
-          style={{
-            width: "400px",
-            height: "230px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
+        className="graphBar-container"
         >
           {progressValues.map((item, index) => (
             <>
@@ -155,18 +112,15 @@ const Graph = ({data}) => {
                 <Progress.Line
                   ref={(el) => (boxRefs.current[index] = el)}
                   vertical
+                  className="graphBar-single"
                   style={{
-                    width: "40px",
-                    height: "200px",
-                    borderRadius: "10px",
                     display: item.change == -1 ? "table-footer-group" : "flex"
                   }}
                   percent={(item.change).toFixed(3)}
                   status="active"
                 />
                 <div
-                  style={{ width: "40px", textAlign: "center" }}
-                  className="rs-progress-info-status"
+                  className="rs-progress-info-status graphBar-content"
                 >
                   {index + 2015}
                 </div>
@@ -186,25 +140,10 @@ const Graph = ({data}) => {
                   }}
                 >
                   <div
-                    style={{
-                      width: "80px",
-                      height: "20px",
-                      borderRadius: "10px",
-                      backgroundColor: "#EA8E8C",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
+                  className="graphBar-hover-container"
                   >
                     <div
-                      style={{
-                        height: "10px",
-                        display: "flex",
-                        alignItems: "center",
-                        color: "#292929",
-                        fontSize: "13px",
-                        fontFamily: "cursive",
-                      }}
+                    className="graphBar-hover-content" F
                     >
                       {(item.change).toFixed(2)}%
                     </div>

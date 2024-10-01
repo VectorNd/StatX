@@ -7,13 +7,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { UserContextProvider } from "./context/UserContext";
 import { Toaster } from "react-hot-toast";
 import { AuthContextProvider } from "./context/AuthContext";
-import CompanySearch from "./app/component/CompanySearch";
-import CompanyMetrics from "./app/component/CompanyMetrics";
-import Enable2FA from "./app/component/Enable2FA";
-import ResetPassword from "./app/component/ResetPassword";
-import ForgotPassword from "./app/component/ForgotPassword";
-import Login from "./app/component/Login";
-import History from "./app/component/History";
+import Login from "./app/component/login/Login";
+import ResetPassword from "./app/component/login/ResetPassword";
+import Enable2FA from "./app/component/login/Enable2FA";
+import CompanySearch from "./app/component/search/CompanySearch";
 
 
 const router = createBrowserRouter([
@@ -22,32 +19,20 @@ const router = createBrowserRouter([
     element: <App key="page1" />,
   },
   {
-    path: "/companySearch",
-    element: <CompanySearch key="page2" />,
+    path: "/login",
+    element: <Login key="page2" />,
   },
   {
-    path: "/companyMetrics",
-    element: <CompanyMetrics key="page3" />,
+    path: "/reset-password/:token",
+    element: <ResetPassword key="page3" />,
   },
   {
     path: "/enable2FA",
     element: <Enable2FA key="page4" />,
   },
   {
-    path: "/forgot-password",
-    element: <ForgotPassword key="page5" />,
-  },
-  {
-    path: "/reset-password/:token",
-    element: <ResetPassword key="page6" />,
-  },
-  {
-    path: "/login",
-    element: <Login key="page7" />,
-  },
-  {
-    path: "/history",
-    element: <History key="page8" />,
+    path: "/companySearch",
+    element: <CompanySearch key="page5" />,
   },
 ]);
 
