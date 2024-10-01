@@ -528,6 +528,82 @@ body {
 }
 
 
+
+/* Responsive for Tablet Screens */
+@media (max-width: 768px) {
+  .login-container {
+    width: 350px;
+    height: 400px;
+    right: 5%;
+    top: 30%;
+  }
+
+  .login-apps {
+    width: 220px;
+    height: 35px;
+  }
+
+  .flip-button {
+    font-size: 14px;
+  }
+
+  .login-card {
+    width: 280px;
+    height: 300px;
+  }
+}
+
+/* Responsive for Mobile Screens */
+@media (max-width: 480px) {
+  .login-container {
+    width: 280px;
+    height: 360px;
+    right: 2%;
+    top: 35%;
+  }
+
+  .login-apps {
+    width: 180px;
+    height: 30px;
+  }
+
+  .login-card {
+    width: 250px;
+    height: 280px;
+  }
+
+  .flip-button {
+    font-size: 12px;
+  }
+
+  .search-content-container {
+    flex-direction: column;
+  }
+
+  .search-content-container .search-content {
+    width: 180px;
+    height: 25px;
+  }
+
+  .search-page-input {
+    width: 200px;
+  }
+}
+
+/* For fine adjustments */
+.search-company-content-div-heading-content {
+  font-size: 26px;
+}
+
+.search-company-content-div-para-heading {
+  font-size: 14px;
+}
+
+.search-page-input {
+  padding: 8px;
+}
+
+
 .search-modal-body {
   display: flex;
   justify-content: center;
