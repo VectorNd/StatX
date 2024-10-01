@@ -36,7 +36,7 @@ const CompanySearch = () => {
       );
       const parsedResponse = await response.json();
 
-      if (parsedResponse.status != "SUCCESS") {
+      if (parsedResponse.status !== "SUCCESS") {
         throw new Error("Network response was not ok");
       }
       setCompanies(parsedResponse.data);
@@ -93,7 +93,7 @@ const CompanySearch = () => {
       );
 
       const parsedResponse = await response.json();
-      if (parsedResponse.status != "SUCCESS") {
+      if (parsedResponse.status !== "SUCCESS") {
         throw new Error("Network response was not ok");
       }
       setMetrics(parsedResponse.data.metrics);
@@ -170,7 +170,7 @@ const CompanySearch = () => {
         );
 
         const parsedResponse = await response.json();
-        if (parsedResponse.status != "SUCCESS") {
+        if (parsedResponse.status !== "SUCCESS") {
           throw new Error("Network response was not ok");
         }
         setHistory(parsedResponse.data.metrics);
@@ -233,7 +233,7 @@ const CompanySearch = () => {
                   </Whisper>
                 </div>
               </div>
-              <div className="search-images-div">
+              <div className="search-images-div search-images-div1">
                 <div className="search-image">
                   <img
                     src={Search2Img}

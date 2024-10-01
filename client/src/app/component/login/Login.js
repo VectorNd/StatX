@@ -56,13 +56,15 @@ function Login() {
 
   return (
     <div className="App">
+      <div className="login-first">
+
       <MainPage />
       {!isFlipped ? (
         <>
           <div className="login-container">
             <div
               className={`background-icons ${isCollapsed ? "collapsed" : ""}`}
-            ></div>
+              ></div>
 
             <Panel
               shaded
@@ -94,7 +96,7 @@ function Login() {
                               alt="google"
                               height="19px"
                               width="20px"
-                            />
+                              />
                           </div>
                           <div className="login-app-content">
                             Continue with Google
@@ -131,7 +133,7 @@ function Login() {
           <div className="login-container">
             <div
               className={`background-icons ${!isCollapsed ? "collapsed" : ""}`}
-            ></div>
+              ></div>
 
             <Panel
               shaded
@@ -140,7 +142,7 @@ function Login() {
               className={`login-card ${!isCollapsed ? "zoomed" : ""} ${
                 !isFlipped ? "flipped" : ""
               }`}
-            >
+              >
               <div className="card-content">
                 <Panel className="card-back">
                   <div
@@ -148,13 +150,13 @@ function Login() {
                     style={{
                       height: "100%",
                     }}
-                  >
+                    >
                     <div className="login-content-heading">Forgot Password</div>
                     <div className="login-content-para">
                       Please enter your credentials first. Won't be shared
                       publicly, won't be spammed.
                     </div>
-                    <div className="flex-column-container">
+                    <div className="flex-column-container" style={{flexWrap: "wrap"}}>
                       <input
                         type="email"
                         placeholder="Enter Your Email Address"
@@ -196,6 +198,7 @@ function Login() {
           </div>
         </>
       )}
+      </div>
     </div>
   );
 }
