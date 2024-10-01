@@ -3,4 +3,5 @@ module.exports = {
     RateLimiter: require('./limiter'),
     AdminAuthMiddleware: require('./adminAuth'),
     DbConnectionMiddleware: require("./dbConnection"),
+    CacheMiddleware: require("./cacheMiddleware"),
 }
