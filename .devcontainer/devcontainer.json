@@ -1,27 +1,47 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-    "name": "SDETRACK Dev Environment",
-    "dockerComposeFile": "../docker-compose.yml",
-    "service": "nginx", // or your main service
-    "workspaceFolder": "/workspace/SDETRACK",
-    "shutdownAction": "stopCompose",
-    "services": {
-      "nginx": {
-        "overrideCommand": false
-      }
-    },
-    "settings": {
-      "terminal.integrated.defaultProfile.linux": "bash",
-      "editor.formatOnSave": true
-    },
-    "extensions": [
-      "ms-azuretools.vscode-docker",
-      "mongodb.mongodb-vscode"
-    ],
-    "postCreateCommand": "npm install --prefix client && npm install --prefix server && apt-get update && apt-get install -y docker.io", // Installs dependencies for both client and server, and Docker
-    "forwardPorts": [4001, 4002, 4003, 6379, 8080],
-    "remoteUser": "root",
-    "build": {
-      "dockerfile": "Dockerfile" // Specify the Dockerfile if needed
-    }
-  }
-  
+	"name": "Ubuntu",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:jammy",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": true,
+			"azureDnsAutoDetection": true,
+			"installDockerBuildx": true,
+			"installDockerComposeSwitch": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "latest"
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {
+			"installDirectlyFromGitHubRelease": true,
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/powershell:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/terraform:1": {
+			"installSentinel": true,
+			"installTFsec": true,
+			"installTerraformDocs": true,
+			"version": "latest",
+			"tflint": "latest",
+			"terragrunt": "latest"
+		}
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": []
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}

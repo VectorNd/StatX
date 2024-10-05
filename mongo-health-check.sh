@@ -33,7 +33,7 @@ echo "All MongoDB servers are healthy. Running initialization commands..."
 
  /usr/bin/mongosh --host shard1_r1 --port 27017 <<EOF
     rs.initiate({
-    _id: "shard1_r1",
+    _id: "shard1",
     members: [
         {_id: 0, host: "shard1_r1:27017"},
     ],
@@ -44,7 +44,7 @@ EOF
 
  /usr/bin/mongosh --host shard2_r1 --port 27017 <<EOF
     rs.initiate({
-    _id: "shard2_r1",
+    _id: "shard2",
     members: [
         {_id: 0, host: "shard2_r1:27017"},
     ],
