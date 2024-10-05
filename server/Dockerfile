@@ -1,20 +1,18 @@
-# Use a Node.js base image
-FROM node:20-alpine
+# Dockerfile
 
-# Set the working directory in the container
+# Stage 1: Build
+FROM node:20-alpine AS build
 WORKDIR /app
-
-# Copy package.json and package-lock.json files
 COPY package*.json ./
-
-# Install backend dependencies
 RUN npm install
-
-# Copy the rest of the backend code
 COPY . .
+RUN npm run build
 
-# Expose the port your backend service runs on (adjust as per your setup)
+# Stage 2: Production
+FROM node:20-alpine
+RUN apk add --no-cache curl
+WORKDIR /app
+COPY --from=build /app ./
+COPY .env .env
 EXPOSE 4000
-
-# Command to run your backend service
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
