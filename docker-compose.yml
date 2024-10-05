@@ -1,0 +1,278 @@
+version: '3.8'
+
+services:
+
+  server-1:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=sdetrack-redis-1
+      - REDIS_PORT=6379
+      - MONGOURI=mongodb://router1:27017/service1_db
+    ports:
+      - "4001:4000" 
+    depends_on:
+      router1:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    # volumes:
+    #   - ./server:/app
+    # deploy:
+    #   replicas: 3  # Number of server instances
+    networks:
+      - webnet
+
+  server-2:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=sdetrack-redis-1
+      - REDIS_PORT=6379
+      - MONGOURI=mongodb://router1:27017/service2_db
+    ports:
+      - "4002:4000"  
+    depends_on:
+      redis:
+        condition: service_started
+      router1:
+        condition: service_healthy
+    networks:
+      - webnet
+
+  server-3:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=sdetrack-redis-1
+      - REDIS_PORT=6379
+      - MONGOURI=mongodb://router1:27017/service3_db
+    ports:
+      - "4003:4000"  
+    depends_on:
+      redis:
+        condition: service_started
+      router1:
+        condition: service_healthy
+    networks:
+      - webnet
+
+  # mongo-config:
+  #   image: mongo
+  #   container_name: mongo-config
+  #   command: ["sh", "-c", "mongod --configsvr --replSet configReplSet --bind_ip_all --port 27017 --dbpath /data/configdb" ]
+  #   volumes:
+  #     - ./mongo-config:/data/configdb
+  #     - ./mongo-init/init-config.sh:/scripts/init-config.sh  # Initialization script for config server
+  #   entrypoint: ["bin/bash", "/scripts/init-config.sh"]
+  #   ports:
+  #     - "40001:27017"
+  #   healthcheck:
+  #     test: ["CMD", "mongo", "--eval", "db.adminCommand({ ping: 1 })"]
+  #     interval: 80s
+  #     timeout: 40s
+  #     retries: 5
+  #   networks:
+  #     - webnet
+
+  # mongo-shard1:
+  #   image: mongo
+  #   container_name: mongo-shard1
+  #   command: ["sh", "-c", "mongod --shardsvr --replSet shard1ReplSet --bind_ip_all --port 27017 --dbpath /data/db/shard1"]
+  #   volumes:
+  #     - ./mongo-shard1:/data/db/shard1
+  #     - ./mongo-init/init-shard.sh:/scripts/init-shard.sh  # Initialization script for shard1
+  #   entrypoint: ["bin/bash", "/scripts/init-shard.sh"]  
+  #   ports:
+  #     - "50001:27017"
+  #   healthcheck:
+  #     test: ["CMD", "mongo", "--eval", "db.adminCommand({ ping: 1 })"]
+  #     interval: 80s
+  #     timeout: 40s
+  #     retries: 5
+  #   networks:
+  #     - webnet
+
+  # mongo-shard2:
+  #   image: mongo
+  #   container_name: mongo-shard2
+  #   command: ["sh", "-c", "mongod --shardsvr --replSet shard2ReplSet --bind_ip_all --port 27017 --dbpath /data/db/shard2"]
+  #   volumes:
+  #     - ./mongo-shard2:/data/db/shard2
+  #     - ./mongo-init/init-shard.sh:/scripts/init-shard.sh  # Initialization script for shard2
+  #   entrypoint: ["bin/bash", "/scripts/init-shard.sh"]
+  #   ports:
+  #     - "50002:27017"
+  #   healthcheck:
+  #     test: ["CMD", "mongo", "--eval", "db.adminCommand({ ping: 1 })"]
+  #     interval: 80s
+  #     timeout: 40s
+  #     retries: 5
+  #   networks:
+  #     - webnet
+
+  # mongo-shard3:
+  #   image: mongo
+  #   container_name: mongo-shard3
+  #   command: ["sh", "-c", "mongod --shardsvr --replSet shard3ReplSet --bind_ip_all --port 27017 --dbpath /data/db/shard3"]
+  #   volumes:
+  #     - ./mongo-shard3:/data/db/shard3
+  #     - ./mongo-init/init-shard.sh:/scripts/init-shard.sh  # Initialization script for shard3
+  #   entrypoint: ["bin/bash", "/scripts/init-shard.sh"]
+  #   ports:
+  #     - "50003:27017"
+  #   healthcheck:
+  #     test: ["CMD", "mongo", "--eval", "db.adminCommand({ ping: 1 })"]
+  #     interval: 80s
+  #     timeout: 40s
+  #     retries: 5
+  #   networks:
+  #     - webnet
+
+  # mongos:
+  #   image: mongo
+  #   container_name: mongos
+  #   command: ["sh", "-c", "mongos --configdb configReplSet/mongo-config:27017 --bind_ip_all --port 27017"]
+  #   volumes:
+  #     - ./mongo-init/init-mongos.sh:/scripts/init-mongos.sh # Initialization script for mongos router
+  #   entrypoint: ["bin/bash", "/scripts/init-mongos.sh"]
+  #   ports:
+  #     - "60000:27017"
+  #   depends_on:
+  #     mongo-config:
+  #       condition: service_healthy
+  #     mongo-shard1:
+  #       condition: service_healthy
+  #     mongo-shard2:
+  #       condition: service_healthy
+  #     mongo-shard3:
+  #       condition: service_healthy
+  #   healthcheck:
+  #     test: ["CMD", "mongod", "--eval", "db.adminCommand({ ping: 1 })"]
+  #     interval: 40s
+  #     timeout: 30s
+  #     retries: 5  
+  #   networks:
+  #     - webnet
+
+
+   # SHARD #1
+
+  shard1_r1:
+    image: mongo
+    command: ["sh", "-c", "mongod --shardsvr --replSet shard1 --bind_ip_all --port 27017"]
+    container_name: shard1_r1
+    environment:
+      - REPSET_NAME=${SHARD1_REPSET_NAME}
+      - REPSET_CONTAINER=r1
+    ports:
+      - 40001:27017
+    volumes:
+      - ./mongo/mongod/mongod.conf:/etc/mongod.conf
+      - ./mongo/data/${SHARD1_REPSET_NAME}_r1:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+    networks:
+      - webnet
+
+  # SHARD #2
+
+  shard2_r1:
+    image: mongo
+    command: ["sh", "-c", "mongod --shardsvr --replSet shard2 --bind_ip_all --port 27017"]
+    container_name: shard2_r1
+    environment:
+      - REPSET_NAME=${SHARD2_REPSET_NAME}
+      - REPSET_CONTAINER=r1
+    ports:
+      - 40002:27017
+    volumes:
+      - ./mongo/mongod/mongod.conf:/etc/mongod.conf
+      - ./mongo/data/${SHARD2_REPSET_NAME}_r1:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+    networks:
+      - webnet
+
+  # CONFIG DBS
+
+  cfg_r1:
+    image: mongo
+    command: ["sh", "-c", "mongod --configsvr --replSet cfg --bind_ip_all --port 27017"]
+    container_name: cfg_r1
+    environment:
+      - REPSET_NAME=${CONFIG_REPSET_NAME}
+      - REPSET_CONTAINER=r1
+    ports:
+      - 40003:27017
+    volumes:
+      - ./mongo/mongod/mongod.conf:/etc/mongod.conf
+      - ./mongo/data/${CONFIG_REPSET_NAME}_r1:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 15s
+      timeout: 5s
+      retries: 15
+    networks:
+      - webnet
+
+  # ROUTER
+
+  router1:
+    image: mongo
+    command: ["sh", "-c", "mongos --configdb cfg/cfg_r1:27017 --bind_ip_all --port 27017"]
+    container_name: router1
+    depends_on:
+      shard1_r1:
+        condition: service_healthy
+      shard2_r1:
+        condition: service_healthy
+      cfg_r1:
+        condition: service_healthy
+    environment:
+      - SHARD_LIST=${SHARD1_REPSET_NAME}/shard1_r1:27017;${SHARD2_REPSET_NAME}/shard2_r1:27017
+    env_file: .env
+    expose:
+      - 27017
+    ports:
+      - 40004:27017
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+    networks:
+      - webnet
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - webnet
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - server-1
+      - server-2
+      - server-3
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge

@@ -22,8 +22,13 @@ RUN npm run build && rm -rf node_modules
 # Stage 2: Serve the React app with Nginx
 FROM nginx:alpine
 
+
+# Remove the default Nginx website
+RUN rm -rf /usr/share/nginx/html/*
+
 # Copy build output from the previous stage to Nginx's html directory
 COPY --from=build /app/build /usr/share/nginx/html
+
 
 # Expose the default port for Nginx
 EXPOSE 80

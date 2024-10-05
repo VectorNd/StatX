@@ -3,11 +3,10 @@ const redis = require("redis");
 const { ServerConfig } = require("./config");
 
 const redisClient = redis.createClient({
-  password: ServerConfig.REDIS_PASSWORD,
   socket: {
-    host: ServerConfig.REDIS_HOST,
-    port: 17602,
-  },
+    host: "sdetrack-redis-1",
+    port: 6379,
+  }
 });
 
 (async () => {
