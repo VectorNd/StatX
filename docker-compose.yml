@@ -9,7 +9,7 @@ services:
     environment:
       - REDIS_HOST=sdetrack-redis-1
       - REDIS_PORT=6379
-      - MONGOURI=mongodb://router1:27017/service1_db
+      - MONGOURI=mongodb://router1:27017/db
     ports:
       - "4001:4000" 
     depends_on:
@@ -31,7 +31,7 @@ services:
     environment:
       - REDIS_HOST=sdetrack-redis-1
       - REDIS_PORT=6379
-      - MONGOURI=mongodb://router1:27017/service2_db
+      - MONGOURI=mongodb://router1:27017/db
     ports:
       - "4002:4000"  
     depends_on:
@@ -49,7 +49,7 @@ services:
     environment:
       - REDIS_HOST=sdetrack-redis-1
       - REDIS_PORT=6379
-      - MONGOURI=mongodb://router1:27017/service3_db
+      - MONGOURI=mongodb://router1:27017/db
     ports:
       - "4003:4000"  
     depends_on:

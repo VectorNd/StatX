@@ -27,7 +27,7 @@ done
 # Run initialization commands after confirming MongoDB is healthy
 echo "All MongoDB servers are healthy. Running initialization commands..."
 
-# 1) Create a user for accessing to claster
+# 1) Create a users for accessing to claster
 # 2) Create a sharded collection
 # 3) Config sharded collection
 # https://docs.mongodb.com/manual/tutorial/sharding-segmenting-data-by-location/
@@ -45,18 +45,20 @@ db.createUser({user: 'harshshrivastavaeee21', pwd: 'J6rVwdzNCQWT0m4A', roles: [{
 // Enable sharding for the database
 sh.enableSharding("db");
 
-// Create User Collection and configure sharding
+// Create users Collection and configure sharding
 
-db.createCollection("User");
-db.adminCommand({ shardCollection: "db.User", key: { email: 1 } });  // Sharding by email or any other suitable key
+db.createCollection("users");
+db.companies.createIndex({ _id: 1 });
+db.adminCommand({ shardCollection: "db.users", key: { _id: 1 } });
 
-// Create Company Collection and configure sharding
-db.createCollection("Company");
-db.adminCommand({ shardCollection: "db.Company", key: { name: 1 } });  // Sharding by company name or any other suitable key
+// Create companies Collection and configure sharding
+db.createCollection("companies");
+db.companies.createIndex({ _id: 1 });
+db.adminCommand({ shardCollection: "db.companies", key: { _id: 1 } });
 
 // Optional: Disable balancing initially (enable later if needed)
-sh.disableBalancing("db.User");
-sh.disableBalancing("db.Company");
+sh.disableBalancing("db.users");
+sh.disableBalancing("db.companies");
 
 // Example of adding tags and zones (if needed)
 # [['shard1', 'NA'], ['shard2', 'EU']].forEach(([shardName, tag]) => sh.addShardTag(shardName, tag));
@@ -64,21 +66,38 @@ sh.disableBalancing("db.Company");
 sh.addShardTag('shard1', 'NA');
 sh.addShardTag('shard2', 'EU');
 
-sh.addTagRange("db.User", { "companyMetrics.companyCode": "A" }, { "companyMetrics.companyCode" : "M" }, "NA");
-sh.addTagRange("db.User", { "companyMetrics.companyCode": "N" }, { "companyMetrics.companyCode" : "Z" }, "EU");
-sh.addTagRange("db.Company", { "name": "A" }, { "name" : "M" }, "NA");
-sh.addTagRange("db.Company", { "name": "N" }, { "name" : "Z" }, "EU");
+
+sh.addTagRange("db.users", 
+    { "_id": MinKey() }, 
+    { "_id": ObjectId("6490b6a70000000000000000") },
+    "NA"); 
+
+sh.addTagRange("db.users", 
+    { "_id": ObjectId("6490b6a70000000000000000") }, 
+    { "_id": MaxKey() }, 
+    "EU"); 
+
+sh.addTagRange("db.companies", 
+    { "_id": MinKey() }, 
+    { "_id": ObjectId("6490b6a70000000000000000") },
+    "NA"); 
+
+sh.addTagRange("db.companies", 
+    { "_id": ObjectId("6490b6a70000000000000000") },
+    { "_id": MaxKey() }, 
+    "EU"); 
 
 # [
-#     ["db.User", { "companyMetrics.companyCode": "A" }, { "companyMetrics.companyCode": "M" }, "NA"],
-#     ["db.User", { "companyMetrics.companyCode": "N" }, { "companyMetrics.companyCode": "Z" }, "EU"],
-#     ["db.Company", { "name": "A" }, { "name": "M" }, "shard1"],
-#     ["db.Company", { "name": "N" }, { "name": "Z" }, "shard2"]
+#     ["db.users", { "companiesMetrics.companiesCode": "A" }, { "companiesMetrics.companiesCode": "M" }, "NA"],
+#     ["db.users", { "companiesMetrics.companiesCode": "N" }, { "companiesMetrics.companiesCode": "Z" }, "EU"],
+#     ["db.companies", { "name": "A" }, { "name": "M" }, "shard1"],
+#     ["db.companies", { "name": "N" }, { "name": "Z" }, "shard2"]
 # ].forEach(([collection, min, max, tag]) => sh.addTagRange(collection, min, max, tag));
 
 // Enable balancing after configuration
-sh.enableBalancing("db.User");
-sh.enableBalancing("db.Company");
+sh.enableBalancing("db.users");
+sh.enableBalancing("db.companies");
+
 EOF
 
 # Add your MongoDB initialization commands here

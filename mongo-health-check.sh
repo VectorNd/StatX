@@ -64,12 +64,12 @@ EOF
     }});
 EOF
 
- /usr/bin/mongosh --host router1 --port 27017 <<EOF
-    sh.addShard(shard1_r1);
-EOF
- /usr/bin/mongosh --host router1 --port 27017 <<EOF
-    sh.addShard(shard2_r1);
-EOF
+#  /usr/bin/mongosh --host router1 --port 27017 <<EOF
+#     sh.addShard(shard1_r1);
+# EOF
+#  /usr/bin/mongosh --host router1 --port 27017 <<EOF
+#     sh.addShard(shard2_r1);
+# EOF
 # 1) Create a user for accessing to claster
 # 2) Create a sharded collection
 # 3) Config sharded collection
