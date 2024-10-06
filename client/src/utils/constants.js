@@ -1,5 +1,5 @@
 
-const SERVER_ENDPOINT = "http://localhost:8080";
+const SERVER_ENDPOINT = "https://cuddly-fiesta-p49jrwg4wg7h6x6g-8080.app.github.dev";
 
 export {
   SERVER_ENDPOINT,

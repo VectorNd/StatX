@@ -5,10 +5,16 @@ import "../../styles/styles.css";
 
 const SameCountry = ({ data, type }) => {
   return (
-    <div>
+    <div className="top-container">
       <div className="sameCountry-container">
+        <div className="slide-background" />
         <div className="sameCountry-image-container">
-          <img src={type === "diversity" ? FrameImg : JordanImg} alt="jordan" height="19px" width="20px" />
+          <img
+            src={type === "diversity" ? FrameImg : JordanImg}
+            alt="jordan"
+            height="19px"
+            width="20px"
+          />
         </div>
         <div className="sameCountry-content-container">
           <div className="sameCountry-content">

@@ -806,6 +806,16 @@ body {
   align-items: center;
   height: 600px;
   width: 1000px;
+  z-index: 1;
+}
+
+.metrics-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 600px;
+  width: 1000px;
 }
 
 .metrics-left-div {
@@ -815,6 +825,7 @@ body {
   height: 100%;
   align-items: center;
   margin: 20px;
+  z-index: 1;
 }
 
 .metrics-left-div .same-country {
@@ -824,6 +835,22 @@ body {
   justify-content: space-between;
 }
 
+.same-prediction {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: 30px;
+  justify-content: space-around;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; /* You can adjust these values as necessary */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+}
+
 .metrics-right-div {
   display: flex;
   flex-direction: column;
@@ -831,6 +858,7 @@ body {
   align-items: center;
   height: 100%;
   padding-right: 20px;
+  z-index: 1;
 }
 
 .search-popover {
@@ -965,17 +993,42 @@ body {
 }
 
 .sameCountry-container {
+  position: relative;
   width: 200px;
   height: 180px;
   background-color: #e7e7e7;
+  /* background-color: transparent; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 13px;
   align-items: start;
+  transition: background-color 0.5s ease;
+  overflow: hidden;
+}
+
+.top-container {
+  position: relative;
+}
+
+.slide-background {
+  position: absolute; /* Positioning for sliding effect */
+  top: 0;
+  right: -80%; /* Start off-screen to the right */
+  width: 0; /* Full width */
+  height: 100%; /* Full height */
+  background-color: #363636; /* Background color for the slide */
+  transition: right 0.8s ease; /* Smooth transition for sliding */
+}
+
+.sameCountry-container:hover .slide-background {
+  right: 0; /* Move to original position on hover */
+  width: 100%;
 }
 
 .sameCountry-image-container {
+  position: relative;
+  z-index: 1;
   margin-left: 25px;
   width: 30px;
   height: 30px;
@@ -987,6 +1040,8 @@ body {
 }
 
 .sameCountry-content-container {
+  z-index: 1;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1012,4 +1067,10 @@ body {
   color: #292929;
   font-size: 32px;
   font-family: cursive;
+  transition: color 0.8s ease;
+}
+
+
+.sameCountry-container:hover .sameCountry-content-answer {
+  color: #f5f7f9; 
 }
