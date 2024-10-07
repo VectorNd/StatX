@@ -48,13 +48,13 @@ sh.enableSharding("db");
 // Create users Collection and configure sharding
 
 db.createCollection("users");
-db.companies.createIndex({ _id: 1 });
-db.adminCommand({ shardCollection: "db.users", key: { _id: 1 } });
+db.companies.createIndex({ username: 1 });
+db.adminCommand({ shardCollection: "db.users", key: { username: 1 } });
 
 // Create companies Collection and configure sharding
 db.createCollection("companies");
-db.companies.createIndex({ _id: 1 });
-db.adminCommand({ shardCollection: "db.companies", key: { _id: 1 } });
+db.companies.createIndex({ name: 1 });
+db.adminCommand({ shardCollection: "db.companies", key: { name: 1 } });
 
 // Optional: Disable balancing initially (enable later if needed)
 sh.disableBalancing("db.users");
@@ -67,31 +67,19 @@ sh.addShardTag('shard1', 'NA');
 sh.addShardTag('shard2', 'EU');
 
 
-sh.addTagRange("db.users", 
-    { "_id": MinKey() }, 
-    { "_id": ObjectId("6490b6a70000000000000000") },
-    "NA"); 
+sh.addTagRange("db.users", { "username": "A" }, { "username": "M" }, "NA"); 
 
-sh.addTagRange("db.users", 
-    { "_id": ObjectId("6490b6a70000000000000000") }, 
-    { "_id": MaxKey() }, 
-    "EU"); 
+sh.addTagRange("db.users", { "username": "N" }, { "username": "Z" }, "EU"); 
 
-sh.addTagRange("db.companies", 
-    { "_id": MinKey() }, 
-    { "_id": ObjectId("6490b6a70000000000000000") },
-    "NA"); 
+sh.addTagRange("db.companies", { "name": "A" }, { "name": "M" }, "NA"); 
 
-sh.addTagRange("db.companies", 
-    { "_id": ObjectId("6490b6a70000000000000000") },
-    { "_id": MaxKey() }, 
-    "EU"); 
+sh.addTagRange("db.companies", { "name": "N" }, { "name": "Z" }, "EU"); 
 
 # [
-#     ["db.users", { "companiesMetrics.companiesCode": "A" }, { "companiesMetrics.companiesCode": "M" }, "NA"],
-#     ["db.users", { "companiesMetrics.companiesCode": "N" }, { "companiesMetrics.companiesCode": "Z" }, "EU"],
-#     ["db.companies", { "name": "A" }, { "name": "M" }, "shard1"],
-#     ["db.companies", { "name": "N" }, { "name": "Z" }, "shard2"]
+#     ["db.users", { "username": "A" }, { "username": "M" }, "NA"],
+#     ["db.users", { "username": "N" }, { "username": "Z" } "EU"],
+#     ["db.companies", { "name": "A" }, { "name": "M" }, "NA"],
+#     ["db.companies", { "name": "N" }, { "name": "Z" }, "EU"]
 # ].forEach(([collection, min, max, tag]) => sh.addTagRange(collection, min, max, tag));
 
 // Enable balancing after configuration
