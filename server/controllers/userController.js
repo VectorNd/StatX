@@ -99,6 +99,7 @@ async function googleOAuthCallback(req, res) {
       // });
 
       // Step 5: Send JWT token to the frontend
+      res.setHeader('Authorization', `Bearer ${token}`);
       res.redirect(`${ServerConfig.FRONTEND_URL}/enable2FA?token=${token}`)
     } else {
       console.error("Token request failed:", tokenData);

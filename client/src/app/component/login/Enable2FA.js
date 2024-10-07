@@ -21,13 +21,14 @@ const Enable2FA = () => {
   };
 
   const handleEnable2FA = async () => {
+    const retrievedToken = getQueryParams();
     try {
       console.log(jwt);
       const response = await fetch(`${SERVER_ENDPOINT}/api/v1/user/enable2FA`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
+          Authorization: `Bearer ${retrievedToken}`,
         },
       });
 
