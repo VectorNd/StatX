@@ -52,7 +52,7 @@ const PredictionChart = ({ years, values, companyName, country, type }) => {
           : type === "market"
           ? "Market Share"
           : type === "revenue"
-          ? "Rebemue"
+          ? "Revenue"
           : "Expense"
       }:</b> %{customdata}<extra></extra>`,
       customdata: type === "market" ? values : values.map(formatValue),
@@ -67,7 +67,7 @@ const PredictionChart = ({ years, values, companyName, country, type }) => {
           : type === "market"
           ? "Market Share"
           : type === "revenue"
-          ? "Rebemue"
+          ? "Revenue"
           : "Expense"
       } for ${companyName} in ${country} (2015-2025)`,
       x: 0.5,
