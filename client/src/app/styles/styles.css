@@ -792,7 +792,7 @@ body {
 
 .search-modal-body {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   /* min-height: 600px; */
   /* min-width: 800px; */
   background-color: rgb(246, 246, 246);
@@ -1073,4 +1073,10 @@ body {
 
 .sameCountry-container:hover .sameCountry-content-answer {
   color: #f5f7f9; 
+}
+
+.rs-modal-md {
+  width: auto;
+  max-width: calc(100% - 880px);
+  /* overflow-y: hidden; */
 }

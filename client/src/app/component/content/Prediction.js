@@ -5,9 +5,17 @@ import CandleStickImg from "../../../media/CandleStick.png";
 import CalculateImg from "../../../media/Calculate.png";
 import "../../styles/styles.css";
 import { Modal } from "rsuite";
+import PredictionChart from "./PredictionChart";
 
-const Prediction = ({ data, type }) => {
+const Prediction = ({ data, companyName, country, type }) => {
   const [openModal, setOpenModal] = useState(false);
+
+  const years = [
+    2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025,
+  ];
+
+  const values = data.map((item) => item.value);
+
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -47,19 +55,25 @@ const Prediction = ({ data, type }) => {
                 : "Expense"}{" "}
               For 2025
             </div>
-            <div className="sameCountry-content-answer">{data}</div>
+            <div className="sameCountry-content-answer">{type !== "market" && "$"}{(values[values.length - 1]).toFixed(3)}</div>
           </div>
         </div>
       </div>
-      <Modal size="md" open={openModal} onClose={handleClose} style={{top: "60px"}}>
-          <Modal.Header>
-            <Modal.Title>
-              "HII"
-            </Modal.Title>
-          </Modal.Header> 
-            <Modal.Body>
-              "agdhafhkdsjhjksdhjksdh"
-            </Modal.Body>
+      <Modal
+        size="md"
+        open={openModal}
+        onClose={handleClose}
+        style={{ top: "40px" }}
+      >
+        <Modal.Body>
+          <PredictionChart
+            years={years}
+            values={values}
+            companyName={companyName}
+            country={country}
+            type={type}
+          />
+        </Modal.Body>
       </Modal>
     </>
   );

@@ -7,7 +7,7 @@ async function searchCompanies(req, res) {
     const companies = await CompanyService.searchCompanies(input);
 
     let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify(companies)); // Cache for 1 hour
+    // await redisClient.setEx(cacheKey, 3600, JSON.stringify(companies)); // Cache for 1 hour
     return res.status(200).json({ status: "SUCCESS", data: companies });
   } catch (error) {
     console.log(error);
@@ -73,6 +73,7 @@ async function compute(req, res) {
       // Iterate through each year
       for (let i = 0; i < companyData.stockPrices.length; i++) {
         const year = 2015 + i; // Assume starting year is 2015
+        if (year === 2025) continue;
     
         // Current year metrics
         const stockPriceCurrent = companyData.stockPrices[i].price;
@@ -102,6 +103,7 @@ async function compute(req, res) {
       // Normalize the percentage changes to fit within 0-100%
       for (let i = 0; i < companyData.stockPrices.length; i++) {
         const year = 2015 + i;
+        if (year === 2025) continue;
         // Current year metrics
         const stockPriceCurrent = companyData.stockPrices[i].price;
         const marketShareCurrent = companyData.marketShares[i].share;
@@ -115,6 +117,33 @@ async function compute(req, res) {
       }
     
       return changes;
+    };
+
+
+
+    const calculatePrediction = (companyData) => {
+      const prediction = {
+        stockPricePrediction: [],
+        marketSharePrediction: [],
+        revenuePrediction: [],
+        expensePrediction: [],
+      };
+    
+      for (let i = 0; i < companyData.stockPrices.length; i++) {
+        const year = 2015 + i;
+
+        const stockPriceCurrent = companyData.stockPrices[i].price;
+        const marketShareCurrent = companyData.marketShares[i].share;
+        const revenueCurrent = companyData.revenues[i].revenue;
+        const expenseCurrent = companyData.expenses[i].expense;
+    
+        prediction.stockPricePrediction.push({ value: stockPriceCurrent });
+        prediction.marketSharePrediction.push({ value: marketShareCurrent });
+        prediction.revenuePrediction.push({ value: revenueCurrent });
+        prediction.expensePrediction.push({ value: expenseCurrent });
+      }
+    
+      return prediction;
     };
     
 
@@ -165,32 +194,35 @@ async function compute(req, res) {
         ),
       },
       yearlyChanges: calculateYearlyPercentageChanges(company),
-      growthStability: CompanyService.computeGrowthStability(company), // Some helper function you write
-      predictions: CompanyService.predictNextYear(company), // Some ML/logic to predict based on past data
+      predictions: calculatePrediction(company),
+      name: company.name,
+      country: company.country,
     };
 
     // Enforce 2-minute response time
     
+    const responseTime = Date.now() - startTime;
+    const waitTime = Math.max(120000 - responseTime, 0); // Wait for at least 2 minutes (120000 ms)
+    
+    function delay(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    await delay(waitTime);
+
+
+    let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
+    // await redisClient.setEx(cacheKey, 3600, JSON.stringify({ metrics: metrics, actualProcessingTime: responseTime }));
     user.companyMetrics.push({
       companyCode: company.code,
       name: company.name,
+      country: company.country,
       metrics: metrics,
       searchedAt: Date.now(),
     });
     await user.save();
-    const responseTime = Date.now() - startTime;
-    const waitTime = Math.max(120000 - responseTime, 0); // Wait for at least 2 minutes (120000 ms)
-
-    // setTimeout(() => {
-    // }, waitTime);
-
-
-    let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify({ metrics: metrics, actualProcessingTime: responseTime }));
-
     return res.status(200).json({ status: "SUCCESS", data: { metrics: metrics, actualProcessingTime: responseTime } });
-
-
+    
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "FAILED" });
@@ -208,7 +240,7 @@ async function historyCompute(req, res) {
 
 
     let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}_${JSON.stringify(req.userId)}`;
-    await redisClient.setEx(cacheKey, 3600, JSON.stringify({ metrics: user.companyMetrics }));
+    // await redisClient.setEx(cacheKey, 3600, JSON.stringify({ metrics: user.companyMetrics }));
     return res.status(200).json({ status: "SUCCESS", data: { metrics: user.companyMetrics }});
     
 
@@ -220,7 +252,7 @@ async function historyCompute(req, res) {
 
 async function addCompaniesFromCsv(req, res) {
   try {
-    const filePath = "./Mock Data Prepathon.csv";
+    const filePath = "./CompanyDataPrediction.csv";
     const val = await CompanyService.addCompaniesFromCsv(filePath);
 
     return res.status(200).json({ status: "SUCCESS", data: val });

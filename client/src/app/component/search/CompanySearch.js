@@ -9,6 +9,7 @@ import "../../styles/styles.css";
 import CompanyMetrics from "./CompanyMetrics";
 import History from "../content/History";
 import { useNavigate } from "react-router";
+import Timer from "../content/Timer";
 
 const CompanySearch = () => {
   const [input, setInput] = useState("");
@@ -153,7 +154,7 @@ const CompanySearch = () => {
 
   useEffect(() => {
     if (!jwt) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [jwt, navigate]);
 
@@ -257,11 +258,20 @@ const CompanySearch = () => {
             </div>
           </div>
 
-          <Modal size="lg" open={openModal} onClose={handleClose}>
+          <Modal backdrop="static" size="lg" open={openModal} onClose={handleClose}>
             {loading && (
               <Modal.Header>
                 <Modal.Title>
-                  <Loader />
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Loader />
+                    <Timer />
+                  </div>
                 </Modal.Title>
               </Modal.Header>
             )}

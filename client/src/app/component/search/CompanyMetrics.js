@@ -27,12 +27,12 @@ const CompanyMetrics = ({ data }) => {
         <div style={{fontSize: "23px", width: "200px", fontWeight: "bold", marginLeft: "20px"}}>Prediction:</div>
         <div className="metrics-container" style={{ flexDirection: "column" }}>
           <div className="same-prediction">
-            <Prediction data={data.totalCompaniesInCountry} type="stock" />
-            <Prediction data={data.greaterDiversity} type="market" />
+            <Prediction data={data.predictions.stockPricePrediction} companyName={data.name} country={data.country} type="stock" />
+            <Prediction data={data.predictions.marketSharePrediction} companyName={data.name} country={data.country} type="market" />
           </div>
           <div className="same-prediction">
-            <Prediction data={data.totalCompaniesInCountry} type="revenue" />
-            <Prediction data={data.greaterDiversity} type="expense" />
+            <Prediction data={data.predictions.revenuePrediction} companyName={data.name} country={data.country} type="revenue" />
+            <Prediction data={data.predictions.expensePrediction} companyName={data.name} country={data.country} type="expense" />
           </div>
         </div>
       </div>

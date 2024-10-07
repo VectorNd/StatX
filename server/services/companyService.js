@@ -29,18 +29,38 @@ const predictNextYear = (company) => {
 };
 
 function parseValue(value) {
-  // Remove any non-numeric characters (except for decimal points)
+  // Check if the input is a string
   if (typeof value === 'string') {
-      // Check for 'n/a' or similar cases and return 0
+      // Check for 'n/a' or empty strings and return 0
       if (value.trim().toLowerCase() === 'n/a' || value.trim() === '') {
           return 0;
       }
+
       // Remove currency symbols and commas
       const cleanedValue = value.replace(/[\$B,]/g, '').trim();
-      const parsedValue = parseFloat(cleanedValue);
-      return isNaN(parsedValue) ? 0 : parsedValue; // Default to 0 if NaN
+
+      // Determine the multiplier based on the last character
+      let multiplier = 1; // Default multiplier
+      if (cleanedValue.endsWith('k')) {
+          multiplier = 1_000; // Thousands
+      } else if (cleanedValue.endsWith('m')) {
+          multiplier = 1_000_000; // Millions
+      } else if (cleanedValue.endsWith('b')) {
+          multiplier = 1_000_000_000; // Billions
+      }
+
+      // Remove suffix and trim the string
+      const numericValue = cleanedValue.replace(/[kmb]$/, '').trim();
+
+      // Parse the numeric value and multiply by the appropriate multiplier
+      const parsedValue = parseFloat(numericValue) * multiplier;
+
+      // Return the parsed value or 0 if NaN
+      return isNaN(parsedValue) ? 0 : parsedValue; 
   }
-  return 0; // Default for non-string values
+  
+  // Default return for non-string values
+  return 0;
 }
 
 async function searchCompanies(input) {
@@ -149,7 +169,7 @@ async function addCompaniesFromCsv(filePath) {
           const revenues = [];
           const expenses = [];
 
-          for (let year = 2015; year <= 2024; year++) {
+          for (let year = 2015; year <= 2025; year++) {
             stockPrices.push({
               year: year,
               price: parseValue(row[`Stock Price (${year})`]) || 0,
@@ -181,25 +201,25 @@ async function addCompaniesFromCsv(filePath) {
           let countExpense = 0;
 
           stockPrices.map((data) => {
-            if (data.price > 0) {
+            if (data.price > 0 && data.year < 2025) {
               totalMetrics.stockPrice += data.price;
               countStock++;
             } 
           });
           marketShares.map((data) => {
-            if (data.share > 0) {
+            if (data.share > 0 && data.year < 2025) {
               totalMetrics.marketShare += data.share;
               countMarket++;
             }
           });
           revenues.map((data) => {
-            if (data.revenue > 0) {
+            if (data.revenue > 0 && data.year < 2025) {
               totalMetrics.revenue += data.revenue;
               countRevenue++;
             }
           });
           expenses.map((data) => {
-            if (data.expense > 0) {
+            if (data.expense > 0 && data.year < 2025) {
               totalMetrics.expense += data.expense;
               countExpense++;
             }
