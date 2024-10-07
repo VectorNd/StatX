@@ -24,6 +24,16 @@ const CompanySearch = () => {
   const searchRef = useRef(null);
   const navigate = useNavigate();
 
+
+  function fetchWithTimeout(url, options, timeout = 120000) { // Default timeout set to 15 minutes
+    return Promise.race([
+      fetch(url, options),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Request timed out')), timeout)
+      )
+    ]);
+  }
+
   const handleSearch = async () => {
     try {
       const response = await fetch(
@@ -83,7 +93,7 @@ const CompanySearch = () => {
   const handleCompute = async (id) => {
     setLoading(true);
     try {
-      const response = await fetch(
+      const response = await fetchWithTimeout(
         `${SERVER_ENDPOINT}/api/v1/company/compute`,
         {
           method: "POST",
