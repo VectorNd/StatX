@@ -37,7 +37,7 @@ function parseValue(value) {
       }
 
       // Remove currency symbols and commas
-      const cleanedValue = value.replace(/[\$B,]/g, '').trim();
+      const cleanedValue = value.replace(/[\$,]/g, '').trim();
 
       // Determine the multiplier based on the last character
       let multiplier = 1; // Default multiplier
@@ -56,7 +56,7 @@ function parseValue(value) {
       const parsedValue = parseFloat(numericValue) * multiplier;
 
       // Return the parsed value or 0 if NaN
-      console.log(parsedValue)
+      // console.log(parsedValue)
       return isNaN(parsedValue) ? 0 : parsedValue; 
   }
   
@@ -64,7 +64,7 @@ function parseValue(value) {
   return 0;
 }
 
-parseValue('$53.17M')
+// parseValue('$53.17B')
 
 async function searchCompanies(input) {
   try {

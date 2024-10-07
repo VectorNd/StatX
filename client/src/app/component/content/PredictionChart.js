@@ -16,6 +16,7 @@ const PredictionChart = ({ years, values, companyName, country, type }) => {
     }
   };
 
+
   let data = [
     {
       x: years,

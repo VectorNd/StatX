@@ -16,6 +16,16 @@ const Prediction = ({ data, companyName, country, type }) => {
 
   const values = data.map((item) => item.value);
 
+  const formatValue = (val) => {
+    if (val >= 1e9) {
+      return `$${(val / 1e9).toFixed(2)}B`; // Convert to billions
+    } else if (val >= 1e6) {
+      return `$${(val / 1e6).toFixed(2)}M`; // Convert to millions
+    } else {
+      return `$${val.toFixed(2)}`; // Keep as is for smaller values
+    }
+  };
+
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -55,7 +65,7 @@ const Prediction = ({ data, companyName, country, type }) => {
                 : "Expense"}{" "}
               For 2025
             </div>
-            <div className="sameCountry-content-answer">{type !== "market" && "$"}{(values[values.length - 1]).toFixed(3)}</div>
+            <div className="sameCountry-content-answer">{type !== "market" ? formatValue(values[values.length - 1]) : values[values.length - 1].toFixed(2)}</div>
           </div>
         </div>
       </div>
