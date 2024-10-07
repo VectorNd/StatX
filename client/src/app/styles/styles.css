@@ -1079,6 +1079,6 @@ body {
 
 .rs-modal-md {
   width: auto;
-  max-width: calc(100% - 880px);
+  max-width: 620px;
   /* overflow-y: hidden; */
 }

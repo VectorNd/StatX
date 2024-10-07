@@ -55,7 +55,7 @@ const PredictionChart = ({ years, values, companyName, country, type }) => {
           ? "Rebemue"
           : "Expense"
       }:</b> %{customdata}<extra></extra>`,
-      customdata: values.map(formatValue),
+      customdata: type === "market" ? values : values.map(formatValue),
     },
   ];
 
