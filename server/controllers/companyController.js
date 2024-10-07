@@ -204,11 +204,11 @@ async function compute(req, res) {
     const responseTime = Date.now() - startTime;
     const waitTime = Math.max(120000 - responseTime, 0); // Wait for at least 2 minutes (120000 ms)
     
-    function delay(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
+    // function delay(ms) {
+    //   return new Promise((resolve) => setTimeout(resolve, ms));
+    // }
 
-    await delay(waitTime);
+    // await delay(waitTime);
 
 
     let cacheKey = `${req.originalUrl}_${JSON.stringify(req.body)}`;
