@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "base64-arraybuffer": "^1.0.2",
+    "express": "^4.21.0",
     "js-cookie": "^3.0.5",
     "plotly.js": "^2.35.2",
     "react": "^18.3.1",
@@ -23,7 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
