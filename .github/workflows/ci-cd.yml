@@ -30,13 +30,46 @@ jobs:
   #       run: |
   #         curl "$deploy_url"
 
+  # deploy-frontend:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+
+  #     - name: Set up Node.js for Frontend
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '20' # Specify the Node.js version
+
+  #     - name: Install Frontend Dependencies
+  #       working-directory: client
+  #       run: npm install
+
+  #     - name: Install Vercel CLI
+  #       working-directory: client
+  #       run: npm install -g vercel
+
+  #     - name: Build Frontend
+  #       working-directory: client
+  #       run: |
+  #         CI=false npm run build # Set CI to false to ignore warnings
+
+  #     - name: Deploy Frontend
+  #       working-directory: client
+  #       env:
+  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} # Your Vercel token
+  #       run: |
+  #         echo "Deploying Frontend..."
+  #         npx vercel --prod --token $VERCEL_TOKEN --scope harshshrivastava7s-projects --yes 
+  #         echo "Frontend deployed!"
+
   deploy-frontend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js for Frontend
+      - name: Set up Node.js for Backend
         uses: actions/setup-node@v2
         with:
           node-version: '20' # Specify the Node.js version
@@ -45,20 +78,11 @@ jobs:
         working-directory: client
         run: npm install
 
-      - name: Install Vercel CLI
-        working-directory: client
-        run: npm install -g vercel
-
-      - name: Build Frontend
-        working-directory: client
-        run: |
-          CI=false npm run build # Set CI to false to ignore warnings
-
       - name: Deploy Frontend
         working-directory: client
+        # Only run this step if the branch is main
+        if: github.ref == 'refs/heads/main'
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} # Your Vercel token
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL_FRONTEND }}
         run: |
-          echo "Deploying Frontend..."
-          npx vercel --prod --token $VERCEL_TOKEN --scope harshshrivastava7s-projects --yes 
-          echo "Frontend deployed!"
+          curl "$deploy_url"
