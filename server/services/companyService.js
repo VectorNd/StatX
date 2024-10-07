@@ -41,27 +41,30 @@ function parseValue(value) {
 
       // Determine the multiplier based on the last character
       let multiplier = 1; // Default multiplier
-      if (cleanedValue.endsWith('k')) {
-          multiplier = 1_000; // Thousands
-      } else if (cleanedValue.endsWith('m')) {
-          multiplier = 1_000_000; // Millions
-      } else if (cleanedValue.endsWith('b')) {
-          multiplier = 1_000_000_000; // Billions
+      if (cleanedValue.endsWith('K')) {
+          multiplier = 1000; // Thousands
+      } else if (cleanedValue.endsWith('M')) {
+          multiplier = 1000000; // Millions
+      } else if (cleanedValue.endsWith('B')) {
+          multiplier = 1000000000; // Billions
       }
 
       // Remove suffix and trim the string
-      const numericValue = cleanedValue.replace(/[kmb]$/, '').trim();
+      const numericValue = cleanedValue.replace(/[KMB]$/, '').trim();
 
       // Parse the numeric value and multiply by the appropriate multiplier
       const parsedValue = parseFloat(numericValue) * multiplier;
 
       // Return the parsed value or 0 if NaN
+      console.log(parsedValue)
       return isNaN(parsedValue) ? 0 : parsedValue; 
   }
   
   // Default return for non-string values
   return 0;
 }
+
+parseValue('$53.17M')
 
 async function searchCompanies(input) {
   try {

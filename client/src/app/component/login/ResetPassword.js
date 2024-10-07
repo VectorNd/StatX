@@ -31,7 +31,7 @@ const ResetPassword = () => {
       const data = parsedResponse.data;
       setMessage(data.message);
       setJwt(token);
-      navigate("/enable2FA");
+      navigate("/login");
     } catch (error) {
       setMessage(error.message);
     }
