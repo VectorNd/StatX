@@ -3,7 +3,7 @@ StatX is a scalable, real-time company metric visualization platform built using
 
 Project Demo 🎬 - Watch Video
 
-[![Watch the video](https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
+[![Watch the video](https://github.com/VectorNd/StatX/blob/main/images/Screenshot%20from%202024-11-29%2015-44-34.png)](https://www.loom.com/share/c60bcfdf5dd840368228dac377758f72?sid=9c34e97b-ab42-4ffd-98ad-c45049d578d0)
 
 ## 📋 Features  
 
