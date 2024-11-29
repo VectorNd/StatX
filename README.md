@@ -1,6 +1,10 @@
 ## 🏆 Overview  
 StatX is a scalable, real-time company metric visualization platform built using the **MERN stack**. Designed for high concurrency, it enables users to log in, search for companies, view detailed metrics, and access historical data in an intuitive interface.
 
+Project Demo 🎬 - Watch Video
+
+[![Watch the video](https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
+
 ## 📋 Features  
 
 ### **Frontend**  
